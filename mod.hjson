@@ -1,0 +1,25 @@
+#the mod name as displayed in-game
+displayName: "无尽压缩\nEndlessCompression"
+
+#the internal name of your mod
+name: "ec"
+
+#your name
+author: "816543"
+
+#the fully qualified main class of the mod
+main: "ec.EndlessCompression"
+
+#the mod description as seen in the mod dialog
+description: "将一些物质进行压缩"
+
+#the mod version
+version: 0.10
+
+#the minimum game build required to run this mod
+minGameVersion: 145
+
+#this is a java mod
+java: true
+
+dependencies: ["multi-crafter"]
