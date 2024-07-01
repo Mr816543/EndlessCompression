@@ -1,12 +1,8 @@
-package ec;
+package ec.content;
 
-import arc.struct.Seq;
-import mindustry.content.Items;
-import mindustry.content.Liquids;
+import ec.Blocks.ECWalls;
 import mindustry.content.Planets;
-import mindustry.type.ItemStack;
-import static mindustry.content.Blocks.*;
-import static mindustry.content.Blocks.underflowGate;
+
 import static mindustry.content.TechTree.*;
 import static mindustry.content.TechTree.node;
 
@@ -52,6 +48,24 @@ public class ECTechTree {
                     });
                 });
             });
+            node(ECBlocks.copperWall1, () -> {
+                node(ECBlocks.copperWall2, () -> {
+                    node(ECBlocks.copperWall3, () -> {
+                        node(ECBlocks.copperWall4, () -> {
+                            node(ECBlocks.copperWall5, () -> {
+                                node(ECBlocks.copperWall6, () -> {
+                                    node(ECBlocks.copperWall7, () -> {
+                                        node(ECBlocks.copperWall8, () -> {
+                                            node(ECBlocks.copperWall9, () -> {});
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
 
 
         });

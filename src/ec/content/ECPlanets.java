@@ -1,21 +1,6 @@
-package ec;
+package ec.content;
 
-import arc.func.*;
-import arc.graphics.*;
-import arc.math.*;
-import arc.math.geom.*;
-import arc.struct.*;
-import arc.util.*;
-import mindustry.content.Blocks;
-import mindustry.content.Items;
-import mindustry.game.*;
-import mindustry.graphics.*;
-import mindustry.graphics.g3d.*;
-import mindustry.graphics.g3d.PlanetGrid.*;
-import mindustry.maps.planet.*;
 import mindustry.type.*;
-import mindustry.world.*;
-import mindustry.world.meta.*;
 
 public class ECPlanets{
     public static Planet compress;

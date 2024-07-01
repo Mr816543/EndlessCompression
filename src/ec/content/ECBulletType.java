@@ -1,4 +1,4 @@
-package ec;
+package ec.content;
 
 import arc.graphics.Color;
 import arc.math.Interp;

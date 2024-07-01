@@ -1,7 +1,8 @@
-package ec;
+package ec.content;
 
 
 import arc.struct.Seq;
+import ec.Blocks.*;
 import mindustry.content.Blocks;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -13,10 +14,8 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import multicraft.IOEntry;
 import multicraft.MultiCrafter;
 import multicraft.Recipe;
-import multicraft.*;
-import mindustry.*;
-import arc.*;
 
+import static ec.content.ECItems.*;
 import static mindustry.type.ItemStack.with;
 import static mindustry.world.meta.StatValues.ammo;
 import static mindustry.world.meta.StatValues.content;
@@ -24,10 +23,9 @@ import static mindustry.world.meta.StatValues.content;
 
 public class ECBlocks {
     public static void load(){
-
         double damageBase = 10;
         double sizeBase = 1.3;
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper1, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,1))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper1, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,1))){{
             width = (float) (7f*Math.pow(sizeBase,1));height = (float) (9f*Math.pow(sizeBase,1));lifetime = 60f;ammoMultiplier = 2;}});
         ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper2, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,2))){{
             width = (float) (7f*Math.pow(sizeBase,2));height = (float) (9f*Math.pow(sizeBase,2));lifetime = 60f;ammoMultiplier = 2;}});
@@ -69,13 +67,13 @@ public class ECBlocks {
                                 Items.copper, 9));}};
                     output = new IOEntry() {{
                         items = Seq.with(ItemStack.with(
-                                ECItems.copper1, 1));}};
+                                copper1, 1));}};
                     craftTime = ECBlocks.makeTime;
                 }},
                 new Recipe() {{
                     input = new IOEntry() {{
                         items = Seq.with(ItemStack.with(
-                                ECItems.copper1, 9));}};
+                                copper1, 9));}};
                     output = new IOEntry() {{
                         items = Seq.with(ItemStack.with(
                                 ECItems.copper2, 1));}};
@@ -242,4 +240,28 @@ public class ECBlocks {
 
     }};
     */
+
+
+    public static ECWalls copperWall1 = new ECWalls("copperWall1",1,80,copper1){};
+    public static ECWalls copperWall2 = new ECWalls("copperWall2",2,80,copper2){};
+    public static ECWalls copperWall3 = new ECWalls("copperWall3",3,80,copper3){};
+    public static ECWalls copperWall4 = new ECWalls("copperWall4",4,80,copper4){};
+    public static ECWalls copperWall5 = new ECWalls("copperWall5",5,80,copper5){};
+    public static ECWalls copperWall6 = new ECWalls("copperWall6",6,80,copper6){};
+    public static ECWalls copperWall7 = new ECWalls("copperWall7",7,80,copper7){};
+    public static ECWalls copperWall8 = new ECWalls("copperWall8",8,80,copper8){};
+    public static ECWalls copperWall9 = new ECWalls("copperWall9",9,80,copper9){};
+
+    /*
+    public ECWallsLarge copperWallLarge1 = new ECWallsLarge("copperWallLarge1",1,80,copper1){};
+    public ECWallsLarge copperWallLarge2 = new ECWallsLarge("copperWallLarge2",2,80,copper2){};
+    public ECWallsLarge copperWallLarge3 = new ECWallsLarge("copperWallLarge3",3,80,copper3){};
+    public ECWallsLarge copperWallLarge4 = new ECWallsLarge("copperWallLarge4",4,80,copper4){};
+    public ECWallsLarge copperWallLarge5 = new ECWallsLarge("copperWallLarge5",5,80,copper5){};
+    public ECWallsLarge copperWallLarge6 = new ECWallsLarge("copperWallLarge6",6,80,copper6){};
+    public ECWallsLarge copperWallLarge7 = new ECWallsLarge("copperWallLarge7",7,80,copper7){};
+    public ECWallsLarge copperWallLarge8 = new ECWallsLarge("copperWallLarge8",8,80,copper8){};
+    public ECWallsLarge copperWallLarge9 = new ECWallsLarge("copperWallLarge9",9,80,copper9){};
+
+     */
 }

@@ -11,7 +11,21 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod description as seen in the mod dialog
-description: "将一些物质进行压缩"
+description: "将一些物质进行压缩
+
+交流群:708031203
+
+更新日志
+
+
+v0.5.1
+1.每种压缩铜现在可以制作对应的城墙了
+
+v0.5
+1.新增压缩铜,新增铜压缩器
+2.原版双管炮现在可以使用压缩铜作为弹药
+
+"
 
 #the mod version
 version: 0.5
