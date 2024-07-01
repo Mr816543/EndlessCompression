@@ -1,12 +1,11 @@
 package ec;
 
-import arc.*;
 import arc.util.*;
-import mindustry.game.EventType.*;
+import ec.content.ECBlocks;
+import ec.content.ECItems;
+import ec.content.ECPlanets;
+import ec.content.ECTechTree;
 import mindustry.mod.*;
-import mindustry.ui.dialogs.*;
-
-import static mindustry.ui.Fonts.icon;
 
 public class EndlessCompression extends Mod{
 

@@ -11,10 +11,28 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod description as seen in the mod dialog
-description: "将一些物质进行压缩"
+description: "将一些物质进行压缩
+
+交流群:708031203
+
+更新日志
+
+v0.5.2
+1.新增压缩铅,沙,钛系列
+2.原版分裂炮洗澡可以使用压缩铅作为弹药
+
+v0.5.1
+1.每种压缩铜现在可以制作对应的城墙了
+
+v0.5
+1.新增压缩铜,新增铜压缩器
+2.原版双管炮现在可以使用压缩铜作为弹药
+3.构建了新的无尽压缩科技树
+
+"
 
 #the mod version
-version: 0.5
+version: 0.5.2
 
 #the minimum game build required to run this mod
 minGameVersion: 145
