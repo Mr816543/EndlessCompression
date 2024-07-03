@@ -1,12 +1,17 @@
 package ec.content;
 
 
+import arc.graphics.Color;
 import arc.struct.Seq;
 import ec.Blocks.*;
 import mindustry.content.Blocks;
 import mindustry.content.Fx;
 import mindustry.content.Items;
+import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.BasicBulletType;
+import mindustry.entities.bullet.BulletType;
+import mindustry.entities.bullet.FlakBulletType;
+import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
@@ -135,6 +140,453 @@ public class ECBlocks {
             height = (float) (8f*Math.pow(sizeBase,9));
             lifetime = 60f;
         }});
+
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass1, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,1))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,1));
+            height = (float) (8f*Math.pow(sizeBase,1));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,1));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,1));
+            fragBullets = (int) (6*Math.pow(sizeBase,1));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,1))){{
+                width = (float) (5f*Math.pow(sizeBase,1));
+                height = (float) (12f*Math.pow(sizeBase,1));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass2, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,2))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,2));
+            height = (float) (8f*Math.pow(sizeBase,2));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,2));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,2));
+            fragBullets = (int) (6*Math.pow(sizeBase,2));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,2))){{
+                width = (float) (5f*Math.pow(sizeBase,2));
+                height = (float) (12f*Math.pow(sizeBase,2));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass3, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,3))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,3));
+            height = (float) (8f*Math.pow(sizeBase,3));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,3));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,3));
+            fragBullets = (int) (6*Math.pow(sizeBase,3));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,3))){{
+                width = (float) (5f*Math.pow(sizeBase,3));
+                height = (float) (12f*Math.pow(sizeBase,3));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass4, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,4))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,4));
+            height = (float) (8f*Math.pow(sizeBase,4));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,4));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,4));
+            fragBullets = (int) (6*Math.pow(sizeBase,4));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,4))){{
+                width = (float) (5f*Math.pow(sizeBase,4));
+                height = (float) (12f*Math.pow(sizeBase,4));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass5, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,5))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,5));
+            height = (float) (8f*Math.pow(sizeBase,5));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,5));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,5));
+            fragBullets = (int) (6*Math.pow(sizeBase,5));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,5))){{
+                width = (float) (5f*Math.pow(sizeBase,5));
+                height = (float) (12f*Math.pow(sizeBase,5));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass6, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,6))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,6));
+            height = (float) (8f*Math.pow(sizeBase,6));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,6));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,6));
+            fragBullets = (int) (6*Math.pow(sizeBase,6));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,6))){{
+                width = (float) (5f*Math.pow(sizeBase,6));
+                height = (float) (12f*Math.pow(sizeBase,6));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass7, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,7))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,7));
+            height = (float) (8f*Math.pow(sizeBase,7));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,7));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,7));
+            fragBullets = (int) (6*Math.pow(sizeBase,7));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,7))){{
+                width = (float) (5f*Math.pow(sizeBase,7));
+                height = (float) (12f*Math.pow(sizeBase,7));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass8, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,8))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,8));
+            height = (float) (8f*Math.pow(sizeBase,8));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,8));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,8));
+            fragBullets = (int) (6*Math.pow(sizeBase,8));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,8))){{
+                width = (float) (5f*Math.pow(sizeBase,8));
+                height = (float) (12f*Math.pow(sizeBase,8));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(metaglass9, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,9))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.8f;
+            hitEffect = Fx.flakExplosion;
+            width = (float) (6f*Math.pow(sizeBase,9));
+            height = (float) (8f*Math.pow(sizeBase,9));
+            splashDamage = (float) (30f * 1.5f*Math.pow(damageBase,9));
+            splashDamageRadius = (float) (20f*Math.pow(damageBase,9));
+            fragBullets = (int) (6*Math.pow(sizeBase,9));
+            fragBullet = new BasicBulletType(3f, (float) (5*Math.pow(damageBase,9))){{
+                width = (float) (5f*Math.pow(sizeBase,9));
+                height = (float) (12f*Math.pow(sizeBase,9));
+                shrinkY = 1f;
+                lifetime = 20f;
+                backColor = Pal.gray;
+                frontColor = Color.white;
+                despawnEffect = Fx.none;
+                collidesGround = false;
+            }};
+        }});
+
+
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap1, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,1))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,1));
+            height = (float) (8f*Math.pow(sizeBase,1));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,1));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,1));
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap2, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,2))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,2));
+            height = (float) (8f*Math.pow(sizeBase,2));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,2));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,2));
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap3, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,3))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,3));
+            height = (float) (8f*Math.pow(sizeBase,3));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,3));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,3));
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap4, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,4))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,4));
+            height = (float) (8f*Math.pow(sizeBase,4));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,4));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,4));
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap5, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,5))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,5));
+            height = (float) (8f*Math.pow(sizeBase,5));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,5));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,5));
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap6, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,6))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,6));
+            height = (float) (8f*Math.pow(sizeBase,6));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,6));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,6));
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap7, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,7))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,7));
+            height = (float) (8f*Math.pow(sizeBase,7));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,7));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,7));
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap8, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,8))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,8));
+            height = (float) (8f*Math.pow(sizeBase,8));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,8));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,8));
+        }});
+        ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap9, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,9))){{
+            lifetime = 60f;
+            ammoMultiplier = 5f;
+            shootEffect = Fx.shootSmall;
+            reloadMultiplier = 0.5f;
+            width = (float) (6f*Math.pow(sizeBase,9));
+            height = (float) (8f*Math.pow(sizeBase,9));
+            hitEffect = Fx.flakExplosion;
+            splashDamage = (float) (22f * 1.5f*Math.pow(damageBase,9));
+            splashDamageRadius = (float) (24f*Math.pow(damageBase,9));
+        }});
+
+
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal1, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,1))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,1));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,1));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal2, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,2))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,2));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,2));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal3, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,3))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,3));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,3));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal4, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,4))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,4));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,4));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal5, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,5))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,5));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,5));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal6, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,6))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,6));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,6));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal7, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,7))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,7));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,7));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal8, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,8))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,8));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,8));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(coal9, new BulletType(3.35f, (float) (17f*Math.pow(damageBase,9))){{
+
+            hitSize = (float) (7f*Math.pow(sizeBase,9));
+            statusDuration = (float) (60f * 4*Math.pow(sizeBase,9));
+
+            ammoMultiplier = 3f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootSmallFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            keepVelocity = false;
+            hittable = false;
+        }});
+
 
     };
 
@@ -511,6 +963,285 @@ public class ECBlocks {
                     output = new IOEntry() {{
                         items = Seq.with(ItemStack.with(
                                 ECItems.titanium9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block metaglassCompressor = new MultiCrafter("metaglassCompressor"){{
+        requirements(Category.crafting, with(Items.metaglass, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.metaglass, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.metaglass9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block scrapCompressor = new MultiCrafter("scrapCompressor"){{
+        requirements(Category.crafting, with(Items.scrap, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.scrap, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.scrap9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block coalCompressor = new MultiCrafter("coalCompressor"){{
+        requirements(Category.crafting, with(Items.coal, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.coal, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.coal9, 1));}};
                     craftTime = ECBlocks.makeTime;
                 }}
         );

@@ -13,13 +13,19 @@ main: "ec.EndlessCompression"
 #the mod description as seen in the mod dialog
 description: "将一些物质进行压缩
 
-交流群:708031203
+
+无尽压缩Mod交流群:708031203
 
 更新日志
+v0.5.3
+1.新增压缩钢化玻璃,废料,煤系列
+2.原版分裂现在可以使用压缩钢化玻璃,压缩废料作为弹药
+3.原版火焰现在可以使用压缩煤作为弹药
+4.修复了压缩材料作为建材时不会延长建造时间的问题
 
 v0.5.2
 1.新增压缩铅,沙,钛系列
-2.原版分裂炮洗澡可以使用压缩铅作为弹药
+2.原版分裂炮现在可以使用压缩铅作为弹药
 
 v0.5.1
 1.每种压缩铜现在可以制作对应的城墙了
@@ -32,7 +38,7 @@ v0.5
 "
 
 #the mod version
-version: 0.5.2
+version: 0.5.3
 
 #the minimum game build required to run this mod
 minGameVersion: 145

@@ -27,16 +27,16 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(ECBlocks.copperWall1, () -> {
-                    node(ECBlocks.copperWall2, () -> {
-                        node(ECBlocks.copperWall3, () -> {
-                            node(ECBlocks.copperWall4, () -> {
-                                node(ECBlocks.copperWall5, () -> {
-                                    node(ECBlocks.copperWall6, () -> {
-                                        node(ECBlocks.copperWall7, () -> {
-                                            node(ECBlocks.copperWall8, () -> {
-                                                node(ECBlocks.copperWall9, () -> {});
-                                            });
+            });
+            node(ECBlocks.copperWall1, () -> {
+                node(ECBlocks.copperWall2, () -> {
+                    node(ECBlocks.copperWall3, () -> {
+                        node(ECBlocks.copperWall4, () -> {
+                            node(ECBlocks.copperWall5, () -> {
+                                node(ECBlocks.copperWall6, () -> {
+                                    node(ECBlocks.copperWall7, () -> {
+                                        node(ECBlocks.copperWall8, () -> {
+                                            node(ECBlocks.copperWall9, () -> {});
                                         });
                                     });
                                 });
@@ -126,7 +126,68 @@ public class ECTechTree {
                 });
             });
 
+            //metaglass
+            node(ECBlocks.metaglassCompressor, () -> {
+                nodeProduce(ECItems.metaglass1, () -> {
+                    nodeProduce(ECItems.metaglass2, () -> {
+                        nodeProduce(ECItems.metaglass3, () -> {
+                            nodeProduce(ECItems.metaglass4, () -> {
+                                nodeProduce(ECItems.metaglass5, () -> {
+                                    nodeProduce(ECItems.metaglass6, () -> {
+                                        nodeProduce(ECItems.metaglass7, () -> {
+                                            nodeProduce(ECItems.metaglass8, () -> {
+                                                nodeProduce(ECItems.metaglass9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
 
+            //scrap
+            node(ECBlocks.scrapCompressor, () -> {
+                nodeProduce(ECItems.scrap1, () -> {
+                    nodeProduce(ECItems.scrap2, () -> {
+                        nodeProduce(ECItems.scrap3, () -> {
+                            nodeProduce(ECItems.scrap4, () -> {
+                                nodeProduce(ECItems.scrap5, () -> {
+                                    nodeProduce(ECItems.scrap6, () -> {
+                                        nodeProduce(ECItems.scrap7, () -> {
+                                            nodeProduce(ECItems.scrap8, () -> {
+                                                nodeProduce(ECItems.scrap9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //coal
+            node(ECBlocks.coalCompressor, () -> {
+                nodeProduce(ECItems.coal1, () -> {
+                    nodeProduce(ECItems.coal2, () -> {
+                        nodeProduce(ECItems.coal3, () -> {
+                            nodeProduce(ECItems.coal4, () -> {
+                                nodeProduce(ECItems.coal5, () -> {
+                                    nodeProduce(ECItems.coal6, () -> {
+                                        nodeProduce(ECItems.coal7, () -> {
+                                            nodeProduce(ECItems.coal8, () -> {
+                                                nodeProduce(ECItems.coal9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
 
 
 
