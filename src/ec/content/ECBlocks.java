@@ -26,28 +26,166 @@ import static mindustry.world.meta.StatValues.ammo;
 import static mindustry.world.meta.StatValues.content;
 
 
+@SuppressWarnings("ALL")
 public class ECBlocks {
     public static void load(){
         double damageBase = 10;
         double sizeBase = 1.3;
         ((ItemTurret) Blocks.duo).ammoTypes.put(copper1, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,1))){{
             width = (float) (7f*Math.pow(sizeBase,1));height = (float) (9f*Math.pow(sizeBase,1));lifetime = 60f;ammoMultiplier = 2;}});
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper2, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,2))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper2, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,2))){{
             width = (float) (7f*Math.pow(sizeBase,2));height = (float) (9f*Math.pow(sizeBase,2));lifetime = 60f;ammoMultiplier = 2;}});
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper3, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,3))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper3, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,3))){{
             width = (float) (7f*Math.pow(sizeBase,3));height = (float) (9f*Math.pow(sizeBase,3));lifetime = 60f;ammoMultiplier = 2;}});
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper4, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,4))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper4, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,4))){{
             width = (float) (7f*Math.pow(sizeBase,4));height = (float) (9f*Math.pow(sizeBase,4));lifetime = 60f;ammoMultiplier = 2;}});
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper5, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,5))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper5, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,5))){{
             width = (float) (7f*Math.pow(sizeBase,5));height = (float) (9f*Math.pow(sizeBase,5));lifetime = 60f;ammoMultiplier = 2;}});
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper6, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,6))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper6, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,6))){{
             width = (float) (7f*Math.pow(sizeBase,6));height = (float) (9f*Math.pow(sizeBase,6));lifetime = 60f;ammoMultiplier = 2;}});
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper7, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,7))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper7, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,7))){{
             width = (float) (7f*Math.pow(sizeBase,7));height = (float) (9f*Math.pow(sizeBase,7));lifetime = 60f;ammoMultiplier = 2;}});
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper8, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,8))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper8, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,8))){{
             width = (float) (7f*Math.pow(sizeBase,8));height = (float) (9f*Math.pow(sizeBase,8));lifetime = 60f;ammoMultiplier = 2;}});
-        ((ItemTurret) Blocks.duo).ammoTypes.put(ECItems.copper9, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,9))){{
+        ((ItemTurret) Blocks.duo).ammoTypes.put(copper9, new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,9))){{
             width = (float) (7f*Math.pow(sizeBase,9));height = (float) (9f*Math.pow(sizeBase,9));lifetime = 60f;ammoMultiplier = 2;}});
+
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite1, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,1))){{
+            width = (float) (9f*Math.pow(sizeBase,1));
+            height = (float) (12f*Math.pow(sizeBase,1));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite2, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,2))){{
+            width = (float) (9f*Math.pow(sizeBase,2));
+            height = (float) (12f*Math.pow(sizeBase,2));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite3, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,3))){{
+            width = (float) (9f*Math.pow(sizeBase,3));
+            height = (float) (12f*Math.pow(sizeBase,3));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite4, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,4))){{
+            width = (float) (9f*Math.pow(sizeBase,4));
+            height = (float) (12f*Math.pow(sizeBase,4));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite5, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,5))){{
+            width = (float) (9f*Math.pow(sizeBase,5));
+            height = (float) (12f*Math.pow(sizeBase,5));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite6, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,6))){{
+            width = (float) (9f*Math.pow(sizeBase,6));
+            height = (float) (12f*Math.pow(sizeBase,6));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite7, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,7))){{
+            width = (float) (9f*Math.pow(sizeBase,7));
+            height = (float) (12f*Math.pow(sizeBase,7));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite8, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,8))){{
+            width = (float) (9f*Math.pow(sizeBase,8));
+            height = (float) (12f*Math.pow(sizeBase,8));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(graphite9, new BasicBulletType(3.5f, (float) (18*Math.pow(damageBase,9))){{
+            width = (float) (9f*Math.pow(sizeBase,9));
+            height = (float) (12f*Math.pow(sizeBase,9));
+            reloadMultiplier = 0.6f;
+            ammoMultiplier = 4;
+            lifetime = 60f;
+        }});
+
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon1, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,1))){{
+            width = (float) (7f*Math.pow(sizeBase,1));
+            height = (float) (9f*Math.pow(sizeBase,1));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,1));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon2, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,2))){{
+            width = (float) (7f*Math.pow(sizeBase,2));
+            height = (float) (9f*Math.pow(sizeBase,2));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,2));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon3, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,3))){{
+            width = (float) (7f*Math.pow(sizeBase,3));
+            height = (float) (9f*Math.pow(sizeBase,3));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,3));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon4, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,4))){{
+            width = (float) (7f*Math.pow(sizeBase,4));
+            height = (float) (9f*Math.pow(sizeBase,4));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,4));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon5, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,5))){{
+            width = (float) (7f*Math.pow(sizeBase,5));
+            height = (float) (9f*Math.pow(sizeBase,5));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,5));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon6, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,6))){{
+            width = (float) (7f*Math.pow(sizeBase,6));
+            height = (float) (9f*Math.pow(sizeBase,6));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,6));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon7, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,7))){{
+            width = (float) (7f*Math.pow(sizeBase,7));
+            height = (float) (9f*Math.pow(sizeBase,7));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,7));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon8, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,8))){{
+            width = (float) (7f*Math.pow(sizeBase,8));
+            height = (float) (9f*Math.pow(sizeBase,8));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,8));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
+        ((ItemTurret) Blocks.duo).ammoTypes.put(silicon9, new BasicBulletType(3f, (float) (12*Math.pow(damageBase,9))){{
+            width = (float) (7f*Math.pow(sizeBase,9));
+            height = (float) (9f*Math.pow(sizeBase,9));
+            homingPower = (float) (0.1f*Math.pow(sizeBase,9));
+            reloadMultiplier = 1.5f;
+            ammoMultiplier = 5;
+            lifetime = 60f;
+        }});
 
 
         ((ItemTurret) Blocks.scatter).ammoTypes.put(lead1, new BasicBulletType(4.2f, (float) (3*Math.pow(damageBase,1))) {{
@@ -340,7 +478,6 @@ public class ECBlocks {
             }};
         }});
 
-
         ((ItemTurret) Blocks.scatter).ammoTypes.put(scrap1, new FlakBulletType(4f, (float) (3*Math.pow(damageBase,1))){{
             lifetime = 60f;
             ammoMultiplier = 5f;
@@ -587,6 +724,124 @@ public class ECBlocks {
             hittable = false;
         }});
 
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite1, new BulletType(4f, (float) (60f*Math.pow(damageBase,1))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,1));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,1));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite2, new BulletType(4f, (float) (60f*Math.pow(damageBase,2))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,2));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,2));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite3, new BulletType(4f, (float) (60f*Math.pow(damageBase,3))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,3));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,3));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite4, new BulletType(4f, (float) (60f*Math.pow(damageBase,4))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,4));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,4));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite5, new BulletType(4f, (float) (60f*Math.pow(damageBase,5))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,5));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,5));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite6, new BulletType(4f, (float) (60f*Math.pow(damageBase,6))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,6));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,6));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite7, new BulletType(4f, (float) (60f*Math.pow(damageBase,7))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,7));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,7));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite8, new BulletType(4f, (float) (60f*Math.pow(damageBase,8))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,8));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,8));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+        ((ItemTurret) Blocks.scorch).ammoTypes.put(pyratite9, new BulletType(4f, (float) (60f*Math.pow(damageBase,9))){{
+            hitSize = (float) (7f*Math.pow(sizeBase,9));
+            statusDuration = (float) (60f * 10*Math.pow(sizeBase,9));
+            ammoMultiplier = 6f;
+            lifetime = 18f;
+            pierce = true;
+            collidesAir = false;
+            shootEffect = Fx.shootPyraFlame;
+            hitEffect = Fx.hitFlameSmall;
+            despawnEffect = Fx.none;
+            status = StatusEffects.burning;
+            hittable = false;
+        }});
+
 
     };
 
@@ -696,6 +951,7 @@ public class ECBlocks {
         hasLiquids = false;
         itemCapacity = 18;
         craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
 
         resolvedRecipes = Seq.with(
                 new Recipe() {{
@@ -789,6 +1045,7 @@ public class ECBlocks {
         hasLiquids = false;
         itemCapacity = 18;
         craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
 
         resolvedRecipes = Seq.with(
                 new Recipe() {{
@@ -882,6 +1139,7 @@ public class ECBlocks {
         hasLiquids = false;
         itemCapacity = 18;
         craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
 
         resolvedRecipes = Seq.with(
                 new Recipe() {{
@@ -975,6 +1233,7 @@ public class ECBlocks {
         hasLiquids = false;
         itemCapacity = 18;
         craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
 
         resolvedRecipes = Seq.with(
                 new Recipe() {{
@@ -1068,6 +1327,7 @@ public class ECBlocks {
         hasLiquids = false;
         itemCapacity = 18;
         craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
 
         resolvedRecipes = Seq.with(
                 new Recipe() {{
@@ -1161,6 +1421,7 @@ public class ECBlocks {
         hasLiquids = false;
         itemCapacity = 18;
         craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
 
         resolvedRecipes = Seq.with(
                 new Recipe() {{
@@ -1242,6 +1503,852 @@ public class ECBlocks {
                     output = new IOEntry() {{
                         items = Seq.with(ItemStack.with(
                                 ECItems.coal9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block thoriumCompressor = new MultiCrafter("thoriumCompressor"){{
+        requirements(Category.crafting, with(Items.thorium, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.thorium, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.thorium9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block surgeAlloyCompressor = new MultiCrafter("surgeAlloyCompressor"){{
+        requirements(Category.crafting, with(Items.surgeAlloy, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.surgeAlloy, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.surgeAlloy9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block phaseFabricCompressor = new MultiCrafter("phaseFabricCompressor"){{
+        requirements(Category.crafting, with(Items.phaseFabric, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.phaseFabric, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.phaseFabric9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block graphiteCompressor = new MultiCrafter("graphiteCompressor"){{
+        requirements(Category.crafting, with(Items.graphite, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.graphite, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.graphite9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block siliconCompressor = new MultiCrafter("siliconCompressor"){{
+        requirements(Category.crafting, with(Items.silicon, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.silicon, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.silicon9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block pyratiteCompressor = new MultiCrafter("pyratiteCompressor"){{
+        requirements(Category.crafting, with(Items.pyratite, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.pyratite, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.pyratite9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block blastCompoundCompressor = new MultiCrafter("blastCompoundCompressor"){{
+        requirements(Category.crafting, with(Items.blastCompound, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.blastCompound, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.blastCompound9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block sporePodCompressor = new MultiCrafter("sporePodCompressor"){{
+        requirements(Category.crafting, with(Items.sporePod, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.sporePod, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.sporePod9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    public static Block plastaniumCompressor = new MultiCrafter("plastaniumCompressor"){{
+        requirements(Category.crafting, with(Items.plastanium, 30));
+        size = 2;
+        hasPower = false;
+        hasLiquids = false;
+        itemCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Items.plastanium, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium1, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium1, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium2, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium3, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium4, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium5, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium6, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium7, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium8, 9));}};
+                    output = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                ECItems.plastanium9, 1));}};
                     craftTime = ECBlocks.makeTime;
                 }}
         );

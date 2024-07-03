@@ -189,6 +189,194 @@ public class ECTechTree {
                 });
             });
 
+            //thorium
+            node(ECBlocks.thoriumCompressor, () -> {
+                nodeProduce(ECItems.thorium1, () -> {
+                    nodeProduce(ECItems.thorium2, () -> {
+                        nodeProduce(ECItems.thorium3, () -> {
+                            nodeProduce(ECItems.thorium4, () -> {
+                                nodeProduce(ECItems.thorium5, () -> {
+                                    nodeProduce(ECItems.thorium6, () -> {
+                                        nodeProduce(ECItems.thorium7, () -> {
+                                            nodeProduce(ECItems.thorium8, () -> {
+                                                nodeProduce(ECItems.thorium9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //surgeAlloy
+            node(ECBlocks.surgeAlloyCompressor, () -> {
+                nodeProduce(ECItems.surgeAlloy1, () -> {
+                    nodeProduce(ECItems.surgeAlloy2, () -> {
+                        nodeProduce(ECItems.surgeAlloy3, () -> {
+                            nodeProduce(ECItems.surgeAlloy4, () -> {
+                                nodeProduce(ECItems.surgeAlloy5, () -> {
+                                    nodeProduce(ECItems.surgeAlloy6, () -> {
+                                        nodeProduce(ECItems.surgeAlloy7, () -> {
+                                            nodeProduce(ECItems.surgeAlloy8, () -> {
+                                                nodeProduce(ECItems.surgeAlloy9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //phaseFabric
+            node(ECBlocks.phaseFabricCompressor, () -> {
+                nodeProduce(ECItems.phaseFabric1, () -> {
+                    nodeProduce(ECItems.phaseFabric2, () -> {
+                        nodeProduce(ECItems.phaseFabric3, () -> {
+                            nodeProduce(ECItems.phaseFabric4, () -> {
+                                nodeProduce(ECItems.phaseFabric5, () -> {
+                                    nodeProduce(ECItems.phaseFabric6, () -> {
+                                        nodeProduce(ECItems.phaseFabric7, () -> {
+                                            nodeProduce(ECItems.phaseFabric8, () -> {
+                                                nodeProduce(ECItems.phaseFabric9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //graphite
+            node(ECBlocks.graphiteCompressor, () -> {
+                nodeProduce(ECItems.graphite1, () -> {
+                    nodeProduce(ECItems.graphite2, () -> {
+                        nodeProduce(ECItems.graphite3, () -> {
+                            nodeProduce(ECItems.graphite4, () -> {
+                                nodeProduce(ECItems.graphite5, () -> {
+                                    nodeProduce(ECItems.graphite6, () -> {
+                                        nodeProduce(ECItems.graphite7, () -> {
+                                            nodeProduce(ECItems.graphite8, () -> {
+                                                nodeProduce(ECItems.graphite9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //silicon
+            node(ECBlocks.siliconCompressor, () -> {
+                nodeProduce(ECItems.silicon1, () -> {
+                    nodeProduce(ECItems.silicon2, () -> {
+                        nodeProduce(ECItems.silicon3, () -> {
+                            nodeProduce(ECItems.silicon4, () -> {
+                                nodeProduce(ECItems.silicon5, () -> {
+                                    nodeProduce(ECItems.silicon6, () -> {
+                                        nodeProduce(ECItems.silicon7, () -> {
+                                            nodeProduce(ECItems.silicon8, () -> {
+                                                nodeProduce(ECItems.silicon9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //pyratite
+            node(ECBlocks.pyratiteCompressor, () -> {
+                nodeProduce(ECItems.pyratite1, () -> {
+                    nodeProduce(ECItems.pyratite2, () -> {
+                        nodeProduce(ECItems.pyratite3, () -> {
+                            nodeProduce(ECItems.pyratite4, () -> {
+                                nodeProduce(ECItems.pyratite5, () -> {
+                                    nodeProduce(ECItems.pyratite6, () -> {
+                                        nodeProduce(ECItems.pyratite7, () -> {
+                                            nodeProduce(ECItems.pyratite8, () -> {
+                                                nodeProduce(ECItems.pyratite9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //blastCompound
+            node(ECBlocks.blastCompoundCompressor, () -> {
+                nodeProduce(ECItems.blastCompound1, () -> {
+                    nodeProduce(ECItems.blastCompound2, () -> {
+                        nodeProduce(ECItems.blastCompound3, () -> {
+                            nodeProduce(ECItems.blastCompound4, () -> {
+                                nodeProduce(ECItems.blastCompound5, () -> {
+                                    nodeProduce(ECItems.blastCompound6, () -> {
+                                        nodeProduce(ECItems.blastCompound7, () -> {
+                                            nodeProduce(ECItems.blastCompound8, () -> {
+                                                nodeProduce(ECItems.blastCompound9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //sporePod
+            node(ECBlocks.sporePodCompressor, () -> {
+                nodeProduce(ECItems.sporePod1, () -> {
+                    nodeProduce(ECItems.sporePod2, () -> {
+                        nodeProduce(ECItems.sporePod3, () -> {
+                            nodeProduce(ECItems.sporePod4, () -> {
+                                nodeProduce(ECItems.sporePod5, () -> {
+                                    nodeProduce(ECItems.sporePod6, () -> {
+                                        nodeProduce(ECItems.sporePod7, () -> {
+                                            nodeProduce(ECItems.sporePod8, () -> {
+                                                nodeProduce(ECItems.sporePod9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //plastanium
+            node(ECBlocks.plastaniumCompressor, () -> {
+                nodeProduce(ECItems.plastanium1, () -> {
+                    nodeProduce(ECItems.plastanium2, () -> {
+                        nodeProduce(ECItems.plastanium3, () -> {
+                            nodeProduce(ECItems.plastanium4, () -> {
+                                nodeProduce(ECItems.plastanium5, () -> {
+                                    nodeProduce(ECItems.plastanium6, () -> {
+                                        nodeProduce(ECItems.plastanium7, () -> {
+                                            nodeProduce(ECItems.plastanium8, () -> {
+                                                nodeProduce(ECItems.plastanium9, () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
 
 
         });

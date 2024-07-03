@@ -17,6 +17,11 @@ description: "将一些物质进行压缩
 无尽压缩Mod交流群:708031203
 
 更新日志
+
+v0.6.0
+1.原版基础物品全部可以压缩了
+2.原版双管,分裂,火焰完全支持使用原版弹药的压缩版本作为弹药了
+
 v0.5.3
 1.新增压缩钢化玻璃,废料,煤系列
 2.原版分裂现在可以使用压缩钢化玻璃,压缩废料作为弹药
@@ -38,7 +43,7 @@ v0.5
 "
 
 #the mod version
-version: 0.5.3
+version: 0.6.0
 
 #the minimum game build required to run this mod
 minGameVersion: 145
