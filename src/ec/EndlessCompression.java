@@ -1,10 +1,7 @@
 package ec;
 
 import arc.util.*;
-import ec.content.ECBlocks;
-import ec.content.ECItems;
-import ec.content.ECPlanets;
-import ec.content.ECTechTree;
+import ec.content.*;
 import mindustry.mod.*;
 
 public class EndlessCompression extends Mod{
@@ -35,6 +32,8 @@ public class EndlessCompression extends Mod{
         Log.info("Loading some example content.");
         ECItems ECItems = new ECItems();
         ECItems.load();
+        ECLiquids ECLiquids = new ECLiquids();
+        ECLiquids.load();
         //ECBulletType ECBulletType = new ECBulletType();
         //ECBulletType.load();
         ECBlocks ECBlocks = new ECBlocks();

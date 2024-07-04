@@ -4,21 +4,20 @@ package ec.content;
 import arc.graphics.Color;
 import arc.struct.Seq;
 import ec.Blocks.*;
-import mindustry.content.Blocks;
-import mindustry.content.Fx;
-import mindustry.content.Items;
-import mindustry.content.StatusEffects;
+import mindustry.content.*;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.FlakBulletType;
 import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
-import multicraft.IOEntry;
-import multicraft.MultiCrafter;
-import multicraft.Recipe;
+import mindustry.world.blocks.distribution.*;
+import mindustry.world.blocks.production.*;
+import mindustry.world.meta.Env;
+import multicraft.*;
 
 import static ec.content.ECItems.*;
 import static mindustry.type.ItemStack.with;
@@ -845,10 +844,8 @@ public class ECBlocks {
 
     };
 
-
-
+    //Compressor
     private static final float makeTime = 120f;
-
     public static Block copperCompressor = new MultiCrafter("copperCompressor"){{
         requirements(Category.crafting, with(Items.copper, 30));
         size = 2;
@@ -2354,9 +2351,362 @@ public class ECBlocks {
         );
 
     }};
+    /*
+    public static Block waterCompressor = new MultiCrafter("waterCompressor"){{
+        requirements(Category.liquid, with(Items.copper, 15, Items.metaglass, 10));
+        size = 3;
+        hasPower = false;
+        hasLiquids = true;
+        liquidCapacity = 18;
+        craftEffect = Fx.pulverizeMedium;
+        alwaysUnlocked = true;
+
+        resolvedRecipes = Seq.with(
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                Liquids.water, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water1, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water2, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water2, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water3, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water3, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water4, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water4, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water5, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water5, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water6, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water6, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water7, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water7, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water8, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }},
+                new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water8, 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                ECLiquids.water9, 1));}};
+                    craftTime = ECBlocks.makeTime;
+                }}
+        );
+
+    }};
+    */
+    //converyor
+    static int conveyorBase = 3;
+    static double stackConveyorBase = 3;
+    /*
+    public static StackConveyor conveyor1 = new StackConveyor("conveyor1"){{
+        requirements(Category.distribution, with(ECItems.copper1, 1));
+        health = (int) (45*Math.pow(conveyorBase,1));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,1))/(int) (4.2f*Math.pow(conveyorBase,1)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,1)/stackConveyorBase);
+    }};
+    public static StackConveyor conveyor2 = new StackConveyor("conveyor2"){{
+        requirements(Category.distribution, with(ECItems.copper2, 1));
+        health = (int) (45*Math.pow(conveyorBase,2));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,2))/(int) (4.2f*Math.pow(conveyorBase,2)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,2)/stackConveyorBase);
+    }};
+    public static StackConveyor conveyor3 = new StackConveyor("conveyor3"){{
+        requirements(Category.distribution, with(ECItems.copper3, 1));
+        health = (int) (45*Math.pow(conveyorBase,3));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,3))/(int) (4.2f*Math.pow(conveyorBase,3)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,3)/stackConveyorBase);
+    }};
+    public static StackConveyor conveyor4 = new StackConveyor("conveyor4"){{
+        requirements(Category.distribution, with(ECItems.copper4, 1));
+        health = (int) (45*Math.pow(conveyorBase,4));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,4))/(int) (4.2f*Math.pow(conveyorBase,4)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,4)/stackConveyorBase);
+    }};
+    public static StackConveyor conveyor5 = new StackConveyor("conveyor5"){{
+        requirements(Category.distribution, with(ECItems.copper5, 1));
+        health = (int) (45*Math.pow(conveyorBase,5));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,5))/(int) (4.2f*Math.pow(conveyorBase,5)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,5)/stackConveyorBase);
+    }};
+    public static StackConveyor conveyor6 = new StackConveyor("conveyor6"){{
+        requirements(Category.distribution, with(ECItems.copper6, 1));
+        health = (int) (45*Math.pow(conveyorBase,6));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,6))/(int) (4.2f*Math.pow(conveyorBase,6)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,6)/stackConveyorBase);
+    }};
+    public static StackConveyor conveyor7 = new StackConveyor("conveyor7"){{
+        requirements(Category.distribution, with(ECItems.copper7, 1));
+        health = (int) (45*Math.pow(conveyorBase,7));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,7))/(int) (4.2f*Math.pow(conveyorBase,7)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,7)/stackConveyorBase);
+    }};
+    public static StackConveyor conveyor8 = new StackConveyor("conveyor8"){{
+        requirements(Category.distribution, with(ECItems.copper8, 1));
+        health = (int) (45*Math.pow(conveyorBase,8));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,8))/(int) (4.2f*Math.pow(conveyorBase,8)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,8)/stackConveyorBase);
+    }};
+    public static StackConveyor conveyor9 = new StackConveyor("conveyor9"){{
+        requirements(Category.distribution, with(ECItems.copper9, 1));
+        health = (int) (45*Math.pow(conveyorBase,9));
+        speed = (float) ((4.2f*Math.pow(conveyorBase,9))/(int) (4.2f*Math.pow(conveyorBase,9)/stackConveyorBase))/60f;
+        itemCapacity = (int) (4.2f*Math.pow(conveyorBase,9)/stackConveyorBase);
+    }};
+    */
+    public static Conveyor conveyor1 = new Conveyor("conveyor1"){{
+        requirements(Category.distribution, with(ECItems.copper1, 1));
+        researchCost = with(ECItems.copper1, 5);
+        health = (int) (45*Math.pow(conveyorBase,1));
+        speed = (float) (0.03f*Math.pow(conveyorBase,1));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,1));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,1));
+        buildCostMultiplier = 2f;
+    }};
+    public static Conveyor conveyor2 = new Conveyor("conveyor2"){{
+        requirements(Category.distribution, with(ECItems.copper2, 1));
+        researchCost = with(ECItems.copper2, 5);
+        health = (int) (45*Math.pow(conveyorBase,2));
+        speed = (float) (0.03f*Math.pow(conveyorBase,2));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,2));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,2));
+        buildCostMultiplier = 2f;
+    }};
+    public static Conveyor conveyor3 = new Conveyor("conveyor3"){{
+        requirements(Category.distribution, with(ECItems.copper3, 1));
+        researchCost = with(ECItems.copper3, 5);
+        health = (int) (45*Math.pow(conveyorBase,3));
+        speed = (float) (0.03f*Math.pow(conveyorBase,3));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,3));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,3));
+        buildCostMultiplier = 2f;
+    }};
+    public static Conveyor conveyor4 = new Conveyor("conveyor4"){{
+        requirements(Category.distribution, with(ECItems.copper4, 1));
+        researchCost = with(ECItems.copper4, 5);
+        health = (int) (45*Math.pow(conveyorBase,4));
+        speed = (float) (0.03f*Math.pow(conveyorBase,4));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,4));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,4));
+        buildCostMultiplier = 2f;
+    }};
+    public static Conveyor conveyor5 = new Conveyor("conveyor5"){{
+        requirements(Category.distribution, with(ECItems.copper5, 1));
+        researchCost = with(ECItems.copper5, 5);
+        health = (int) (45*Math.pow(conveyorBase,5));
+        speed = (float) (0.03f*Math.pow(conveyorBase,5));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,5));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,5));
+        buildCostMultiplier = 2f;
+    }};
+    public static Conveyor conveyor6 = new Conveyor("conveyor6"){{
+        requirements(Category.distribution, with(ECItems.copper6, 1));
+        researchCost = with(ECItems.copper6, 5);
+        health = (int) (45*Math.pow(conveyorBase,6));
+        speed = (float) (0.03f*Math.pow(conveyorBase,6));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,6));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,6));
+        buildCostMultiplier = 2f;
+    }};
+    public static Conveyor conveyor7 = new Conveyor("conveyor7"){{
+        requirements(Category.distribution, with(ECItems.copper7, 1));
+        researchCost = with(ECItems.copper7, 5);
+        health = (int) (45*Math.pow(conveyorBase,7));
+        speed = (float) (0.03f*Math.pow(conveyorBase,7));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,7));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,7));
+        buildCostMultiplier = 2f;
+    }};
+    public static Conveyor conveyor8 = new Conveyor("conveyor8"){{
+        requirements(Category.distribution, with(ECItems.copper8, 1));
+        researchCost = with(ECItems.copper8, 5);
+        health = (int) (45*Math.pow(conveyorBase,8));
+        speed = (float) (0.03f*Math.pow(conveyorBase,8));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,8));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,8));
+        buildCostMultiplier = 2f;
+    }};
+    public static Conveyor conveyor9 = new Conveyor("conveyor9"){{
+        requirements(Category.distribution, with(ECItems.copper9, 1));
+        researchCost = with(ECItems.copper9, 5);
+        health = (int) (45*Math.pow(conveyorBase,9));
+        speed = (float) (0.03f*Math.pow(conveyorBase,9));
+        displayedSpeed = (float) (4.2f*Math.pow(conveyorBase,9));
+        itemCapacity = (int) (10*Math.pow(conveyorBase,9));
+        buildCostMultiplier = 2f;
+    }};
+
+
+    //drill
+    static double drillBase = 4;
+    public static Drill mechanicalDrill1 = new Drill("mechanicalDrill1"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,1));
+        size = 2;
+        researchCost = with(ECItems.copper1, 10);
+        requirements(Category.production, with(ECItems.copper1, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,1));
+        drillTime = (float) (600/Math.pow(drillBase,1));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
+    public static Drill mechanicalDrill2 = new Drill("mechanicalDrill2"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,2));
+        size = 2;
+        researchCost = with(ECItems.copper2, 10);
+        requirements(Category.production, with(ECItems.copper2, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,2));
+        drillTime = (float) (600/Math.pow(drillBase,2));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
+    public static Drill mechanicalDrill3 = new Drill("mechanicalDrill3"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,3));
+        size = 2;
+        researchCost = with(ECItems.copper3, 10);
+        requirements(Category.production, with(ECItems.copper3, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,3));
+        drillTime = (float) (600/Math.pow(drillBase,3));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
+    public static Drill mechanicalDrill4 = new Drill("mechanicalDrill4"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,4));
+        size = 2;
+        researchCost = with(ECItems.copper4, 10);
+        requirements(Category.production, with(ECItems.copper4, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,4));
+        drillTime = (float) (600/Math.pow(drillBase,4));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
+    public static Drill mechanicalDrill5 = new Drill("mechanicalDrill5"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,5));
+        size = 2;
+        researchCost = with(ECItems.copper5, 10);
+        requirements(Category.production, with(ECItems.copper5, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,5));
+        drillTime = (float) (600/Math.pow(drillBase,5));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
+    public static Drill mechanicalDrill6 = new Drill("mechanicalDrill6"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,6));
+        size = 2;
+        researchCost = with(ECItems.copper6, 10);
+        requirements(Category.production, with(ECItems.copper6, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,6));
+        drillTime = (float) (600/Math.pow(drillBase,6));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
+    public static Drill mechanicalDrill7 = new Drill("mechanicalDrill7"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,7));
+        size = 2;
+        researchCost = with(ECItems.copper7, 10);
+        requirements(Category.production, with(ECItems.copper7, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,7));
+        drillTime = (float) (600/Math.pow(drillBase,7));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
+    public static Drill mechanicalDrill8 = new Drill("mechanicalDrill8"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,8));
+        size = 2;
+        researchCost = with(ECItems.copper8, 10);
+        requirements(Category.production, with(ECItems.copper8, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,8));
+        drillTime = (float) (600/Math.pow(drillBase,8));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
+    public static Drill mechanicalDrill9 = new Drill("mechanicalDrill9"){{
+        hardnessDrillMultiplier = (float) (50f/Math.pow(drillBase,9));
+        size = 2;
+        researchCost = with(ECItems.copper9, 10);
+        requirements(Category.production, with(ECItems.copper9, 12));
+        itemCapacity = (int) (10*Math.pow(drillBase,9));
+        drillTime = (float) (600/Math.pow(drillBase,9));
+        tier = 2;
+        envEnabled ^= Env.space;
+
+        consumeLiquid(Liquids.water, 0.05f).boost();
+    }};
 
 
 
+
+
+
+
+    //copperWall
     public static ECWalls copperWall1 = new ECWalls("copperWall1",1,80,copper1){};
     public static ECWalls copperWall2 = new ECWalls("copperWall2",2,80,copper2){};
     public static ECWalls copperWall3 = new ECWalls("copperWall3",3,80,copper3){};
@@ -2366,7 +2716,6 @@ public class ECBlocks {
     public static ECWalls copperWall7 = new ECWalls("copperWall7",7,80,copper7){};
     public static ECWalls copperWall8 = new ECWalls("copperWall8",8,80,copper8){};
     public static ECWalls copperWall9 = new ECWalls("copperWall9",9,80,copper9){};
-
     /*
     public ECWallsLarge copperWallLarge1 = new ECWallsLarge("copperWallLarge1",1,80,copper1){};
     public ECWallsLarge copperWallLarge2 = new ECWallsLarge("copperWallLarge2",2,80,copper2){};
@@ -2379,7 +2728,7 @@ public class ECBlocks {
     public ECWallsLarge copperWallLarge9 = new ECWallsLarge("copperWallLarge9",9,80,copper9){};
 
      */
-
+    //titaniumWall
     public static ECWalls titaniumWall1 = new ECWalls("titaniumWall1",1,110,titanium1){};
     public static ECWalls titaniumWall2 = new ECWalls("titaniumWall2",2,110,titanium2){};
     public static ECWalls titaniumWall3 = new ECWalls("titaniumWall3",3,110,titanium3){};
