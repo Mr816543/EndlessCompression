@@ -1,251 +1,334 @@
 package ec.content;
 
+import arc.Core;
 import arc.graphics.Color;
+import arc.graphics.Pixmap;
+import arc.graphics.g2d.PixmapRegion;
+import mindustry.Vars;
 import mindustry.type.Item;
+
 
 @SuppressWarnings("SpellCheckingInspection")
 public class ECItems {
     public static void load(){
+
+        int attributeBase = 4;
+
+        for(int i = 1 ; i < 10 ; i++){
+            int num = i;
+            new Item("copper"+num,load.itemcolor("copper",num,true)){{
+                hardness = 1+num;
+                cost = 0.5f;
+            }};
+            new Item("lead"+num,load.itemcolor("lead",num,true)){{
+                hardness = 1+num;
+                cost = 0.7f;
+            }};
+            new Item("sand"+num,load.itemcolor("sand",num,true)){{
+                lowPriority = true;
+                buildable = false;
+            }};
+            new Item("titanium"+num,load.itemcolor("titanium",num,true)){{
+                hardness = 3+num;
+                cost = 1f;
+            }};
+            new Item("metaglass"+num,load.itemcolor("metaglass",num,true)){{
+                cost = 1.5f;
+            }};
+            new Item("scrap"+num,load.itemcolor("scrap",num,true)){};
+            new Item("coal"+num,load.itemcolor("coal",num,false)){{
+                explosiveness = (float) (0.2f*Math.pow(attributeBase,num));
+                flammability = (float) (1f*Math.pow(attributeBase,num));
+                hardness = 2+num;
+                buildable = false;
+            }};
+            new Item("thorium"+num,load.itemcolor("thorium",num,true)){{
+                explosiveness = (float) (0.2f*Math.pow(attributeBase,num));
+                hardness = 4+num;
+                radioactivity = (float) (1f*Math.pow(attributeBase,num));
+                cost = 1.1f;
+                healthScaling = 0.2f;
+            }};
+            new Item("surgeAlloy"+num,load.itemcolor("surge-alloy",num,true)){{
+                cost = 1.2f;
+                charge = (float) (0.75f*Math.pow(attributeBase,num));
+                healthScaling = 0.25f;
+            }};
+            new Item("phaseFabric"+num,load.itemcolor("phase-fabric",num,true)){{
+                cost = 1.3f;
+                radioactivity = (float) (0.6f*Math.pow(attributeBase,num));
+                healthScaling = 0.25f;
+            }};
+            new Item("graphite"+num,load.itemcolor("graphite",num,true)){{
+                cost = 1f;
+            }};
+            new Item("silicon"+num,load.itemcolor("silicon",num,false)){{
+                cost = 0.8f;
+            }};
+            new Item("pyratite"+num,load.itemcolor("pyratite",num,true)){{
+                flammability = (float) (1.4f*Math.pow(attributeBase,num));
+                explosiveness = (float) (0.4f*Math.pow(attributeBase,num));
+                buildable = false;
+            }};
+            new Item("blastCompound"+num,load.itemcolor("blast-compound",num,true)){{
+                flammability = (float) (0.4f*Math.pow(attributeBase,num));
+                explosiveness = (float) (1.2f*Math.pow(attributeBase,num));
+                buildable = false;
+            }};
+            new Item("sporePod"+num,load.itemcolor("spore-pod",num,false)){{
+                flammability = (float) (1.15f*Math.pow(attributeBase,num));
+                buildable = false;
+            }};
+            new Item("plastanium"+num,load.itemcolor("plastanium",num,true)){{
+                flammability = (float) (0.1f*Math.pow(attributeBase,num));
+                explosiveness = (float) (0.2f*Math.pow(attributeBase,num));
+                cost = 1.3f;
+                healthScaling = 0.1f;
+            }};
+        };
+
     };
 
-
+/*
     //copper
-    public static Item copper1 = new Item("copper1",Color.valueOf("cc8d62")){{
+    public static Item copper1 = new Item("copper1",Color.valueOf("d4986e")){{
         hardness = 1+1;
         cost = 0.5f;
     }};
-    public static Item copper2 = new Item("copper2",Color.valueOf("bf7e52")){{
+    public static Item copper2 = new Item("copper2",Color.valueOf("cf9369")){{
         hardness = 1+2;
         cost = 0.5f;
     }};
-    public static Item copper3 = new Item("copper3",Color.valueOf("b27043")){{
+    public static Item copper3 = new Item("copper3",Color.valueOf("ca8e64")){{
         hardness = 1+3;
         cost = 0.5f;
     }};
-    public static Item copper4 = new Item("copper4",Color.valueOf("a56335")){{
+    public static Item copper4 = new Item("copper4",Color.valueOf("c5895f")){{
         hardness = 1+4;
         cost = 0.5f;
     }};
-    public static Item copper5 = new Item("copper5",Color.valueOf("985629")){{
+    public static Item copper5 = new Item("copper5",Color.valueOf("c0845a")){{
         hardness = 1+5;
         cost = 0.5f;
     }};
-    public static Item copper6 = new Item("copper6",Color.valueOf("8b4a1e")){{
+    public static Item copper6 = new Item("copper6",Color.valueOf("bb7f55")){{
         hardness = 1+6;
         cost = 0.5f;
     }};
-    public static Item copper7 = new Item("copper7",Color.valueOf("7e3f14")){{
+    public static Item copper7 = new Item("copper7",Color.valueOf("b67a50")){{
         hardness = 1+7;
         cost = 0.5f;
     }};
-    public static Item copper8 = new Item("copper8",Color.valueOf("71350c")){{
+    public static Item copper8 = new Item("copper8",Color.valueOf("b1754b")){{
         hardness = 1+8;
         cost = 0.5f;
     }};
-    public static Item copper9 = new Item("copper9",Color.valueOf("642c05")){{
+    public static Item copper9 = new Item("copper9",Color.valueOf("ac7046")){{
         hardness = 1+9;
         cost = 0.5f;
     }};
 
+
+
     //lead
-    public static Item lead1 = new Item("lead1",Color.valueOf("7c6d9c")){{
+    public static Item lead1 = new Item("lead1",Color.valueOf("877aa4")){{
         hardness = 1+1;
         cost = 0.7f;
     }};
-    public static Item lead2 = new Item("lead2",Color.valueOf("6c5c8f")){{
+    public static Item lead2 = new Item("lead2",Color.valueOf("82759f")){{
         hardness = 1+2;
         cost = 0.7f;
     }};
-    public static Item lead3 = new Item("lead3",Color.valueOf("5d4d82")){{
+    public static Item lead3 = new Item("lead3",Color.valueOf("7d709a")){{
         hardness = 1+3;
         cost = 0.7f;
     }};
-    public static Item lead4 = new Item("lead4",Color.valueOf("4f3f75")){{
+    public static Item lead4 = new Item("lead4",Color.valueOf("786b95")){{
         hardness = 1+4;
         cost = 0.7f;
     }};
-    public static Item lead5 = new Item("lead5",Color.valueOf("423268")){{
+    public static Item lead5 = new Item("lead5",Color.valueOf("736690")){{
         hardness = 1+5;
         cost = 0.7f;
     }};
-    public static Item lead6 = new Item("lead6",Color.valueOf("36275b")){{
+    public static Item lead6 = new Item("lead6",Color.valueOf("6e618b")){{
         hardness = 1+6;
         cost = 0.7f;
     }};
-    public static Item lead7 = new Item("lead7",Color.valueOf("2b1d4e")){{
+    public static Item lead7 = new Item("lead7",Color.valueOf("695c86")){{
         hardness = 1+7;
         cost = 0.7f;
     }};
-    public static Item lead8 = new Item("lead8",Color.valueOf("211441")){{
+    public static Item lead8 = new Item("lead8",Color.valueOf("645781")){{
         hardness = 1+8;
         cost = 0.7f;
     }};
-    public static Item lead9 = new Item("lead9",Color.valueOf("180d34")){{
+    public static Item lead9 = new Item("lead9",Color.valueOf("5f527c")){{
         hardness = 1+9;
         cost = 0.7f;
     }};
 
     //sand
-    public static Item sand1 = new Item("sand1",Color.valueOf("eaba8f")){{
+    public static Item sand1 = new Item("sand1",Color.valueOf("f2c69f")){{
         lowPriority = true;
         buildable = false;}};
-    public static Item sand2 = new Item("sand2",Color.valueOf("ddaa7c")){{
+    public static Item sand2 = new Item("sand2",Color.valueOf("edc19a")){{
         lowPriority = true;
         buildable = false;}};
-    public static Item sand3 = new Item("sand3",Color.valueOf("d09a6a")){{
+    public static Item sand3 = new Item("sand3",Color.valueOf("e8bc95")){{
         lowPriority = true;
         buildable = false;}};
-    public static Item sand4 = new Item("sand4",Color.valueOf("c38b59")){{
+    public static Item sand4 = new Item("sand4",Color.valueOf("e3b790")){{
         lowPriority = true;
         buildable = false;}};
-    public static Item sand5 = new Item("sand5",Color.valueOf("b67d4a")){{
+    public static Item sand5 = new Item("sand5",Color.valueOf("deb28b")){{
         lowPriority = true;
         buildable = false;}};
-    public static Item sand6 = new Item("sand6",Color.valueOf("a96f3c")){{
+    public static Item sand6 = new Item("sand6",Color.valueOf("d9ad86")){{
         lowPriority = true;
         buildable = false;}};
-    public static Item sand7 = new Item("sand7",Color.valueOf("9c622f")){{
+    public static Item sand7 = new Item("sand7",Color.valueOf("d4a881")){{
         lowPriority = true;
         buildable = false;}};
-    public static Item sand8 = new Item("sand8",Color.valueOf("8f5623")){{
+    public static Item sand8 = new Item("sand8",Color.valueOf("cfa37c")){{
         lowPriority = true;
         buildable = false;}};
-    public static Item sand9 = new Item("sand9",Color.valueOf("824a19")){{
+    public static Item sand9 = new Item("sand9",Color.valueOf("ca9e77")){{
         lowPriority = true;
         buildable = false;}};
 
     //titanium
-    public static Item titanium1 = new Item("titanium1",Color.valueOf("7e8dda")){{
+    public static Item titanium1 = new Item("titanium1",Color.valueOf("889cde")){{
         hardness = 3+1;
         cost = 1f;
     }};
-    public static Item titanium2 = new Item("titanium2",Color.valueOf("6c7ccd")){{
+    public static Item titanium2 = new Item("titanium2",Color.valueOf("8397d9")){{
         hardness = 3+2;
         cost = 1f;
     }};
-    public static Item titanium3 = new Item("titanium3",Color.valueOf("5b6cc0")){{
+    public static Item titanium3 = new Item("titanium3",Color.valueOf("7e92d4")){{
         hardness = 3+3;
         cost = 1f;
     }};
-    public static Item titanium4 = new Item("titanium4",Color.valueOf("4b5db3")){{
+    public static Item titanium4 = new Item("titanium4",Color.valueOf("798dcf")){{
         hardness = 3+4;
         cost = 1f;
     }};
-    public static Item titanium5 = new Item("titanium5",Color.valueOf("3d4fa6")){{
+    public static Item titanium5 = new Item("titanium5",Color.valueOf("7488ca")){{
         hardness = 3+5;
         cost = 1f;
     }};
-    public static Item titanium6 = new Item("titanium6",Color.valueOf("304299")){{
+    public static Item titanium6 = new Item("titanium6",Color.valueOf("6f83c5")){{
         hardness = 3+6;
         cost = 1f;
     }};
-    public static Item titanium7 = new Item("titanium7",Color.valueOf("24368c")){{
+    public static Item titanium7 = new Item("titanium7",Color.valueOf("6a7ec0")){{
         hardness = 3+7;
         cost = 1f;
     }};
-    public static Item titanium8 = new Item("titanium8",Color.valueOf("1a2b7f")){{
+    public static Item titanium8 = new Item("titanium8",Color.valueOf("6579bb")){{
         hardness = 3+8;
         cost = 1f;
     }};
-    public static Item titanium9 = new Item("titanium9",Color.valueOf("112172")){{
+    public static Item titanium9 = new Item("titanium9",Color.valueOf("6074b6")){{
         hardness = 3+9;
         cost = 1f;
     }};
 
 
     //metaglass
-    public static Item metaglass1 = new Item("metaglass1",Color.valueOf("dfe2e8")){{
+    public static Item metaglass1 = new Item("metaglass1",Color.valueOf("e6e9f0")){{
         cost = 1.5f;
     }};
-    public static Item metaglass2 = new Item("metaglass2",Color.valueOf("d3d6dc")){{
+    public static Item metaglass2 = new Item("metaglass2",Color.valueOf("e1e4eb")){{
         cost = 1.5f;
     }};
-    public static Item metaglass3 = new Item("metaglass3",Color.valueOf("c8cbd1")){{
+    public static Item metaglass3 = new Item("metaglass3",Color.valueOf("dcdfe6")){{
         cost = 1.5f;
     }};
-    public static Item metaglass4 = new Item("metaglass4",Color.valueOf("bec0c6")){{
+    public static Item metaglass4 = new Item("metaglass4",Color.valueOf("d7dae1")){{
         cost = 1.5f;
     }};
-    public static Item metaglass5 = new Item("metaglass5",Color.valueOf("b4b6bc")){{
+    public static Item metaglass5 = new Item("metaglass5",Color.valueOf("d2d5dc")){{
         cost = 1.5f;
     }};
-    public static Item metaglass6 = new Item("metaglass6",Color.valueOf("abacb2")){{
+    public static Item metaglass6 = new Item("metaglass6",Color.valueOf("cdd0d7")){{
         cost = 1.5f;
     }};
-    public static Item metaglass7 = new Item("metaglass7",Color.valueOf("a2a3a9")){{
+    public static Item metaglass7 = new Item("metaglass7",Color.valueOf("c8cbd2")){{
         cost = 1.5f;
     }};
-    public static Item metaglass8 = new Item("metaglass8",Color.valueOf("999aa0")){{
+    public static Item metaglass8 = new Item("metaglass8",Color.valueOf("c3c6cd")){{
         cost = 1.5f;
     }};
-    public static Item metaglass9 = new Item("metaglass9",Color.valueOf("919298")){{
+    public static Item metaglass9 = new Item("metaglass9",Color.valueOf("bec1c8")){{
         cost = 1.5f;
     }};
 
 
     //scrap
-    public static Item scrap1 = new Item("scrap1",Color.valueOf("6a6a6a")){};
-    public static Item scrap2 = new Item("scrap2",Color.valueOf("5d5d5d")){};
-    public static Item scrap3 = new Item("scrap3",Color.valueOf("505050")){};
-    public static Item scrap4 = new Item("scrap4",Color.valueOf("434343")){};
-    public static Item scrap5 = new Item("scrap5",Color.valueOf("363636")){};
-    public static Item scrap6 = new Item("scrap6",Color.valueOf("292929")){};
-    public static Item scrap7 = new Item("scrap7",Color.valueOf("1c1c1c")){};
-    public static Item scrap8 = new Item("scrap8",Color.valueOf("191919")){};
-    public static Item scrap9 = new Item("scrap9",Color.valueOf("131313")){};
+    public static Item scrap1 = new Item("scrap1",Color.valueOf("727272")){};
+    public static Item scrap2 = new Item("scrap2",Color.valueOf("6d6d6d")){};
+    public static Item scrap3 = new Item("scrap3",Color.valueOf("686868")){};
+    public static Item scrap4 = new Item("scrap4",Color.valueOf("636363")){};
+    public static Item scrap5 = new Item("scrap5",Color.valueOf("5e5e5e")){};
+    public static Item scrap6 = new Item("scrap6",Color.valueOf("595959")){};
+    public static Item scrap7 = new Item("scrap7",Color.valueOf("545454")){};
+    public static Item scrap8 = new Item("scrap8",Color.valueOf("4f4f4f")){};
+    public static Item scrap9 = new Item("scrap9",Color.valueOf("4a4a4a")){};
 
     static int attributeBase = 10;
 
     //coal
-    public static Item coal1 = new Item("coal1",Color.valueOf("333333")){{
+    public static Item coal1 = new Item("coal1",Color.valueOf("2c2c2c")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,1));
         flammability = (float) (1f*Math.pow(attributeBase,1));
         hardness = 2+1;
         buildable = false;
     }};
-    public static Item coal2 = new Item("coal2",Color.valueOf("3f3f3f")){{
+    public static Item coal2 = new Item("coal2",Color.valueOf("313131")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,2));
         flammability = (float) (1f*Math.pow(attributeBase,2));
         hardness = 2+2;
         buildable = false;
     }};
-    public static Item coal3 = new Item("coal3",Color.valueOf("4b4b4b")){{
+    public static Item coal3 = new Item("coal3",Color.valueOf("363636")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,3));
         flammability = (float) (1f*Math.pow(attributeBase,3));
         hardness = 2+3;
         buildable = false;
     }};
-    public static Item coal4 = new Item("coal4",Color.valueOf("575757")){{
+    public static Item coal4 = new Item("coal4",Color.valueOf("3b3b3b")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,4));
         flammability = (float) (1f*Math.pow(attributeBase,4));
         hardness = 2+4;
         buildable = false;
     }};
-    public static Item coal5 = new Item("coal5",Color.valueOf("636363")){{
+    public static Item coal5 = new Item("coal5",Color.valueOf("404040")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,5));
         flammability = (float) (1f*Math.pow(attributeBase,5));
         hardness = 2+5;
         buildable = false;
     }};
-    public static Item coal6 = new Item("coal6",Color.valueOf("6f6f6f")){{
+    public static Item coal6 = new Item("coal6",Color.valueOf("454545")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,6));
         flammability = (float) (1f*Math.pow(attributeBase,6));
         hardness = 2+6;
         buildable = false;
     }};
-    public static Item coal7 = new Item("coal7",Color.valueOf("7b7b7b")){{
+    public static Item coal7 = new Item("coal7",Color.valueOf("4a4a4a")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,7));
         flammability = (float) (1f*Math.pow(attributeBase,7));
         hardness = 2+7;
         buildable = false;
     }};
-    public static Item coal8 = new Item("coal8",Color.valueOf("878787")){{
+    public static Item coal8 = new Item("coal8",Color.valueOf("4f4f4f")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,8));
         flammability = (float) (1f*Math.pow(attributeBase,8));
         hardness = 2+8;
         buildable = false;
     }};
-    public static Item coal9 = new Item("coal9",Color.valueOf("939393")){{
+    public static Item coal9 = new Item("coal9",Color.valueOf("545454")){{
         explosiveness = (float) (0.2f*Math.pow(attributeBase,9));
         flammability = (float) (1f*Math.pow(attributeBase,9));
         hardness = 2+9;
@@ -658,6 +741,8 @@ public class ECItems {
     }};
 
 
+
+ */
 
 
 

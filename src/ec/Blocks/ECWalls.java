@@ -1,10 +1,9 @@
 package ec.Blocks;
 
-import mindustry.content.Items;
 import mindustry.type.Category;
 import mindustry.type.Item;
-import mindustry.type.ItemStack;
 import mindustry.world.blocks.defense.Wall;
+
 
 import static mindustry.type.ItemStack.with;
 
@@ -16,5 +15,5 @@ public class ECWalls extends Wall {
         requirements(Category.defense, with(material, 6));
         health = (int) (EChealth*Math.pow(10,ECindex)*4);
         researchCostMultiplier = 0.1f;
-    }
+    };
 }

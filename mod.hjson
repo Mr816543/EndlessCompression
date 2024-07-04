@@ -10,6 +10,9 @@ author: "816543"
 #the fully qualified main class of the mod
 main: "ec.EndlessCompression"
 
+#the mod version
+version: 0.8.0
+
 #the mod description as seen in the mod dialog
 description: "将一些物质进行压缩
 
@@ -17,6 +20,17 @@ description: "将一些物质进行压缩
 无尽压缩Mod交流群:708031203
 
 更新日志
+v0.8.0
+1.重写了mod的底层代码
+2.现在原版全部的几乎所有非能量炮台都支持使用压缩物品作为弹药了
+3.现在原版的几乎所有小型墙都具有压缩版本了
+4.新增压缩水,矿渣,石油,冷冻液
+5.调整了部分因为使用压缩物品而产生的属性变化
+
+v0.7.0
+1.新增压缩机械钻头
+2.新增压缩传送带
+3.优化了压缩物品的贴图,现在多重压缩物品的贴图不会过于暗淡/明亮了
 
 v0.6.0
 1.原版基础物品全部可以压缩了
@@ -42,8 +56,6 @@ v0.5
 
 "
 
-#the mod version
-version: 0.6.0
 
 #the minimum game build required to run this mod
 minGameVersion: 145
