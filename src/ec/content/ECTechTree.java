@@ -585,15 +585,15 @@ public class ECTechTree {
             });
 
             //conveyor
-            node(ECBlocks.conveyor1, () -> {
-                node(ECBlocks.conveyor2, () -> {
-                    node(ECBlocks.conveyor3, () -> {
-                        node(ECBlocks.conveyor4, () -> {
-                            node(ECBlocks.conveyor5, () -> {
-                                node(ECBlocks.conveyor6, () -> {
-                                    node(ECBlocks.conveyor7, () -> {
-                                        node(ECBlocks.conveyor8, () -> {
-                                            node(ECBlocks.conveyor9, () -> {});
+            node(Vars.content.block("ec-conveyor1"), () -> {
+                node(Vars.content.block("ec-conveyor2"), () -> {
+                    node(Vars.content.block("ec-conveyor3"), () -> {
+                        node(Vars.content.block("ec-conveyor4"), () -> {
+                            node(Vars.content.block("ec-conveyor5"), () -> {
+                                node(Vars.content.block("ec-conveyor6"), () -> {
+                                    node(Vars.content.block("ec-conveyor7"), () -> {
+                                        node(Vars.content.block("ec-conveyor8"), () -> {
+                                            node(Vars.content.block("ec-conveyor9"), () -> {});
                                         });
                                     });
                                 });
@@ -604,15 +604,15 @@ public class ECTechTree {
             });
 
             //mechanicalDrill
-            node(ECBlocks.mechanicalDrill1, () -> {
-                node(ECBlocks.mechanicalDrill2, () -> {
-                    node(ECBlocks.mechanicalDrill3, () -> {
-                        node(ECBlocks.mechanicalDrill4, () -> {
-                            node(ECBlocks.mechanicalDrill5, () -> {
-                                node(ECBlocks.mechanicalDrill6, () -> {
-                                    node(ECBlocks.mechanicalDrill7, () -> {
-                                        node(ECBlocks.mechanicalDrill8, () -> {
-                                            node(ECBlocks.mechanicalDrill9, () -> {});
+            node(Vars.content.block("ec-mechanicalDrill1"), () -> {
+                node(Vars.content.block("ec-mechanicalDrill2"), () -> {
+                    node(Vars.content.block("ec-mechanicalDrill3"), () -> {
+                        node(Vars.content.block("ec-mechanicalDrill4"), () -> {
+                            node(Vars.content.block("ec-mechanicalDrill5"), () -> {
+                                node(Vars.content.block("ec-mechanicalDrill6"), () -> {
+                                    node(Vars.content.block("ec-mechanicalDrill7"), () -> {
+                                        node(Vars.content.block("ec-mechanicalDrill8"), () -> {
+                                            node(Vars.content.block("ec-mechanicalDrill9"), () -> {});
                                         });
                                     });
                                 });
@@ -621,6 +621,7 @@ public class ECTechTree {
                     });
                 });
             });
+
 
 
         });
