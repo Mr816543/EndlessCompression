@@ -584,6 +584,44 @@ public class ECTechTree {
                 });
             });
 
+            //conveyor
+            node(ECBlocks.conveyor1, () -> {
+                node(ECBlocks.conveyor2, () -> {
+                    node(ECBlocks.conveyor3, () -> {
+                        node(ECBlocks.conveyor4, () -> {
+                            node(ECBlocks.conveyor5, () -> {
+                                node(ECBlocks.conveyor6, () -> {
+                                    node(ECBlocks.conveyor7, () -> {
+                                        node(ECBlocks.conveyor8, () -> {
+                                            node(ECBlocks.conveyor9, () -> {});
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            //mechanicalDrill
+            node(ECBlocks.mechanicalDrill1, () -> {
+                node(ECBlocks.mechanicalDrill2, () -> {
+                    node(ECBlocks.mechanicalDrill3, () -> {
+                        node(ECBlocks.mechanicalDrill4, () -> {
+                            node(ECBlocks.mechanicalDrill5, () -> {
+                                node(ECBlocks.mechanicalDrill6, () -> {
+                                    node(ECBlocks.mechanicalDrill7, () -> {
+                                        node(ECBlocks.mechanicalDrill8, () -> {
+                                            node(ECBlocks.mechanicalDrill9, () -> {});
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
 
         });
     }
