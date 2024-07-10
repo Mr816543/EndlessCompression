@@ -584,16 +584,55 @@ public class ECTechTree {
                 });
             });
 
-            //conveyor
-            node(ECBlocks.conveyor1, () -> {
-                node(ECBlocks.conveyor2, () -> {
-                    node(ECBlocks.conveyor3, () -> {
-                        node(ECBlocks.conveyor4, () -> {
-                            node(ECBlocks.conveyor5, () -> {
-                                node(ECBlocks.conveyor6, () -> {
-                                    node(ECBlocks.conveyor7, () -> {
-                                        node(ECBlocks.conveyor8, () -> {
-                                            node(ECBlocks.conveyor9, () -> {});
+            //units
+            //dagger
+            node(Vars.content.unit("ec-dagger1"), () -> {
+                node(Vars.content.unit("ec-dagger2"), () -> {
+                    node(Vars.content.unit("ec-dagger3"), () -> {
+                        node(Vars.content.unit("ec-dagger4"), () -> {
+                            node(Vars.content.unit("ec-dagger5"), () -> {
+                                node(Vars.content.unit("ec-dagger6"), () -> {
+                                    node(Vars.content.unit("ec-dagger7"), () -> {
+                                        node(Vars.content.unit("ec-dagger8"), () -> {
+                                            node(Vars.content.unit("ec-dagger9"), () -> {});
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+
+                //nova
+                node(Vars.content.unit("ec-nova1"), () -> {
+                    node(Vars.content.unit("ec-nova2"), () -> {
+                        node(Vars.content.unit("ec-nova3"), () -> {
+                            node(Vars.content.unit("ec-nova4"), () -> {
+                                node(Vars.content.unit("ec-nova5"), () -> {
+                                    node(Vars.content.unit("ec-nova6"), () -> {
+                                        node(Vars.content.unit("ec-nova7"), () -> {
+                                            node(Vars.content.unit("ec-nova8"), () -> {
+                                                node(Vars.content.unit("ec-nova9"), () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+
+                //crawler
+                node(Vars.content.unit("ec-crawler1"), () -> {
+                    node(Vars.content.unit("ec-crawler2"), () -> {
+                        node(Vars.content.unit("ec-crawler3"), () -> {
+                            node(Vars.content.unit("ec-crawler4"), () -> {
+                                node(Vars.content.unit("ec-crawler5"), () -> {
+                                    node(Vars.content.unit("ec-crawler6"), () -> {
+                                        node(Vars.content.unit("ec-crawler7"), () -> {
+                                            node(Vars.content.unit("ec-crawler8"), () -> {
+                                                node(Vars.content.unit("ec-crawler9"), () -> {});
+                                            });
                                         });
                                     });
                                 });
@@ -603,24 +642,109 @@ public class ECTechTree {
                 });
             });
 
-            //mechanicalDrill
-            node(ECBlocks.mechanicalDrill1, () -> {
-                node(ECBlocks.mechanicalDrill2, () -> {
-                    node(ECBlocks.mechanicalDrill3, () -> {
-                        node(ECBlocks.mechanicalDrill4, () -> {
-                            node(ECBlocks.mechanicalDrill5, () -> {
-                                node(ECBlocks.mechanicalDrill6, () -> {
-                                    node(ECBlocks.mechanicalDrill7, () -> {
-                                        node(ECBlocks.mechanicalDrill8, () -> {
-                                            node(ECBlocks.mechanicalDrill9, () -> {});
-                                        });
-                                    });
-                                });
+
+            //production
+            node(Vars.content.block("ec-graphite-press"), () -> {
+                /*
+                node(Vars.content.block("ec-pneumaticDrill, Seq.with(new SectorComplete(frozenForest))"), () -> {
+                    node(Vars.content.block("ec-cultivator, Seq.with(new SectorComplete(biomassFacility))"), () -> {
+
+                    });
+
+                    node(Vars.content.block("ec-laserDrill"), () -> {
+                        node(Vars.content.block("ec-blastDrill, Seq.with(new SectorComplete(nuclearComplex))"), () -> {
+
+                        });
+
+                        node(Vars.content.block("ec-waterExtractor, Seq.with(new SectorComplete(saltFlats))"), () -> {
+                            node(Vars.content.block("ec-oilExtractor"), () -> {
+
                             });
                         });
                     });
                 });
+
+                 */
+                node(Vars.content.block("ec-pyratite-mixer"), () -> {
+                    node(Vars.content.block("ec-blast-mixer"), () -> {
+
+                    });
+                });
+
+                node(Vars.content.block("ec-silicon-smelter"), () -> {
+
+                    node(Vars.content.block("ec-spore-press"), () -> {
+                        node(Vars.content.block("ec-coal-centrifuge"), () -> {
+                            /*
+                            node(Vars.content.block("ec-multi-press"), () -> {
+                                node(Vars.content.block("ec-silicon-srucible"), () -> {
+
+                                });
+                            });
+                            */
+                        });
+
+                        node(Vars.content.block("ec-plastanium-compressor"), () -> {
+                            node(Vars.content.block("ec-phase-weaver"), () -> {
+
+                            });
+                        });
+                    });
+
+                    node(Vars.content.block("ec-kiln"), () -> {
+                        node(Vars.content.block("ec-pulverizer"), () -> {
+                            node(Vars.content.block("ec-melter"), () -> {
+                                node(Vars.content.block("ec-surge-smelter"), () -> {
+
+                                });
+
+                                node(Vars.content.block("ec-separator"), () -> {
+                                    node(Vars.content.block("ec-disassembler"), () -> {
+
+                                    });
+                                });
+
+                                node(Vars.content.block("ec-cryofluid-mixer"), () -> {
+
+                                });
+                            });
+                        });
+                    });
+                    /*
+                    //logic disabled until further notice
+                    node(Vars.content.block("ec-microProcessor"), () -> {
+                        node(Vars.content.block("ec-switchBlock"), () -> {
+                            node(Vars.content.block("ec-message"), () -> {
+                                node(Vars.content.block("ec-logicDisplay"), () -> {
+                                    node(Vars.content.block("ec-largeLogicDisplay"), () -> {
+
+                                    });
+                                });
+
+                                node(Vars.content.block("ec-memoryCell"), () -> {
+                                    node(Vars.content.block("ec-memoryBank"), () -> {
+
+                                    });
+                                });
+                            });
+
+                            node(Vars.content.block("ec-logicProcessor"), () -> {
+                                node(Vars.content.block("ec-hyperProcessor"), () -> {
+
+                                });
+                            });
+                        });
+                    });
+
+                    node(Vars.content.block("ec-illuminator"), () -> {
+
+                    });
+                    */
+                });
             });
+
+
+
 
 
         });

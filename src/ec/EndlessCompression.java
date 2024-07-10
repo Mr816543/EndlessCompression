@@ -30,17 +30,11 @@ public class EndlessCompression extends Mod{
     @Override
     public void loadContent(){
         Log.info("Loading some example content.");
-        ECItems ECItems = new ECItems();
         ECItems.load();
-        ECLiquids ECLiquids = new ECLiquids();
         ECLiquids.load();
-        //ECBulletType ECBulletType = new ECBulletType();
-        //ECBulletType.load();
-        ECBlocks ECBlocks = new ECBlocks();
         ECBlocks.load();
-        ECPlanets ECPlanets = new ECPlanets();
+        ECUnitTypes.load();
         ECPlanets.load();
-        ECTechTree ECTechTree = new ECTechTree();
         ECTechTree.load();
 
 

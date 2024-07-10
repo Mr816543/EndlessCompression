@@ -11,16 +11,20 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod version
-version: 0.8.0
+version: 0.8.5
 
 #the mod description as seen in the mod dialog
 description: "将一些物质进行压缩
 
+
 无尽压缩Mod交流群:708031203
 
-特别鸣谢:guiY归某人
-
 更新日志
+v0.8.5
+1.新增t1压缩地面单位
+2.新增了原版工厂的压缩版本
+3.微调了平衡性
+
 v0.8.0
 1.重写了mod的底层代码
 2.现在原版全部的几乎所有非能量炮台都支持使用压缩物品作为弹药了

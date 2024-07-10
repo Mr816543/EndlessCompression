@@ -8,9 +8,11 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.type.*;
+import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.production.Drill;
+import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.meta.Env;
 import multicraft.IOEntry;
 import multicraft.MultiCrafter;
@@ -69,93 +71,39 @@ public class load {
             craftEffect = Fx.pulverizeMedium;
             alwaysUnlocked = true;
 
-
-            resolvedRecipes = Seq.with(
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item(material), 9));}};
-                        output = new IOEntry() {{
-
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+"1"), 1));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+1), 9));}};
-                        output = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+2), 1));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+2), 9));}};
-                        output = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+3), 1));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+3), 9));}};
-                        output = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+4), 1));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+4), 9));}};
-                        output = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+5), 1));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+5), 9));}};
-                        output = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+6), 1));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+6), 9));}};
-                        output = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+7), 1));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+7), 9));}};
-                        output = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+8), 1));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+8), 9));}};
-                        output = new IOEntry() {{
-                            items = Seq.with(ItemStack.with(
-                                    Vars.content.item("ec-"+name0+9), 1));}};
-                        craftTime = makeTime;
-                    }}
-            );
-
+            resolvedRecipes = Seq.with();
         }};
+        for (int i = 1; i < 10;i++){
+            int num = i;
+            int num0 = num-1;
+            if (num==1) {
+                ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
+                    input = new IOEntry() {{
+                        items = Seq.with(ItemStack.with(
+                                Vars.content.item(material), 9));
+                    }};
+                    output = new IOEntry() {{
+
+                        items = Seq.with(ItemStack.with(
+                                Vars.content.item("ec-" + name0 + num), 1));
+                    }};
+                    craftTime = makeTime;
+                }});
+            }else {
+                ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
+                            input = new IOEntry() {{
+                                items = Seq.with(ItemStack.with(
+                                        Vars.content.item("ec-"+name0+num0), 9));}};
+                            output = new IOEntry() {{
+                                items = Seq.with(ItemStack.with(
+                                        Vars.content.item("ec-"+name0+num), 1));}};
+                            craftTime = makeTime;
+                        }});
+
+            }
+
+
+        };
 
     };
 
@@ -171,119 +119,41 @@ public class load {
             craftEffect = Fx.pulverizeMedium;
             alwaysUnlocked = true;
 
-
-            resolvedRecipes = Seq.with(
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid(name0),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+1),1
-                            ));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+1),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+2),1
-                            ));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+2),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+3),1
-                            ));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+3),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+4),1
-                            ));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+4),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+5),1
-                            ));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+5),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+6),1
-                            ));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+6),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+7),1
-                            ));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+7),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+8),1
-                            ));}};
-                        craftTime = makeTime;
-                    }},
-                    new Recipe() {{
-                        input = new IOEntry() {{
-
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+8),9
-                            ));}};
-                        output = new IOEntry() {{
-                            fluids = Seq.with(LiquidStack.with(
-                                    Vars.content.liquid("ec-"+name0+9),1
-                            ));}};
-                        craftTime = makeTime;
-                    }}
-            );
+            resolvedRecipes = Seq.with();
 
         }};
+
+        for (int i = 1; i < 10;i++){
+            int num = i;
+            int num0 = num-1;
+            if (num==1) {
+                ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                Vars.content.liquid(name0), 9));
+                    }};
+                    output = new IOEntry() {{
+
+                        fluids = Seq.with(LiquidStack.with(
+                                Vars.content.liquid("ec-" + name0 + num), 1));
+                    }};
+                    craftTime = makeTime;
+                }});
+            }else {
+                ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
+                    input = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                Vars.content.liquid("ec-"+name0+num0), 9));}};
+                    output = new IOEntry() {{
+                        fluids = Seq.with(LiquidStack.with(
+                                Vars.content.liquid("ec-"+name0+num), 1));}};
+                    craftTime = makeTime;
+                }});
+
+            }
+
+
+        };
 
     };
 
@@ -321,7 +191,7 @@ public class load {
     };
 
     public static void wall(String name,String material,int health0,int num){
-        int healthBase = 4;
+        int healthBase = 5;
         new Wall(name+"Wall"+num){{
             requirements(Category.defense, with(Vars.content.item("ec-"+material+num), 6));
             health = (int) (health0 * 4 * Math.pow(healthBase,num));
@@ -330,4 +200,6 @@ public class load {
         }};
 
     };
+
+
 }
