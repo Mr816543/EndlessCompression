@@ -9,7 +9,7 @@ import static mindustry.content.TechTree.node;
 
 public class ECTechTree {
     public static void load(){
-        ECPlanets.compress.techTree = nodeRoot("compress", Vars.content.block("ec-copperCompressor"), () -> {
+        Planets.serpulo.techTree = nodeRoot("compress", Vars.content.block("ec-copperCompressor"), () -> {
 
             //copper
             nodeProduce(Vars.content.item("ec-copper1"), () -> {
