@@ -182,7 +182,7 @@ public class load {
             requirements(Category.production, with(Vars.content.item("ec-"+material+num), 12));
             itemCapacity = (int) (10*Math.pow(drillBase,num));
             drillTime = (float) (drilltime/Math.pow(drillBase,num));
-            tier = 2;
+            tier = 2+num;
             envEnabled ^= Env.space;
 
             consumeLiquid(Liquids.water, 0.05f).boost();
