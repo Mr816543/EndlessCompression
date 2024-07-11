@@ -28,16 +28,17 @@ public class ECTechTree {
                         });
                     });
                 });
-            });
-            node(Vars.content.block("ec-copperWall1"), () -> {
-                node(Vars.content.block("ec-copperWall2"), () -> {
-                    node(Vars.content.block("ec-copperWall3"), () -> {
-                        node(Vars.content.block("ec-copperWall4"), () -> {
-                            node(Vars.content.block("ec-copperWall5"), () -> {
-                                node(Vars.content.block("ec-copperWall6"), () -> {
-                                    node(Vars.content.block("ec-copperWall7"), () -> {
-                                        node(Vars.content.block("ec-copperWall8"), () -> {
-                                            node(Vars.content.block("ec-copperWall9"), () -> {});
+                node(Vars.content.block("ec-copperMultiPress"), () -> {});
+                node(Vars.content.block("ec-copperWall1"), () -> {
+                    node(Vars.content.block("ec-copperWall2"), () -> {
+                        node(Vars.content.block("ec-copperWall3"), () -> {
+                            node(Vars.content.block("ec-copperWall4"), () -> {
+                                node(Vars.content.block("ec-copperWall5"), () -> {
+                                    node(Vars.content.block("ec-copperWall6"), () -> {
+                                        node(Vars.content.block("ec-copperWall7"), () -> {
+                                            node(Vars.content.block("ec-copperWall8"), () -> {
+                                                node(Vars.content.block("ec-copperWall9"), () -> {});
+                                            });
                                         });
                                     });
                                 });
@@ -66,6 +67,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-leadMultiPress"), () -> {});
             });
 
             //sand
@@ -87,6 +89,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-sandMultiPress"), () -> {});
             });
 
             //titanium
@@ -108,6 +111,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-titaniumMultiPress"), () -> {});
                 node(Vars.content.block("ec-titaniumWall1"), () -> {
                     node(Vars.content.block("ec-titaniumWall2"), () -> {
                         node(Vars.content.block("ec-titaniumWall3"), () -> {
@@ -163,6 +167,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-metaglassMultiPress"), () -> {});
             });
 
             //scrap
@@ -184,6 +189,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-scrapMultiPress"), () -> {});
             });
 
             //coal
@@ -205,6 +211,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-coalMultiPress"), () -> {});
             });
 
             //thorium
@@ -226,6 +233,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-thoriumMultiPress"), () -> {});
                 node(Vars.content.block("ec-thoriumWall1"), () -> {
                     node(Vars.content.block("ec-thoriumWall2"), () -> {
                         node(Vars.content.block("ec-thoriumWall3"), () -> {
@@ -265,6 +273,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-surgeAlloyMultiPress"), () -> {});
                 node(Vars.content.block("ec-surgeWall1"), () -> {
                     node(Vars.content.block("ec-surgeWall2"), () -> {
                         node(Vars.content.block("ec-surgeWall3"), () -> {
@@ -303,6 +312,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-phaseFabricMultiPress"), () -> {});
                 node(Vars.content.block("ec-phaseWall1"), () -> {
                     node(Vars.content.block("ec-phaseWall2"), () -> {
                         node(Vars.content.block("ec-phaseWall3"), () -> {
@@ -341,6 +351,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-graphiteMultiPress"), () -> {});
             });
 
             //silicon
@@ -362,6 +373,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-siliconMultiPress"), () -> {});
             });
 
             //pyratite
@@ -383,6 +395,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-pyratiteMultiPress"), () -> {});
             });
 
             //blastCompound
@@ -404,6 +417,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-blastCompoundMultiPress"), () -> {});
             });
 
             //sporePod
@@ -425,6 +439,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-sporePodMultiPress"), () -> {});
             });
 
             //plastanium
@@ -446,6 +461,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-plastaniumMultiPress"), () -> {});
                 node(Vars.content.block("ec-plastaniumWall1"), () -> {
                     node(Vars.content.block("ec-plastaniumWall2"), () -> {
                         node(Vars.content.block("ec-plastaniumWall3"), () -> {
@@ -484,6 +500,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-waterMultiPress"), () -> {});
             });
             //slag
             node(Vars.content.block("ec-slagCompressor"), () -> {
@@ -504,6 +521,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-slagMultiPress"), () -> {});
             });
             //oil
             node(Vars.content.block("ec-oilCompressor"), () -> {
@@ -524,6 +542,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-oilMultiPress"), () -> {});
             });
             //cryofluid
             node(Vars.content.block("ec-cryofluidCompressor"), () -> {
@@ -544,6 +563,7 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-cryofluidMultiPress"), () -> {});
             });
 
             //conveyor
@@ -556,6 +576,24 @@ public class ECTechTree {
                                     node(Vars.content.block("ec-conveyor7"), () -> {
                                         node(Vars.content.block("ec-conveyor8"), () -> {
                                             node(Vars.content.block("ec-conveyor9"), () -> {});
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+                //titanium-conveyor
+                node(Vars.content.block("ec-titanium-conveyor1"), () -> {
+                    node(Vars.content.block("ec-titanium-conveyor2"), () -> {
+                        node(Vars.content.block("ec-titanium-conveyor3"), () -> {
+                            node(Vars.content.block("ec-titanium-conveyor4"), () -> {
+                                node(Vars.content.block("ec-titanium-conveyor5"), () -> {
+                                    node(Vars.content.block("ec-titanium-conveyor6"), () -> {
+                                        node(Vars.content.block("ec-titanium-conveyor7"), () -> {
+                                            node(Vars.content.block("ec-titanium-conveyor8"), () -> {
+                                                node(Vars.content.block("ec-titanium-conveyor9"), () -> {});
+                                            });
                                         });
                                     });
                                 });

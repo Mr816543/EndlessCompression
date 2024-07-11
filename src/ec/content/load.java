@@ -2,6 +2,7 @@ package ec.content;
 
 import arc.graphics.Color;
 import arc.struct.Seq;
+import ec.AnyMtiCrafter;
 import ec.Blocks.ECWalls;
 import mindustry.Vars;
 import mindustry.content.Fx;
@@ -11,13 +12,19 @@ import mindustry.type.*;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.distribution.Conveyor;
+import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.consumers.ConsumePower;
+import mindustry.world.draw.DrawLiquidTile;
+import mindustry.world.draw.DrawMulti;
+import mindustry.world.draw.DrawRegion;
 import mindustry.world.meta.Env;
 import multicraft.IOEntry;
 import multicraft.MultiCrafter;
 import multicraft.Recipe;
 
+import static ec.Get.base;
 import static mindustry.content.Items.copper;
 import static mindustry.type.ItemStack.with;
 
@@ -59,11 +66,11 @@ public class load {
 
     };
 
-    public static void itemCompressor(String name0,String material){
+    public static void itemCompressor(String name0,String name1){
 
         float makeTime = 120f;
         new MultiCrafter(name0+"Compressor"){{
-            requirements(Category.crafting, with(Vars.content.item(material), 30));
+            requirements(Category.crafting, with(Vars.content.item("copper"), 30));
             size = 2;
             hasPower = false;
             hasLiquids = false;
@@ -80,7 +87,7 @@ public class load {
                 ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
                     input = new IOEntry() {{
                         items = Seq.with(ItemStack.with(
-                                Vars.content.item(material), 9));
+                                Vars.content.item(name1), 9));
                     }};
                     output = new IOEntry() {{
 
@@ -171,6 +178,20 @@ public class load {
         }};
 
     };
+    public static void titaniumConveyor(int num){
+        int health0 = 65;
+        int conveyorBase = 4;
+        new StackConveyor("titanium-conveyor"+num){{
+            requirements(Category.distribution, with(Vars.content.item("ec-"+"copper"+num), 1, Vars.content.item("ec-"+"lead"+num), 1, Vars.content.item("ec-"+"titanium"+num), 1));
+            health = (int) (health0*Math.pow(conveyorBase,num));
+            speed = 4.8f/ 60f;
+            itemCapacity = (int) ((11*Math.pow(conveyorBase,num))/4.8f);
+        }};
+
+
+
+
+    };
 
     public static void drill(String name,String material,int drilltime,int num){
 
@@ -198,6 +219,67 @@ public class load {
             researchCostMultiplier = 0.1f;
             envDisabled |= Env.scorching;
         }};
+
+    };
+
+    public static void multipress(String Item0, String Item1){
+
+        new AnyMtiCrafter(Item0+"MultiPress"){{
+            requirements(Category.crafting, with(Vars.content.item("ec-"+"copper"+1),100));
+            size = 3;
+            useBlockDrawer = false;
+            maxList = 5;
+            itemCapacity = ((int)Math.pow(9,9));
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+
+            for (int i = 1 ;i < 10;i++){
+                int num = i;
+                products.add(
+                    new Formula(){{
+                        consumeItem(Vars.content.item(Item1), (int) Math.pow(9,num));
+                        outputItems = ItemStack.with(Vars.content.item("ec-"+Item0+num),1);
+                        int timeBase = num*num ;
+                        craftTime = 120f*timeBase;
+                        craftEffect = Fx.pulverizeMedium;
+                        consumePower(108f/60);
+                    }}
+                );
+            };
+
+        }};
+
+
+    };
+
+    public static void liquidmultipress(String liquid0){
+
+        new AnyMtiCrafter(liquid0+"MultiPress"){{
+            requirements(Category.crafting, with(Vars.content.item("ec-"+"copper"+1),100));
+            size = 3;
+            useBlockDrawer = false;
+            maxList = 5;
+            liquidCapacity = ((int)Math.pow(9,9));
+            hasLiquids = true;
+            hasPower = true;
+
+            for (int i = 1 ;i < 10;i++){
+                int num = i;
+                products.add(
+                        new Formula(){{
+                            consumeLiquid(Vars.content.liquid(liquid0), (float) (Math.pow(9,num)/60));
+                            outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+liquid0+num),1/60);
+                            int timeBase = num*num ;
+                            craftTime = 120f*timeBase;
+                            craftEffect = Fx.pulverizeMedium;
+                            consumePower(108f/60);
+                        }}
+                );
+            };
+
+        }};
+
 
     };
 

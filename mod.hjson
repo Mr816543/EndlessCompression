@@ -11,7 +11,7 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod version
-version: 0.8.5
+version: 0.8.7
 
 #the mod description as seen in the mod dialog
 description: "将一些物质进行压缩
@@ -20,6 +20,14 @@ description: "将一些物质进行压缩
 无尽压缩Mod交流群:708031203
 
 更新日志
+v0.9.0
+1.新增多重压缩器,能够直接将原版物品压缩为多重压缩的物品
+2.新增压缩钛传送带
+
+
+v0.8.7
+1.现在压缩机械钻头能够提升挖掘等级了
+
 v0.8.6
 1.修复了科技树无法解锁的问题
 

@@ -3,6 +3,7 @@ package ec.content;
 
 import arc.graphics.Color;
 import arc.struct.Seq;
+import ec.AnyMtiCrafter;
 import ec.Blocks.*;
 import mindustry.Vars;
 import mindustry.content.*;
@@ -27,6 +28,7 @@ import mindustry.world.draw.*;
 import mindustry.world.meta.Env;
 import multicraft.*;
 
+import static ec.Get.base;
 import static ec.content.ECItems.*;
 import static mindustry.type.ItemStack.with;
 import static mindustry.world.meta.StatValues.ammo;
@@ -51,12 +53,17 @@ public class ECBlocks {
         };
         for(int i = 0 ; i < item0.length ; i++ ){
             load.itemCompressor(item0[i],item1[i]);
+            load.multipress(item0[i],item1[i]);
         };
 
         String[] liquid0 = {"water","slag","oil","cryofluid"};
         for (int i = 0 ; i < liquid0.length ; i++){
             load.liquidCompressor(liquid0[i],"copper");
+            load.liquidmultipress(liquid0[i]);
         };
+
+
+
 
 
 
@@ -591,7 +598,6 @@ public class ECBlocks {
                 layer = Layer.bullet - 2f;
             }});
 
-
             ((ItemTurret) Blocks.swarmer).ammoTypes.put(Vars.content.item("ec-"+"blastCompound"+num), new MissileBulletType(3.7f, (float) (10*Math.pow(damageBase,num))){{
                 width = (float) (8f*Math.pow(sizeBase,num));
                 height = (float) (8f*Math.pow(sizeBase,num));
@@ -887,7 +893,7 @@ public class ECBlocks {
                 smokeEffect = Fx.smokeCloud;
                 pointEffect = Fx.instTrail;
                 despawnEffect = Fx.instBomb;
-                pointEffectSpace = (float) (20f*Math.pow(damageBase,num));
+                pointEffectSpace = (float) (20f*Math.pow(sizeBase,num));
                 damage = (float) (1350*Math.pow(damageBase,num));
                 buildingDamageMultiplier = (float) (1-0.8f/Math.pow(damageBase,num));
                 //maxDamageFraction = 0.6f;
@@ -937,6 +943,7 @@ public class ECBlocks {
 
 
             load.conveyor("","copper",4.2f,num);
+            load.titaniumConveyor(num);
 
             load.drill("mechanicalDrill","copper",600,num);
 
