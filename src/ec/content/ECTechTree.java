@@ -620,6 +620,45 @@ public class ECTechTree {
                         });
                     });
                 });
+                node(Vars.content.block("ec-combustion-generator"), () -> {
+                    //power-node
+                    node(Vars.content.block("ec-power-node1"), () -> {
+                        node(Vars.content.block("ec-power-node2"), () -> {
+                            node(Vars.content.block("ec-power-node3"), () -> {
+                                node(Vars.content.block("ec-power-node4"), () -> {
+                                    node(Vars.content.block("ec-power-node5"), () -> {
+                                        node(Vars.content.block("ec-power-node6"), () -> {
+                                            node(Vars.content.block("ec-power-node7"), () -> {
+                                                node(Vars.content.block("ec-power-node8"), () -> {
+                                                    node(Vars.content.block("ec-power-node9"), () -> {});
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                        //battery
+                        node(Vars.content.block("ec-battery1"), () -> {
+                            node(Vars.content.block("ec-battery2"), () -> {
+                                node(Vars.content.block("ec-battery3"), () -> {
+                                    node(Vars.content.block("ec-battery4"), () -> {
+                                        node(Vars.content.block("ec-battery5"), () -> {
+                                            node(Vars.content.block("ec-battery6"), () -> {
+                                                node(Vars.content.block("ec-battery7"), () -> {
+                                                    node(Vars.content.block("ec-battery8"), () -> {
+                                                        node(Vars.content.block("ec-battery9"), () -> {});
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                        node(Vars.content.block("ec-steam-generator"), () -> {});
+                    });
+                });
             });
 
             //units

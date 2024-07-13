@@ -11,7 +11,7 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod version
-version: 0.9.0
+version: 0.9.1
 
 #the mod description as seen in the mod dialog
 description: "将一些物质进行压缩
@@ -20,14 +20,16 @@ description: "将一些物质进行压缩
 无尽压缩Mod交流群:708031203
 
 更新日志
-<<<<<<< HEAD
+v0.9.1
+1.使用了新的多合成工厂组件,现在不再需要多合成前置mod了
+(感谢来自guiY归某人大佬的帮助)
+2.略微加快了压缩器的合成速度
+3.新增多重压缩火力发电机,涡轮发电机,电力节点,电池
+
 v0.9.0
 1.新增多重压缩器,能够直接将原版物品压缩为多重压缩的物品
 2.新增压缩钛传送带
 
-
-=======
->>>>>>> origin/master
 v0.8.7
 1.现在压缩机械钻头能够提升挖掘等级了
 
@@ -82,4 +84,4 @@ minGameVersion: 145
 #this is a java mod
 java: true
 
-dependencies: ["multi-crafter"]
+dependencies: []

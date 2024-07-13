@@ -32,8 +32,8 @@ public class EndlessCompression extends Mod{
         Log.info("Loading some example content.");
         ECItems.load();
         ECLiquids.load();
-        ECBlocks.load();
         ECUnitTypes.load();
+        ECBlocks.load();
         ECPlanets.load();
         ECTechTree.load();
 

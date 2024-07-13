@@ -23,10 +23,16 @@ import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.distribution.*;
+import mindustry.world.blocks.power.Battery;
+import mindustry.world.blocks.power.ConsumeGenerator;
+import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.production.*;
+import mindustry.world.consumers.ConsumeItemExplode;
+import mindustry.world.consumers.ConsumeItemFlammable;
 import mindustry.world.draw.*;
 import mindustry.world.meta.Env;
 import multicraft.*;
+import ec.world.*;
 
 import static ec.Get.base;
 import static ec.content.ECItems.*;
@@ -67,15 +73,14 @@ public class ECBlocks {
 
 
 
-
-        new MultiCrafter("graphite-press"){{
+        //原版工厂
+        new AnyMtiCrafter("graphite-press"){{
             requirements(Category.crafting, with(Items.copper, 75, Items.lead, 30));
             craftEffect = Fx.pulverizeMedium;
             size = 2;
             hasItems = true;
-            resolvedRecipes = Seq.with();
         }};
-        new MultiCrafter("silicon-smelter"){{
+        new AnyMtiCrafter("silicon-smelter"){{
             requirements(Category.crafting, with(Items.copper, 30, Items.lead, 25));
             craftEffect = Fx.smeltsmoke;
             size = 2;
@@ -84,9 +89,9 @@ public class ECBlocks {
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffef99")));
             ambientSound = Sounds.smelter;
             ambientSoundVolume = 0.07f;
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("kiln"){{
+        new AnyMtiCrafter("kiln"){{
             requirements(Category.crafting, with(Items.copper, 60, Items.graphite, 30, Items.lead, 30));
             craftEffect = Fx.smeltsmoke;
             size = 2;
@@ -94,9 +99,9 @@ public class ECBlocks {
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffc099")));
             ambientSound = Sounds.smelter;
             ambientSoundVolume = 0.07f;
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("plastanium-compressor"){{
+        new AnyMtiCrafter("plastanium-compressor"){{
             requirements(Category.crafting, with(Items.silicon, 80, Items.lead, 115, Items.graphite, 60, Items.titanium, 80));
             hasItems = true;
             liquidCapacity = 60f;
@@ -106,9 +111,9 @@ public class ECBlocks {
             craftEffect = Fx.formsmoke;
             updateEffect = Fx.plasticburn;
             drawer = new DrawMulti(new DrawDefault(), new DrawFade());
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("phase-weaver"){{
+        new AnyMtiCrafter("phase-weaver"){{
             requirements(Category.crafting, with(Items.silicon, 130, Items.lead, 120, Items.thorium, 75));
             craftEffect = Fx.smeltsmoke;
             size = 2;
@@ -117,19 +122,19 @@ public class ECBlocks {
             envEnabled |= Env.space;
             ambientSound = Sounds.techloop;
             ambientSoundVolume = 0.02f;
-            resolvedRecipes = Seq.with();
+
             itemCapacity = 20;
         }};
-        new MultiCrafter("surge-smelter"){{
+        new AnyMtiCrafter("surge-smelter"){{
             requirements(Category.crafting, with(Items.silicon, 80, Items.lead, 80, Items.thorium, 70));
             craftEffect = Fx.smeltsmoke;
             size = 3;
             hasPower = true;
             itemCapacity = 20;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("cryofluid-mixer"){{
+        new AnyMtiCrafter("cryofluid-mixer"){{
             requirements(Category.crafting, with(Items.lead, 65, Items.silicon, 40, Items.titanium, 60));
             size = 2;
             hasPower = true;
@@ -142,47 +147,47 @@ public class ECBlocks {
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.water), new DrawLiquidTile(Liquids.cryofluid){{drawLiquidLight = true;}}, new DrawDefault());
             liquidCapacity = 24f;
             lightLiquid = Liquids.cryofluid;
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("pyratite-mixer"){{
+        new AnyMtiCrafter("pyratite-mixer"){{
             requirements(Category.crafting, with(Items.copper, 50, Items.lead, 25));
             hasItems = true;
             hasPower = true;
             envEnabled |= Env.space;
-            resolvedRecipes = Seq.with();
+
             size = 2;
         }};
-        new MultiCrafter("blast-mixer"){{
+        new AnyMtiCrafter("blast-mixer"){{
             requirements(Category.crafting, with(Items.lead, 30, Items.titanium, 20));
             hasItems = true;
             hasPower = true;
             size = 2;
             envEnabled |= Env.space;
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("melter"){{
+        new AnyMtiCrafter("melter"){{
             requirements(Category.crafting, with(Items.copper, 30, Items.lead, 35, Items.graphite, 45));
             health = 200;
             hasLiquids = hasPower = true;
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawDefault());
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("separator"){{
+        new AnyMtiCrafter("separator"){{
             requirements(Category.crafting, with(Items.copper, 30, Items.titanium, 25));
             hasPower = true;
             size = 2;
-            resolvedRecipes = Seq.with();
+
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
         }};
-        new MultiCrafter("disassembler"){{
+        new AnyMtiCrafter("disassembler"){{
             requirements(Category.crafting, with(Items.plastanium, 40, Items.titanium, 100, Items.silicon, 150, Items.thorium, 80));
             hasPower = true;
             size = 3;
             itemCapacity = 20;
-            resolvedRecipes = Seq.with();
+
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
         }};
-        new MultiCrafter("spore-press"){{
+        new AnyMtiCrafter("spore-press"){{
             requirements(Category.crafting, with(Items.lead, 35, Items.silicon, 30));
             liquidCapacity = 60f;
             size = 2;
@@ -199,9 +204,9 @@ public class ECBlocks {
                     new DrawLiquidRegion(),
                     new DrawRegion("-top")
             );
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("pulverizer"){{
+        new AnyMtiCrafter("pulverizer"){{
             requirements(Category.crafting, with(Items.copper, 30, Items.lead, 25));
             craftEffect = Fx.pulverize;
             updateEffect = Fx.pulverizeSmall;
@@ -212,237 +217,284 @@ public class ECBlocks {
             }}, new DrawRegion("-top"));
             ambientSound = Sounds.grinding;
             ambientSoundVolume = 0.025f;
-            resolvedRecipes = Seq.with();
+
         }};
-        new MultiCrafter("coal-centrifuge"){{
+        new AnyMtiCrafter("coal-centrifuge"){{
             requirements(Category.crafting, with(Items.titanium, 20, Items.graphite, 40, Items.lead, 30));
             craftEffect = Fx.coalSmeltsmoke;
             size = 2;
             hasPower = hasItems = hasLiquids = true;
             rotateDraw = false;
-            resolvedRecipes = Seq.with();
+
         }};
+
+
 
         for (int i = 1;i<10;i++){
             int num = i;
-            ((MultiCrafter)Vars.content.block("ec-"+"graphite-press")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"coal"+num), 2));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"graphite"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"graphite-press")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItem(Vars.content.item("ec-"+"coal"+num),2);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"graphite"+num),1);
                 craftTime = 90f;
+                craftEffect = Fx.pulverizeMedium;
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"silicon-smelter")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*0.5f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"coal"+num), 2,
-                            Vars.content.item("ec-"+"sand"+num), 2
-                    ));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"silicon"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"silicon-smelter")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItems(with(Vars.content.item("ec-"+"coal"+num),1,Vars.content.item("ec-"+"sand"+num),2));
+                consumePower(0.5f);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"silicon"+num),1);
                 craftTime = 40f;
+                craftEffect = Fx.smeltsmoke;
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"kiln")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*0.6f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"lead"+num), 1,
-                            Vars.content.item("ec-"+"sand"+num), 1
-                    ));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"metaglass"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"kiln")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItems(with(Vars.content.item("ec-"+"lead"+num),1,Vars.content.item("ec-"+"sand"+num),1));
+                consumePower(0.6f);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"metaglass"+num),1);
                 craftTime = 30f;
+                drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffc099")));
+
+                craftEffect = Fx.smeltsmoke;
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"plastanium-compressor")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*3f;
-                    fluids = Seq.with(LiquidStack.with(
-                            Vars.content.liquid("ec-"+"oil"+num),0.25f
-                    ));
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"titanium"+num), 2
-                    ));
-                }};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"plastanium"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"plastanium-compressor")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItem(Vars.content.item("ec-"+"titanium"+num),2);
+                consumePower(3f);
+                consumeLiquid(Vars.content.liquid("ec-"+"oil"+num),0.25f);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"plastanium"+num),1);
+                craftEffect = Fx.formsmoke;
+                updateEffect = Fx.plasticburn;
+                drawer = new DrawMulti(new DrawDefault(), new DrawFade());
                 craftTime = 60f;
+                craftEffect = Fx.pulverizeMedium;
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"phase-weaver")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*5f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"thorium"+num), 4,
-                            Vars.content.item("ec-"+"sand"+num), 10
-                    ));
-                }};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"phaseFabric"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"phase-weaver")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItems(with(Vars.content.item("ec-"+"thorium"+num),4,Vars.content.item("ec-"+"sand"+num),10));
+                consumePower(5f);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"phaseFabric"+num),1);
                 craftTime = 120f;
+                drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawWeave(), new DrawDefault());
+                craftEffect = Fx.smeltsmoke;
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"surge-smelter")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*4f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"copper"+num), 3,
-                            Vars.content.item("ec-"+"lead"+num), 4,
-                            Vars.content.item("ec-"+"titanium"+num), 2,
-                            Vars.content.item("ec-"+"silicon"+num), 3
-                    ));
-                }};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"surgeAlloy"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"surge-smelter")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItems(with(
+                        Vars.content.item("ec-"+"copper"+num),3,
+                        Vars.content.item("ec-"+"lead"+num),4,
+                        Vars.content.item("ec-"+"titanium"+num),2,
+                        Vars.content.item("ec-"+"silicon"+num),3));
+                consumePower(4f);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"surgeAlloy"+num),1);
+                drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
                 craftTime = 75f;
+                craftEffect = Fx.smeltsmoke;
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"cryofluid-mixer")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*1f;
-                    fluids = Seq.with(LiquidStack.with(
-                            Vars.content.liquid("ec-"+"water"+num), 12f/60
-                    ));
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"titanium"+num), 1
-                    ));
-                }};
-                output = new IOEntry() {{
-                    fluids = Seq.with(LiquidStack.with(
-                            Vars.content.liquid("ec-" + "cryofluid" + num), 12f / 60
-                    ));
-                    craftTime = 120f;
-                }};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"cryofluid-mixer")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItem(Vars.content.item("ec-"+"titanium"+num),1);
+                consumeLiquid(Vars.content.liquid("ec-"+"water"+num),12f/60);
+                outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+"cryofluid"+num),12f/60);
+                craftTime = 120f;
+
+                consumePower(1f);
+                craftEffect = Fx.pulverizeMedium;
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"pyratite-mixer")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*0.2f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"coal"+num), 1,
-                            Vars.content.item("ec-"+"lead"+num), 2,
-                            Vars.content.item("ec-"+"sand"+num), 2
-                    ));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"pyratite"+num), 1));}};
-                craftTime = 80;
-            }});
-            ((MultiCrafter)Vars.content.block("ec-"+"blast-mixer")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*0.4f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"pyratite"+num), 1,
-                            Vars.content.item("ec-"+"sporePod"+num), 1
-                    ));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"blastCompound"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"pyratite-mixer")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItems(with(
+                        Vars.content.item("ec-"+"coal"+num),1,
+                        Vars.content.item("ec-"+"lead"+num),2,
+                        Vars.content.item("ec-"+"sand"+num),2));
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"pyratite"+num),1);
                 craftTime = 80f;
+                craftEffect = Fx.pulverizeMedium;
+
+                consumePower(0.20f);
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"melter")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*1f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"scrap"+num), 1
-                    ));}};
-                output = new IOEntry() {{
-                    fluids = Seq.with(LiquidStack.with(
-                            Vars.content.liquid("ec-"+"scrap"+num), 12f/60));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"blast-mixer")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItems(with(
+                        Vars.content.item("ec-"+"pyratite"+num),1,
+                        Vars.content.item("ec-"+"sporePod"+num),1));
+
+                consumePower(0.40f);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"blastCompound"+num),1);
+                craftTime = 80f;
+                craftEffect = Fx.pulverizeMedium;
+            }});
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"melter")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItem(Vars.content.item("ec-"+"scrap"+num),1);
+                consumePower(1f);
+                outputLiquids =LiquidStack.with(Vars.content.liquid("ec-"+"slag"+num),12f/60);
                 craftTime = 10f;
+                craftEffect = Fx.pulverizeMedium;
+
+                drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawDefault());
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"separator")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*1.1f;
-                    fluids = Seq.with(LiquidStack.with(
-                            Vars.content.liquid("ec-"+"slag"+num), 4f*12/60
-                    ));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"copper"+num), 5,
-                            Vars.content.item("ec-"+"lead"+num), 3,
-                            Vars.content.item("ec-"+"graphite"+num), 2,
-                            Vars.content.item("ec-"+"titanium"+num), 2
-                    ));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"separator")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeLiquid(Vars.content.liquid("ec-"+"slag"+num),4f*12/60);
+                consumePower(1.1f);
+                outputItems = ItemStack.with(
+                        Vars.content.item("ec-"+"copper"+num),5,
+                        Vars.content.item("ec-"+"lead"+num),3,
+                        Vars.content.item("ec-"+"graphite"+num),2,
+                        Vars.content.item("ec-"+"titanium"+num),2);
                 craftTime = 35f*12;
+                drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"disassembler")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*4f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"scrap"+num), 1*5
-                    ));
-                    fluids = Seq.with(LiquidStack.with(
-                            Vars.content.liquid("ec-"+"slag"+num), 0.12f*5
-                    ));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"sand"+num), 2,
-                            Vars.content.item("ec-"+"graphite"+num), 1,
-                            Vars.content.item("ec-"+"titanium"+num), 1,
-                            Vars.content.item("ec-"+"thorium"+num), 1
-                    ));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"disassembler")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItem(Vars.content.item("ec-"+"scrap"+num),1);
+                consumeLiquid(Vars.content.liquid("ec-"+"slag"+num),0.12f*5);
+                consumePower(4f);
+                outputItems = ItemStack.with(
+                        Vars.content.item("ec-"+"sand"+num),2,
+                        Vars.content.item("ec-"+"graphite"+num),1,
+                        Vars.content.item("ec-"+"titanium"+num),1,
+                        Vars.content.item("ec-"+"thorium"+num),1);
                 craftTime = 15f*5;
+                drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"spore-press")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*0.7f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"sporePod"+num), 1
-                    ));}};
-                output = new IOEntry() {{
-                    fluids = Seq.with(LiquidStack.with(
-                            Vars.content.liquid("ec-"+"oil"+num), 18f/60));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"spore-press")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItem(Vars.content.item("ec-"+"sporePod"+num),1);
+                consumePower(0.7f);
+                outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+"oil"+num),18f/60f);
                 craftTime = 20f;
+                craftEffect = Fx.none;
+                drawer = new DrawMulti(
+                        new DrawRegion("-bottom"),
+                        new DrawPistons(){{
+                            sinMag = 1f;
+                        }},
+                        new DrawDefault(),
+                        new DrawLiquidRegion(),
+                        new DrawRegion("-top")
+                );
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"pulverizer")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*0.5f;
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"scrap"+num), 1
-                    ));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"sand"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"pulverizer")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeItem(Vars.content.item("ec-"+"scrap"+num),1);
+                consumePower(0.50f);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"sand"+num),1);
                 craftTime = 40f;
+                updateEffect = Fx.pulverizeSmall;
+                craftEffect = Fx.pulverize;
+                drawer = new DrawMulti(new DrawDefault(), new DrawRegion("-rotator"){{
+                    spinSprite = true;
+                    rotateSpeed = 2f;
+                }}, new DrawRegion("-top"));
             }});
-            ((MultiCrafter)Vars.content.block("ec-"+"coal-centrifuge")).resolvedRecipes.add(new Recipe() {{
-                input = new IOEntry() {{
-                    power = 60f*0.7f;
-                    fluids = Seq.with(LiquidStack.with(
-                            Vars.content.liquid("ec-"+"oil"+num), 0.1f
-                    ));}};
-                output = new IOEntry() {{
-                    items = Seq.with(ItemStack.with(
-                            Vars.content.item("ec-"+"coal"+num), 1));}};
+            ((AnyMtiCrafter)Vars.content.block("ec-"+"coal-centrifuge")).products.add(new AnyMtiCrafter.Formula(){{
+                consumeLiquid(Vars.content.liquid("ec-"+"oil"+num),0.1f);
+                consumePower(0.7f);
+                outputItems = ItemStack.with(Vars.content.item("ec-"+"coal"+num),1);
                 craftTime = 30f;
+                craftEffect = Fx.coalSmeltsmoke;
             }});
-
-
-
-
-
-
-
 
         };
 
+        //原版电力
+        int powerBase = 5 ;
+        double sizeBase = 1.4;
+        for (int i = 1 ; i < 10 ; i++){
+            int num = i ;
+            new PowerNode("power-node"+num){{
+                double healthBase = 5;
+                health = (int) (40*Math.pow(healthBase,num));
+                requirements(Category.power, with(Vars.content.item("ec-"+"copper"+num), 1, Vars.content.item("ec-"+"lead"+num), 3));
+                maxNodes = (int) (10*Math.pow(powerBase,num));
+                laserRange = (float) (6*Math.pow(sizeBase,num));
+            }};
+            new Battery("battery"+num){{
+                double healthBase = 5;
+                int batteryBase = 5;
+                health = (int) (40*Math.pow(healthBase,num));
+                requirements(Category.power, with(Vars.content.item("ec-"+"copper"+num), 5, Vars.content.item("ec-"+"lead"+num), 20));
+                consumePowerBuffered((float) (4000f*Math.pow(batteryBase,num)));
+                baseExplosiveness = (float) (1f*Math.pow(batteryBase,num));
+            }};
+        };
+        /*
+        new ConsumeGenerator("power-producer"){{
+            requirements(Category.power, with(
+                    Vars.content.item("ec-"+"titanium"+1), 20,
+                    Vars.content.item("ec-"+"lead"+1), 50,
+                    Vars.content.item("ec-"+"silicon"+1), 30));
+            size = 3;
+            baseExplosiveness = 5f;
+            powerProduction = 1f;
+            itemDuration = 60f;
+
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.03f;
+            generateEffect = Fx.generatespark;
+            explosionDamage = 0 ;
 
 
+            consume(new ConsumeItemcharge(1f));
 
 
+            ConsumeItemExplode explode = new ConsumeItemExplode();
+            explode.baseChance = -1;
+            consume(explode);
+
+            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+        }};
+
+         */
+        new ConsumeGenerator("combustion-generator"){{
+            requirements(Category.power, with(Vars.content.item("ec-"+"copper"+1), 25, Vars.content.item("ec-"+"lead"+1), 15));
+            powerProduction = 2.5f;
+            itemDuration = 120f;
+
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.03f;
+            generateEffect = Fx.generatespark;
+            explosionDamage = 0 ;
 
 
+            consume(new ConsumeItemFlammable());
+
+
+            ConsumeItemExplode explode = new ConsumeItemExplode();
+            explode.baseChance = -1;
+            consume(explode);
+
+            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+        }};
+        new ConsumeGenerator("steam-generator"){{
+            requirements(Category.power, with(
+                    Vars.content.item("ec-"+"copper"+1), 35,
+                    Vars.content.item("ec-"+"graphite"+1), 25,
+                    Vars.content.item("ec-"+"lead"+1), 40,
+                    Vars.content.item("ec-"+"silicon"+1), 30));
+            powerProduction = 5.5f*2.5f;
+            itemDuration = 90f;
+            consumeLiquid(Vars.content.liquid("ec-"+"water"+1), 0.1f);
+            hasLiquids = true;
+            size = 2;
+            generateEffect = Fx.generatespark;
+
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.06f;
+
+            consume(new ConsumeItemFlammable());
+            ConsumeItemExplode explode = new ConsumeItemExplode();
+            explode.baseChance = -1;
+            consume(explode);
+
+            drawer = new DrawMulti(
+                    new DrawDefault(),
+                    new DrawWarmupRegion(),
+                    new DrawRegion("-turbine"){{
+                        rotateSpeed = 2f;
+                    }},
+                    new DrawRegion("-turbine"){{
+                        rotateSpeed = -2f;
+                        rotation = 45f;
+                    }},
+                    new DrawRegion("-cap"),
+                    new DrawLiquidRegion()
+            );
+        }};
 
 
 
 
 
         double damageBase = 5;
-        double sizeBase = 1.4;
         for (int i = 1 ; i < 10 ; i++){
             int num = i;
             ((ItemTurret) Blocks.duo).ammoTypes.put(Vars.content.item("ec-"+"copper"+num), new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,num))){{

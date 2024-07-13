@@ -85,6 +85,12 @@ public class ECItems {
                 cost = 1.3f;
                 healthScaling = 0.1f;
             }};
+            /*
+            new Item("power"+num,load.itemcolor("surge-alloy",0,true)){{
+                charge = (float) (1*Math.pow(10,num));
+            }};
+
+             */
         };
 
     };

@@ -67,100 +67,69 @@ public class load {
     };
 
     public static void itemCompressor(String name0,String name1){
-
-        float makeTime = 120f;
-        new MultiCrafter(name0+"Compressor"){{
+        new AnyMtiCrafter(name0+"Compressor"){{
             requirements(Category.crafting, with(Vars.content.item("copper"), 30));
             size = 2;
-            hasPower = false;
             hasLiquids = false;
             itemCapacity = 18;
             craftEffect = Fx.pulverizeMedium;
             alwaysUnlocked = true;
+            products.add(
+                    new Formula(){{
+                        consumeItem(Vars.content.item(name1),9);
+                        outputItems = ItemStack.with(Vars.content.item("ec-"+name0+1),1);
+                        craftTime = 60f;
+                        craftEffect = Fx.pulverizeMedium;
+                    }}
+            );
+            for (int i = 2 ;i < 10;i++){
+                int num = i;
+                int num0 = i - 1;
+                products.add(
+                        new Formula(){{
+                            consumeItem(Vars.content.item("ec-"+name0+num0),9);
+                            outputItems = ItemStack.with(Vars.content.item("ec-"+name0+num),1);
+                            craftTime = 60f;
+                            craftEffect = Fx.pulverizeMedium;
+                        }}
+                );
+            };
 
-            resolvedRecipes = Seq.with();
         }};
-        for (int i = 1; i < 10;i++){
-            int num = i;
-            int num0 = num-1;
-            if (num==1) {
-                ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
-                    input = new IOEntry() {{
-                        items = Seq.with(ItemStack.with(
-                                Vars.content.item(name1), 9));
-                    }};
-                    output = new IOEntry() {{
 
-                        items = Seq.with(ItemStack.with(
-                                Vars.content.item("ec-" + name0 + num), 1));
-                    }};
-                    craftTime = makeTime;
-                }});
-            }else {
-                ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
-                            input = new IOEntry() {{
-                                items = Seq.with(ItemStack.with(
-                                        Vars.content.item("ec-"+name0+num0), 9));}};
-                            output = new IOEntry() {{
-                                items = Seq.with(ItemStack.with(
-                                        Vars.content.item("ec-"+name0+num), 1));}};
-                            craftTime = makeTime;
-                        }});
-
-            }
-
-
-        };
 
     };
 
     public static void liquidCompressor(String name0,String material){
-
-        float makeTime = 120f;
-        new MultiCrafter(name0+"Compressor"){{
-            requirements(Category.crafting, with(Vars.content.item(material), 30));
+        new AnyMtiCrafter(name0+"Compressor"){{
+            requirements(Category.crafting, with(Vars.content.item("copper"), 30));
             size = 2;
-            hasPower = false;
             hasLiquids = true;
             liquidCapacity = 18*60;
             craftEffect = Fx.pulverizeMedium;
             alwaysUnlocked = true;
-
-            resolvedRecipes = Seq.with();
+            products.add(
+                    new Formula(){{
+                        consumeLiquid(Vars.content.liquid(name0),9);
+                        outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+name0+1),1);
+                        craftTime = 60f;
+                        craftEffect = Fx.pulverizeMedium;
+                    }}
+            );
+            for (int i = 2 ;i < 10;i++){
+                int num = i;
+                int num0 = i - 1;
+                products.add(
+                        new Formula(){{
+                            consumeLiquid(Vars.content.liquid("ec-"+name0+num0),9);
+                            outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+name0+num),1);
+                            craftTime = 60f;
+                            craftEffect = Fx.pulverizeMedium;
+                        }}
+                );
+            };
 
         }};
-
-        for (int i = 1; i < 10;i++){
-            int num = i;
-            int num0 = num-1;
-            if (num==1) {
-                ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
-                    input = new IOEntry() {{
-                        fluids = Seq.with(LiquidStack.with(
-                                Vars.content.liquid(name0), 9));
-                    }};
-                    output = new IOEntry() {{
-
-                        fluids = Seq.with(LiquidStack.with(
-                                Vars.content.liquid("ec-" + name0 + num), 1));
-                    }};
-                    craftTime = makeTime;
-                }});
-            }else {
-                ((MultiCrafter) Vars.content.block("ec-" + name0 + "Compressor")).resolvedRecipes.add(new Recipe() {{
-                    input = new IOEntry() {{
-                        fluids = Seq.with(LiquidStack.with(
-                                Vars.content.liquid("ec-"+name0+num0), 9));}};
-                    output = new IOEntry() {{
-                        fluids = Seq.with(LiquidStack.with(
-                                Vars.content.liquid("ec-"+name0+num), 1));}};
-                    craftTime = makeTime;
-                }});
-
-            }
-
-
-        };
 
     };
 
@@ -178,6 +147,7 @@ public class load {
         }};
 
     };
+
     public static void titaniumConveyor(int num){
         int health0 = 65;
         int conveyorBase = 4;
@@ -241,7 +211,7 @@ public class load {
                         consumeItem(Vars.content.item(Item1), (int) Math.pow(9,num));
                         outputItems = ItemStack.with(Vars.content.item("ec-"+Item0+num),1);
                         int timeBase = num*num ;
-                        craftTime = 120f*timeBase;
+                        craftTime = 60f*timeBase;
                         craftEffect = Fx.pulverizeMedium;
                         consumePower(108f/60);
                     }}
