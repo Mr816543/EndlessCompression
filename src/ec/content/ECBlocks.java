@@ -2,40 +2,33 @@ package ec.content;
 
 
 import arc.graphics.Color;
-import arc.struct.Seq;
 import ec.AnyMtiCrafter;
-import ec.Blocks.*;
 import mindustry.Vars;
 import mindustry.content.*;
-import mindustry.entities.Damage;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
-import mindustry.logic.LExecutor;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
-import mindustry.world.Block;
 import mindustry.world.blocks.defense.Door;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
-import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.power.Battery;
 import mindustry.world.blocks.power.ConsumeGenerator;
+import mindustry.world.blocks.power.NuclearReactor;
 import mindustry.world.blocks.power.PowerNode;
-import mindustry.world.blocks.production.*;
+import mindustry.world.consumers.ConsumeItemCharged;
 import mindustry.world.consumers.ConsumeItemExplode;
 import mindustry.world.consumers.ConsumeItemFlammable;
+import mindustry.world.consumers.ConsumeItemRadioactive;
 import mindustry.world.draw.*;
 import mindustry.world.meta.Env;
-import multicraft.*;
-import ec.world.*;
+import mindustry.world.blocks.power.NuclearReactor.*;
 
-import static ec.Get.base;
-import static ec.content.ECItems.*;
 import static mindustry.type.ItemStack.with;
 import static mindustry.world.meta.StatValues.ammo;
 import static mindustry.world.meta.StatValues.content;
@@ -64,9 +57,33 @@ public class ECBlocks {
 
         String[] liquid0 = {"water","slag","oil","cryofluid"};
         for (int i = 0 ; i < liquid0.length ; i++){
-            load.liquidCompressor(liquid0[i],"copper");
-            load.liquidmultipress(liquid0[i]);
+            load.liquidCompressor(liquid0[i]);
+            //load.liquidmultipress(liquid0[i]);
         };
+
+        //test
+        /*
+        new AnyMtiCrafter("test"){{
+            requirements(Category.crafting, with());
+            size = 3;
+
+            liquidCapacity = 20;
+
+            products.addAll(
+                    new Formula(){{
+                        consumeLiquid(Liquids.water, 12);
+                        outputLiquids = LiquidStack.with(Liquids.oil, 12);
+                        craftTime = 10f;
+                    }},
+                    new Formula(){{
+                        consumeLiquid(Liquids.water, 6);
+                        outputLiquids = LiquidStack.with(Liquids.cryofluid, 6);
+                        craftTime = 10f;
+                    }}
+                    );
+        }};
+
+         */
 
 
 
@@ -388,6 +405,66 @@ public class ECBlocks {
         //原版电力
         int powerBase = 5 ;
         double sizeBase = 1.4;
+
+        new AnyMtiCrafter("powerCompressor"){{
+            requirements(Category.power, with(Vars.content.item("ec-copper1"), 30));
+            hasLiquids = true;
+            hasItems = true;
+            size = 2;
+            ambientSound = Sounds.steam;
+            ambientSoundVolume = 0.03f;
+
+            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion(), new DrawLiquidRegion());
+
+            for (int i = 0 ; i < 8 ; i++){
+                int num = i;
+                products.add(new Formula(){{
+                    consumePower((float) (1f*Math.pow(10,num)));
+                    outputItems = ItemStack.with(
+                            Vars.content.item("ec-"+"power"+num), 1);
+                    craftTime = 60f;
+                    craftEffect = Fx.generatespark;
+                }});
+            };
+            products.addAll(new Formula(){{
+                consumePower((float) (1f*Math.pow(10,7)));
+                outputItems = ItemStack.with(
+                        Vars.content.item("ec-"+"power"+8), 1);
+                craftTime = 600f;
+                craftEffect = Fx.generatespark;
+            }},new Formula(){{
+                consumePower((float) (1f*Math.pow(10,7)));
+                outputItems = ItemStack.with(
+                        Vars.content.item("ec-"+"power"+9), 1);
+                craftTime = 6000f;
+                craftEffect = Fx.generatespark;
+            }});
+        }};
+        new ConsumeGenerator("power-producer"){{
+            requirements(Category.power, with(
+                    Vars.content.item("ec-"+"titanium"+1), 20,
+                    Vars.content.item("ec-"+"lead"+1), 50,
+                    Vars.content.item("ec-"+"silicon"+1), 30));
+            size = 3;
+            baseExplosiveness = 5f;
+            powerProduction = 1f;
+            itemDuration = 60f;
+
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.03f;
+            generateEffect = Fx.generatespark;
+            explosionDamage = 0 ;
+
+
+            consume(new ConsumeItemCharged(1f));
+
+
+            ConsumeItemExplode explode = new ConsumeItemExplode();
+            explode.baseChance = -1;
+            consume(explode);
+
+            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+        }};
         for (int i = 1 ; i < 10 ; i++){
             int num = i ;
             new PowerNode("power-node"+num){{
@@ -406,34 +483,6 @@ public class ECBlocks {
                 baseExplosiveness = (float) (1f*Math.pow(batteryBase,num));
             }};
         };
-        /*
-        new ConsumeGenerator("power-producer"){{
-            requirements(Category.power, with(
-                    Vars.content.item("ec-"+"titanium"+1), 20,
-                    Vars.content.item("ec-"+"lead"+1), 50,
-                    Vars.content.item("ec-"+"silicon"+1), 30));
-            size = 3;
-            baseExplosiveness = 5f;
-            powerProduction = 1f;
-            itemDuration = 60f;
-
-            ambientSound = Sounds.smelter;
-            ambientSoundVolume = 0.03f;
-            generateEffect = Fx.generatespark;
-            explosionDamage = 0 ;
-
-
-            consume(new ConsumeItemcharge(1f));
-
-
-            ConsumeItemExplode explode = new ConsumeItemExplode();
-            explode.baseChance = -1;
-            consume(explode);
-
-            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
-        }};
-
-         */
         new ConsumeGenerator("combustion-generator"){{
             requirements(Category.power, with(Vars.content.item("ec-"+"copper"+1), 25, Vars.content.item("ec-"+"lead"+1), 15));
             powerProduction = 2.5f;
@@ -489,6 +538,56 @@ public class ECBlocks {
                     new DrawLiquidRegion()
             );
         }};
+        new AnyMtiCrafter("differential-generator"){{
+            requirements(Category.power, with(
+                    Vars.content.item("ec-"+"copper"+1), 70,
+                    Vars.content.item("ec-"+"titanium"+1), 50,
+                    Vars.content.item("ec-"+"lead"+1), 100,
+                    Vars.content.item("ec-"+"silicon"+1), 65,
+                    Vars.content.item("ec-"+"metaglass"+1), 50));
+            hasLiquids = true;
+            hasItems = true;
+            size = 3;
+            ambientSound = Sounds.steam;
+            ambientSoundVolume = 0.03f;
+
+            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion(), new DrawLiquidRegion());
+
+            products.add(new Formula(){{
+                consumeLiquid(Vars.content.liquid("cryofluid"),0.1f);
+                consumeItem(Vars.content.item("pyratite"),1);
+
+                outputItems = ItemStack.with(
+                        Vars.content.item("ec-"+"power"+1), 6,
+                        Vars.content.item("ec-"+"power"+0), 6);
+                craftTime = 220f;
+                craftEffect = Fx.generatespark;
+            }});
+            for (int i = 1 ; i < 9 ; i++){
+                int num = i;
+                int num1 = i + 1;
+                products.add(new Formula(){{
+                    consumeLiquid(Vars.content.liquid("ec-"+"cryofluid"+num),0.1f);
+                    consumeItem(Vars.content.item("ec-"+"pyratite"+num),1);
+
+                    outputItems = ItemStack.with(
+                            Vars.content.item("ec-"+"power"+num1), 6,
+                            Vars.content.item("ec-"+"power"+num), 6);
+                    craftTime = 220f;
+                    craftEffect = Fx.generatespark;
+                }});
+            };
+            products.add(new Formula(){{
+                consumeLiquid(Vars.content.liquid("ec-"+"cryofluid"+9),0.1f);
+                consumeItem(Vars.content.item("ec-"+"pyratite"+9),1);
+
+                outputItems = ItemStack.with(
+                        Vars.content.item("ec-"+"power"+9), 66);
+                craftTime = 220f;
+                craftEffect = Fx.generatespark;
+            }});
+        }};
+
 
 
 

@@ -500,7 +500,7 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(Vars.content.block("ec-waterMultiPress"), () -> {});
+                //node(Vars.content.block("ec-waterMultiPress"), () -> {});
             });
             //slag
             node(Vars.content.block("ec-slagCompressor"), () -> {
@@ -521,7 +521,7 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(Vars.content.block("ec-slagMultiPress"), () -> {});
+                //node(Vars.content.block("ec-slagMultiPress"), () -> {});
             });
             //oil
             node(Vars.content.block("ec-oilCompressor"), () -> {
@@ -542,7 +542,7 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(Vars.content.block("ec-oilMultiPress"), () -> {});
+                //node(Vars.content.block("ec-oilMultiPress"), () -> {});
             });
             //cryofluid
             node(Vars.content.block("ec-cryofluidCompressor"), () -> {
@@ -563,7 +563,7 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(Vars.content.block("ec-cryofluidMultiPress"), () -> {});
+                //node(Vars.content.block("ec-cryofluidMultiPress"), () -> {});
             });
 
             //conveyor
@@ -621,6 +621,10 @@ public class ECTechTree {
                     });
                 });
                 node(Vars.content.block("ec-combustion-generator"), () -> {
+
+                    node(Vars.content.block("ec-powerCompressor"), () -> {});
+                    node(Vars.content.block("ec-power-producer"), () -> {});
+
                     //power-node
                     node(Vars.content.block("ec-power-node1"), () -> {
                         node(Vars.content.block("ec-power-node2"), () -> {
@@ -656,7 +660,10 @@ public class ECTechTree {
                                 });
                             });
                         });
-                        node(Vars.content.block("ec-steam-generator"), () -> {});
+                        node(Vars.content.block("ec-steam-generator"), () -> {
+
+                            node(Vars.content.block("ec-differential-generator"), () -> {});
+                        });
                     });
                 });
             });
@@ -709,6 +716,82 @@ public class ECTechTree {
                                         node(Vars.content.unit("ec-crawler7"), () -> {
                                             node(Vars.content.unit("ec-crawler8"), () -> {
                                                 node(Vars.content.unit("ec-crawler9"), () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+
+                //flare
+                node(Vars.content.unit("ec-flare1"), () -> {
+                    node(Vars.content.unit("ec-flare2"), () -> {
+                        node(Vars.content.unit("ec-flare3"), () -> {
+                            node(Vars.content.unit("ec-flare4"), () -> {
+                                node(Vars.content.unit("ec-flare5"), () -> {
+                                    node(Vars.content.unit("ec-flare6"), () -> {
+                                        node(Vars.content.unit("ec-flare7"), () -> {
+                                            node(Vars.content.unit("ec-flare8"), () -> {
+                                                node(Vars.content.unit("ec-flare9"), () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+
+                //mono
+                node(Vars.content.unit("ec-mono1"), () -> {
+                    node(Vars.content.unit("ec-mono2"), () -> {
+                        node(Vars.content.unit("ec-mono3"), () -> {
+                            node(Vars.content.unit("ec-mono4"), () -> {
+                                node(Vars.content.unit("ec-mono5"), () -> {
+                                    node(Vars.content.unit("ec-mono6"), () -> {
+                                        node(Vars.content.unit("ec-mono7"), () -> {
+                                            node(Vars.content.unit("ec-mono8"), () -> {
+                                                node(Vars.content.unit("ec-mono9"), () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+
+                //risso
+                node(Vars.content.unit("ec-risso1"), () -> {
+                    node(Vars.content.unit("ec-risso2"), () -> {
+                        node(Vars.content.unit("ec-risso3"), () -> {
+                            node(Vars.content.unit("ec-risso4"), () -> {
+                                node(Vars.content.unit("ec-risso5"), () -> {
+                                    node(Vars.content.unit("ec-risso6"), () -> {
+                                        node(Vars.content.unit("ec-risso7"), () -> {
+                                            node(Vars.content.unit("ec-risso8"), () -> {
+                                                node(Vars.content.unit("ec-risso9"), () -> {});
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+
+                //retusa
+                node(Vars.content.unit("ec-retusa1"), () -> {
+                    node(Vars.content.unit("ec-retusa2"), () -> {
+                        node(Vars.content.unit("ec-retusa3"), () -> {
+                            node(Vars.content.unit("ec-retusa4"), () -> {
+                                node(Vars.content.unit("ec-retusa5"), () -> {
+                                    node(Vars.content.unit("ec-retusa6"), () -> {
+                                        node(Vars.content.unit("ec-retusa7"), () -> {
+                                            node(Vars.content.unit("ec-retusa8"), () -> {
+                                                node(Vars.content.unit("ec-retusa9"), () -> {});
                                             });
                                         });
                                     });

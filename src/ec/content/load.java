@@ -100,18 +100,16 @@ public class load {
 
     };
 
-    public static void liquidCompressor(String name0,String material){
+    public static void liquidCompressor(String name0){
         new AnyMtiCrafter(name0+"Compressor"){{
-            requirements(Category.crafting, with(Vars.content.item("copper"), 30));
+            requirements(Category.crafting, with(Vars.content.item("ec-"+"copper"+1), 60));
             size = 2;
-            hasLiquids = true;
             liquidCapacity = 18*60;
-            craftEffect = Fx.pulverizeMedium;
             alwaysUnlocked = true;
             products.add(
                     new Formula(){{
-                        consumeLiquid(Vars.content.liquid(name0),9);
-                        outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+name0+1),1);
+                        consumeLiquid(Vars.content.liquid(name0),9f);
+                        outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+name0+1), 1f);
                         craftTime = 60f;
                         craftEffect = Fx.pulverizeMedium;
                     }}
@@ -121,8 +119,28 @@ public class load {
                 int num0 = i - 1;
                 products.add(
                         new Formula(){{
-                            consumeLiquid(Vars.content.liquid("ec-"+name0+num0),9);
-                            outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+name0+num),1);
+                            consumeLiquid(Vars.content.liquid("ec-"+name0+num0),9f);
+                            outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+name0+num),1f);
+                            craftTime = 60f;
+                            craftEffect = Fx.pulverizeMedium;
+                        }}
+                );
+            };
+            products.add(
+                    new Formula(){{
+                        consumeLiquid(Vars.content.liquid("ec-"+name0+1), 1f);
+                        outputLiquids = LiquidStack.with(Vars.content.liquid(name0),9f);
+                        craftTime = 60f;
+                        craftEffect = Fx.pulverizeMedium;
+                    }}
+            );
+            for (int i = 2 ;i < 10;i++){
+                int num = i;
+                int num0 = i - 1;
+                products.add(
+                        new Formula(){{
+                            consumeLiquid(Vars.content.liquid("ec-"+name0+num),1f);
+                            outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+name0+num0),9f);
                             craftTime = 60f;
                             craftEffect = Fx.pulverizeMedium;
                         }}
@@ -218,6 +236,20 @@ public class load {
                 );
             };
 
+            for (int i = 1 ;i < 10;i++){
+                int num = i;
+                products.add(
+                        new Formula(){{
+                            consumeItem(Vars.content.item("ec-"+Item0+num),1);
+                            outputItems = ItemStack.with(Vars.content.item(Item1), (int) Math.pow(9,num));
+                            int timeBase = num*num ;
+                            craftTime = 60f*timeBase;
+                            craftEffect = Fx.pulverizeMedium;
+                            consumePower(108f/60);
+                        }}
+                );
+            };
+
         }};
 
 
@@ -238,10 +270,23 @@ public class load {
                 int num = i;
                 products.add(
                         new Formula(){{
-                            consumeLiquid(Vars.content.liquid(liquid0), (float) (Math.pow(9,num)/60));
-                            outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+liquid0+num),1/60);
+                            consumeLiquid(Vars.content.liquid(liquid0), (float) (12*Math.pow(9,num)/60));
+                            outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+liquid0+num),12f/60);
                             int timeBase = num*num ;
-                            craftTime = 120f*timeBase;
+                            craftTime = 10f*timeBase;
+                            craftEffect = Fx.pulverizeMedium;
+                            consumePower(108f/60);
+                        }}
+                );
+            };
+            for (int i = 1 ;i < 10;i++){
+                int num = i;
+                products.add(
+                        new Formula(){{
+                            consumeLiquid(Vars.content.liquid("ec-"+liquid0+num),12f/60);
+                            outputLiquids = LiquidStack.with(Vars.content.liquid(liquid0), (float) (12*Math.pow(9,num)/60));
+                            int timeBase = num*num ;
+                            craftTime = 10f*timeBase;
                             craftEffect = Fx.pulverizeMedium;
                             consumePower(108f/60);
                         }}

@@ -1,10 +1,5 @@
 package ec.content;
 
-import arc.Core;
-import arc.graphics.Color;
-import arc.graphics.Pixmap;
-import arc.graphics.g2d.PixmapRegion;
-import mindustry.Vars;
 import mindustry.type.Item;
 
 
@@ -85,12 +80,17 @@ public class ECItems {
                 cost = 1.3f;
                 healthScaling = 0.1f;
             }};
-            /*
+
+
+
+
+        };
+
+        for (int i = 0 ; i < 10 ;i++){
+            int num = i ;
             new Item("power"+num,load.itemcolor("surge-alloy",0,true)){{
                 charge = (float) (1*Math.pow(10,num));
             }};
-
-             */
         };
 
     };
