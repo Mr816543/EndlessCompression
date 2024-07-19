@@ -1,4 +1,4 @@
-package ec;
+package ec.Tools;
 
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;

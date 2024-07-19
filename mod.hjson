@@ -11,7 +11,11 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod version
-version: 0.9.2
+version:1.0.0
+
+
+#TO DO
+#波次修改出怪
 
 #the mod description as seen in the mod dialog
 description: "将一些物质进行压缩
@@ -20,6 +24,13 @@ description: "将一些物质进行压缩
 无尽压缩Mod交流群:708031203
 
 更新日志
+v1.0.0正式版
+1.优化了代码结构,同时添加了部分注释
+2.修改了科技树,现在本Mod提供的新内容会直接作为原内容的子科技节点
+3.对原版的大部分内容均可进行压缩
+
+
+
 v0.9.2
 1.现在多重压缩器可以解压压缩材料了
 2.去除了液体多重压缩器,液体压缩器现在能够逐层解压压缩液体了

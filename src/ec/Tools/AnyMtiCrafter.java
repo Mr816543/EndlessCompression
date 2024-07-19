@@ -1,4 +1,4 @@
-package ec;
+package ec.Tools;
 
 import arc.Core;
 import arc.func.Func;
@@ -41,10 +41,8 @@ import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.meta.*;
 
-import java.util.Iterator;
-
-import static ec.Get.statToTable;
-import static ec.Get.statTurnTable;
+import static ec.Tools.Get.statToTable;
+import static ec.Tools.Get.statTurnTable;
 import static mindustry.Vars.*;
 
 /**
