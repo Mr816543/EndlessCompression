@@ -1,97 +1,66 @@
 package ec.content;
 
+import arc.Core;
+import arc.struct.ObjectMap;
+import arc.struct.Seq;
+import mindustry.Vars;
+import mindustry.content.Items;
 import mindustry.type.Item;
+
+import static mindustry.content.Items.*;
 
 
 @SuppressWarnings("SpellCheckingInspection")
 public class ECItems {
-    public static void load(){
+    public static Seq<Item> AllItems;
+    public static ObjectMap<Item,Seq<Item>> ECItems = new ObjectMap<>();
 
-        int attributeBase = 4;
+    public static void load() throws IllegalAccessException {
 
-        for(int i = 1 ; i < 10 ; i++){
-            int num = i;
-            new Item("copper"+num,load.itemcolor("copper",num,true)){{
-                hardness = 1+num;
-                cost = 0.5f;
-            }};
-            new Item("lead"+num,load.itemcolor("lead",num,true)){{
-                hardness = 1+num;
-                cost = 0.7f;
-            }};
-            new Item("sand"+num,load.itemcolor("sand",num,true)){{
-                lowPriority = true;
-                buildable = false;
-            }};
-            new Item("titanium"+num,load.itemcolor("titanium",num,true)){{
-                hardness = 3+num;
-                cost = 1f;
-            }};
-            new Item("metaglass"+num,load.itemcolor("metaglass",num,true)){{
-                cost = 1.5f;
-            }};
-            new Item("scrap"+num,load.itemcolor("scrap",num,true)){};
-            new Item("coal"+num,load.itemcolor("coal",num,false)){{
-                explosiveness = (float) (0.2f*Math.pow(attributeBase,num));
-                flammability = (float) (1f*Math.pow(attributeBase,num));
-                hardness = 2+num;
-                buildable = false;
-            }};
-            new Item("thorium"+num,load.itemcolor("thorium",num,true)){{
-                explosiveness = (float) (0.2f*Math.pow(attributeBase,num));
-                hardness = 4+num;
-                radioactivity = (float) (1f*Math.pow(attributeBase,num));
-                cost = 1.1f;
-                healthScaling = 0.2f;
-            }};
-            new Item("surgeAlloy"+num,load.itemcolor("surge-alloy",num,true)){{
-                cost = 1.2f;
-                charge = (float) (0.75f*Math.pow(attributeBase,num));
-                healthScaling = 0.25f;
-            }};
-            new Item("phaseFabric"+num,load.itemcolor("phase-fabric",num,true)){{
-                cost = 1.3f;
-                radioactivity = (float) (0.6f*Math.pow(attributeBase,num));
-                healthScaling = 0.25f;
-            }};
-            new Item("graphite"+num,load.itemcolor("graphite",num,true)){{
-                cost = 1f;
-            }};
-            new Item("silicon"+num,load.itemcolor("silicon",num,false)){{
-                cost = 0.8f;
-            }};
-            new Item("pyratite"+num,load.itemcolor("pyratite",num,true)){{
-                flammability = (float) (1.4f*Math.pow(attributeBase,num));
-                explosiveness = (float) (0.4f*Math.pow(attributeBase,num));
-                buildable = false;
-            }};
-            new Item("blastCompound"+num,load.itemcolor("blast-compound",num,true)){{
-                flammability = (float) (0.4f*Math.pow(attributeBase,num));
-                explosiveness = (float) (1.2f*Math.pow(attributeBase,num));
-                buildable = false;
-            }};
-            new Item("sporePod"+num,load.itemcolor("spore-pod",num,false)){{
-                flammability = (float) (1.15f*Math.pow(attributeBase,num));
-                buildable = false;
-            }};
-            new Item("plastanium"+num,load.itemcolor("plastanium",num,true)){{
-                flammability = (float) (0.1f*Math.pow(attributeBase,num));
-                explosiveness = (float) (0.2f*Math.pow(attributeBase,num));
-                cost = 1.3f;
-                healthScaling = 0.1f;
-            }};
+        //判断设置"Compress-other-Mods"(是否对其他Mod生效)的状态
+        if (Core.settings.getBool("Compress-other-Mods")){
+            //根据全部物品的数量创建一个字符串组AllTtems用于储存全部物品的名字
+            AllItems = Vars.content.items().copy();
+            //遍历AllItems
+            for (Item item : AllItems){
+                //根据每个物品的注册名运行加载压缩物品的方法
+                load.item(item);
+                load.itemCompressor(item);
+                load.itemMultiPress(item);
+            }
+        }
+        //如果设置为false,则遍历原版物品,根据原版物品的注册名运行加载压缩物品的方法
+        else{
+            //原版物品
+            AllItems = new Seq<>(new Item[]{
+                    copper, lead, sand, titanium,
+                    metaglass, scrap, coal, thorium,
+                    surgeAlloy, phaseFabric, graphite, silicon,
+                    pyratite, blastCompound, sporePod, plastanium,
+                    beryllium,tungsten,oxide,carbide,fissileMatter,
+                    dormantCyst
+            });
+            //遍历原版物品
+            for (Item item : AllItems){
+                //根据原版物品的注册名运行加载压缩物品的方法
+                load.item(item);
+                load.itemCompressor(item);
+                load.itemMultiPress(item);
+            }
+        }
 
 
-
-
-        };
 
         for (int i = 0 ; i < 10 ;i++){
             int num = i ;
-            new Item("power"+num,load.itemcolor("surge-alloy",0,true)){{
+            new Item("power"+num,load.itemColor("surge-alloy",0,true)){{
                 charge = (float) (1*Math.pow(10,num));
             }};
         };
+
+
+
+
 
     };
 

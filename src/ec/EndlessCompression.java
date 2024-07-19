@@ -1,41 +1,58 @@
 package ec;
 
-import arc.util.*;
+import arc.Events;
+import arc.util.Log;
+import ec.Blocks.ECGenericCrafters;
+import ec.Blocks.ECTurrets;
+import ec.Blocks.ECUnitFactorys;
 import ec.content.*;
-import mindustry.mod.*;
+import mindustry.Vars;
+import mindustry.game.EventType;
+import mindustry.mod.Mod;
 
-public class EndlessCompression extends Mod{
+public class EndlessCompression extends Mod {
 
-    public EndlessCompression(){
+    public EndlessCompression() {
         Log.info("Loaded ExampleJavaMod constructor.");
 
         //listen for game load event
-        /*Events.on(ClientLoadEvent.class, e -> {
-            //show dialog upon startup
-            Time.runTask(10f, () -> {
-                BaseDialog dialog = new BaseDialog("icon.png");
-                dialog.cont.add("无尽压缩能够让您可以压缩原版的物品并利用").row();
-                //mod sprites are prefixed with the mod name (this mod is called 'example-java-mod' in its config)
-                //dialog.cont.image(Core.atlas.find("example-java-mod-frog")).pad(20f).row();
-                dialog.cont.button("我明白了", dialog::hide).size(100f, 50f);
-                dialog.show();
-            });
-
-
-        });
-
-         */
+        //Core.settings.remove("Compress-other-Mods");
+        Events.on(EventType.ClientLoadEvent.class, e -> Vars.ui.settings.game.checkPref("Compress-other-Mods", false));
     }
+    public void init(){
+    };
 
     @Override
-    public void loadContent(){
+    public void loadContent() {
         Log.info("Loading some example content.");
-        ECItems.load();
-        ECLiquids.load();
-        ECUnitTypes.load();
+
+
+        try {
+            ECItems.load();
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            ECLiquids.load();
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            ECUnitTypes.load();
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        ECUnitFactorys.load();
         ECBlocks.load();
-        ECPlanets.load();
-        ECTechTree.load();
+        //ECPlanets.load();
+        //ECTechTree.load();
+        try {
+            ECGenericCrafters.load();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        ECTurrets.load();
 
 
     }

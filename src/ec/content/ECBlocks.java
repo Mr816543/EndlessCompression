@@ -38,370 +38,6 @@ import static mindustry.world.meta.StatValues.content;
 public class ECBlocks {
     public static void load(){
 
-        String[] item0 = {
-                "copper","lead","sand","titanium",
-                "metaglass","scrap","coal","thorium",
-                "surgeAlloy","phaseFabric","graphite", "silicon",
-                "pyratite","blastCompound","sporePod","plastanium"
-        };
-        String[] item1 = {
-                "copper","lead","sand","titanium",
-                "metaglass","scrap","coal","thorium",
-                "surge-alloy","phase-fabric","graphite", "silicon",
-                "pyratite","blast-compound","spore-pod","plastanium"
-        };
-        for(int i = 0 ; i < item0.length ; i++ ){
-            load.itemCompressor(item0[i],item1[i]);
-            load.multipress(item0[i],item1[i]);
-        };
-
-        String[] liquid0 = {"water","slag","oil","cryofluid"};
-        for (int i = 0 ; i < liquid0.length ; i++){
-            load.liquidCompressor(liquid0[i]);
-            //load.liquidmultipress(liquid0[i]);
-        };
-
-        //test
-        /*
-        new AnyMtiCrafter("test"){{
-            requirements(Category.crafting, with());
-            size = 3;
-
-            liquidCapacity = 20;
-
-            products.addAll(
-                    new Formula(){{
-                        consumeLiquid(Liquids.water, 12);
-                        outputLiquids = LiquidStack.with(Liquids.oil, 12);
-                        craftTime = 10f;
-                    }},
-                    new Formula(){{
-                        consumeLiquid(Liquids.water, 6);
-                        outputLiquids = LiquidStack.with(Liquids.cryofluid, 6);
-                        craftTime = 10f;
-                    }}
-                    );
-        }};
-
-         */
-
-
-
-
-
-
-        //原版工厂
-        new AnyMtiCrafter("graphite-press"){{
-            requirements(Category.crafting, with(Items.copper, 75, Items.lead, 30));
-            craftEffect = Fx.pulverizeMedium;
-            size = 2;
-            hasItems = true;
-        }};
-        new AnyMtiCrafter("silicon-smelter"){{
-            requirements(Category.crafting, with(Items.copper, 30, Items.lead, 25));
-            craftEffect = Fx.smeltsmoke;
-            size = 2;
-            hasPower = true;
-            hasLiquids = false;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffef99")));
-            ambientSound = Sounds.smelter;
-            ambientSoundVolume = 0.07f;
-
-        }};
-        new AnyMtiCrafter("kiln"){{
-            requirements(Category.crafting, with(Items.copper, 60, Items.graphite, 30, Items.lead, 30));
-            craftEffect = Fx.smeltsmoke;
-            size = 2;
-            hasPower = hasItems = true;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffc099")));
-            ambientSound = Sounds.smelter;
-            ambientSoundVolume = 0.07f;
-
-        }};
-        new AnyMtiCrafter("plastanium-compressor"){{
-            requirements(Category.crafting, with(Items.silicon, 80, Items.lead, 115, Items.graphite, 60, Items.titanium, 80));
-            hasItems = true;
-            liquidCapacity = 60f;
-            size = 2;
-            health = 320;
-            hasPower = hasLiquids = true;
-            craftEffect = Fx.formsmoke;
-            updateEffect = Fx.plasticburn;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFade());
-
-        }};
-        new AnyMtiCrafter("phase-weaver"){{
-            requirements(Category.crafting, with(Items.silicon, 130, Items.lead, 120, Items.thorium, 75));
-            craftEffect = Fx.smeltsmoke;
-            size = 2;
-            hasPower = true;
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawWeave(), new DrawDefault());
-            envEnabled |= Env.space;
-            ambientSound = Sounds.techloop;
-            ambientSoundVolume = 0.02f;
-
-            itemCapacity = 20;
-        }};
-        new AnyMtiCrafter("surge-smelter"){{
-            requirements(Category.crafting, with(Items.silicon, 80, Items.lead, 80, Items.thorium, 70));
-            craftEffect = Fx.smeltsmoke;
-            size = 3;
-            hasPower = true;
-            itemCapacity = 20;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
-
-        }};
-        new AnyMtiCrafter("cryofluid-mixer"){{
-            requirements(Category.crafting, with(Items.lead, 65, Items.silicon, 40, Items.titanium, 60));
-            size = 2;
-            hasPower = true;
-            hasItems = true;
-            hasLiquids = true;
-            rotate = false;
-            solid = true;
-            outputsLiquid = true;
-            envEnabled = Env.any;
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.water), new DrawLiquidTile(Liquids.cryofluid){{drawLiquidLight = true;}}, new DrawDefault());
-            liquidCapacity = 24f;
-            lightLiquid = Liquids.cryofluid;
-
-        }};
-        new AnyMtiCrafter("pyratite-mixer"){{
-            requirements(Category.crafting, with(Items.copper, 50, Items.lead, 25));
-            hasItems = true;
-            hasPower = true;
-            envEnabled |= Env.space;
-
-            size = 2;
-        }};
-        new AnyMtiCrafter("blast-mixer"){{
-            requirements(Category.crafting, with(Items.lead, 30, Items.titanium, 20));
-            hasItems = true;
-            hasPower = true;
-            size = 2;
-            envEnabled |= Env.space;
-
-        }};
-        new AnyMtiCrafter("melter"){{
-            requirements(Category.crafting, with(Items.copper, 30, Items.lead, 35, Items.graphite, 45));
-            health = 200;
-            hasLiquids = hasPower = true;
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawDefault());
-
-        }};
-        new AnyMtiCrafter("separator"){{
-            requirements(Category.crafting, with(Items.copper, 30, Items.titanium, 25));
-            hasPower = true;
-            size = 2;
-
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
-        }};
-        new AnyMtiCrafter("disassembler"){{
-            requirements(Category.crafting, with(Items.plastanium, 40, Items.titanium, 100, Items.silicon, 150, Items.thorium, 80));
-            hasPower = true;
-            size = 3;
-            itemCapacity = 20;
-
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
-        }};
-        new AnyMtiCrafter("spore-press"){{
-            requirements(Category.crafting, with(Items.lead, 35, Items.silicon, 30));
-            liquidCapacity = 60f;
-            size = 2;
-            health = 320;
-            hasLiquids = true;
-            hasPower = true;
-            craftEffect = Fx.none;
-            drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawPistons(){{
-                        sinMag = 1f;
-                    }},
-                    new DrawDefault(),
-                    new DrawLiquidRegion(),
-                    new DrawRegion("-top")
-            );
-
-        }};
-        new AnyMtiCrafter("pulverizer"){{
-            requirements(Category.crafting, with(Items.copper, 30, Items.lead, 25));
-            craftEffect = Fx.pulverize;
-            updateEffect = Fx.pulverizeSmall;
-            hasItems = hasPower = true;
-            drawer = new DrawMulti(new DrawDefault(), new DrawRegion("-rotator"){{
-                spinSprite = true;
-                rotateSpeed = 2f;
-            }}, new DrawRegion("-top"));
-            ambientSound = Sounds.grinding;
-            ambientSoundVolume = 0.025f;
-
-        }};
-        new AnyMtiCrafter("coal-centrifuge"){{
-            requirements(Category.crafting, with(Items.titanium, 20, Items.graphite, 40, Items.lead, 30));
-            craftEffect = Fx.coalSmeltsmoke;
-            size = 2;
-            hasPower = hasItems = hasLiquids = true;
-            rotateDraw = false;
-
-        }};
-
-
-
-        for (int i = 1;i<10;i++){
-            int num = i;
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"graphite-press")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItem(Vars.content.item("ec-"+"coal"+num),2);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"graphite"+num),1);
-                craftTime = 90f;
-                craftEffect = Fx.pulverizeMedium;
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"silicon-smelter")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItems(with(Vars.content.item("ec-"+"coal"+num),1,Vars.content.item("ec-"+"sand"+num),2));
-                consumePower(0.5f);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"silicon"+num),1);
-                craftTime = 40f;
-                craftEffect = Fx.smeltsmoke;
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"kiln")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItems(with(Vars.content.item("ec-"+"lead"+num),1,Vars.content.item("ec-"+"sand"+num),1));
-                consumePower(0.6f);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"metaglass"+num),1);
-                craftTime = 30f;
-                drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffc099")));
-
-                craftEffect = Fx.smeltsmoke;
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"plastanium-compressor")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItem(Vars.content.item("ec-"+"titanium"+num),2);
-                consumePower(3f);
-                consumeLiquid(Vars.content.liquid("ec-"+"oil"+num),0.25f);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"plastanium"+num),1);
-                craftEffect = Fx.formsmoke;
-                updateEffect = Fx.plasticburn;
-                drawer = new DrawMulti(new DrawDefault(), new DrawFade());
-                craftTime = 60f;
-                craftEffect = Fx.pulverizeMedium;
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"phase-weaver")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItems(with(Vars.content.item("ec-"+"thorium"+num),4,Vars.content.item("ec-"+"sand"+num),10));
-                consumePower(5f);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"phaseFabric"+num),1);
-                craftTime = 120f;
-                drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawWeave(), new DrawDefault());
-                craftEffect = Fx.smeltsmoke;
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"surge-smelter")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItems(with(
-                        Vars.content.item("ec-"+"copper"+num),3,
-                        Vars.content.item("ec-"+"lead"+num),4,
-                        Vars.content.item("ec-"+"titanium"+num),2,
-                        Vars.content.item("ec-"+"silicon"+num),3));
-                consumePower(4f);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"surgeAlloy"+num),1);
-                drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
-                craftTime = 75f;
-                craftEffect = Fx.smeltsmoke;
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"cryofluid-mixer")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItem(Vars.content.item("ec-"+"titanium"+num),1);
-                consumeLiquid(Vars.content.liquid("ec-"+"water"+num),12f/60);
-                outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+"cryofluid"+num),12f/60);
-                craftTime = 120f;
-
-                consumePower(1f);
-                craftEffect = Fx.pulverizeMedium;
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"pyratite-mixer")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItems(with(
-                        Vars.content.item("ec-"+"coal"+num),1,
-                        Vars.content.item("ec-"+"lead"+num),2,
-                        Vars.content.item("ec-"+"sand"+num),2));
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"pyratite"+num),1);
-                craftTime = 80f;
-                craftEffect = Fx.pulverizeMedium;
-
-                consumePower(0.20f);
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"blast-mixer")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItems(with(
-                        Vars.content.item("ec-"+"pyratite"+num),1,
-                        Vars.content.item("ec-"+"sporePod"+num),1));
-
-                consumePower(0.40f);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"blastCompound"+num),1);
-                craftTime = 80f;
-                craftEffect = Fx.pulverizeMedium;
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"melter")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItem(Vars.content.item("ec-"+"scrap"+num),1);
-                consumePower(1f);
-                outputLiquids =LiquidStack.with(Vars.content.liquid("ec-"+"slag"+num),12f/60);
-                craftTime = 10f;
-                craftEffect = Fx.pulverizeMedium;
-
-                drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawDefault());
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"separator")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeLiquid(Vars.content.liquid("ec-"+"slag"+num),4f*12/60);
-                consumePower(1.1f);
-                outputItems = ItemStack.with(
-                        Vars.content.item("ec-"+"copper"+num),5,
-                        Vars.content.item("ec-"+"lead"+num),3,
-                        Vars.content.item("ec-"+"graphite"+num),2,
-                        Vars.content.item("ec-"+"titanium"+num),2);
-                craftTime = 35f*12;
-                drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"disassembler")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItem(Vars.content.item("ec-"+"scrap"+num),1);
-                consumeLiquid(Vars.content.liquid("ec-"+"slag"+num),0.12f*5);
-                consumePower(4f);
-                outputItems = ItemStack.with(
-                        Vars.content.item("ec-"+"sand"+num),2,
-                        Vars.content.item("ec-"+"graphite"+num),1,
-                        Vars.content.item("ec-"+"titanium"+num),1,
-                        Vars.content.item("ec-"+"thorium"+num),1);
-                craftTime = 15f*5;
-                drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"spore-press")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItem(Vars.content.item("ec-"+"sporePod"+num),1);
-                consumePower(0.7f);
-                outputLiquids = LiquidStack.with(Vars.content.liquid("ec-"+"oil"+num),18f/60f);
-                craftTime = 20f;
-                craftEffect = Fx.none;
-                drawer = new DrawMulti(
-                        new DrawRegion("-bottom"),
-                        new DrawPistons(){{
-                            sinMag = 1f;
-                        }},
-                        new DrawDefault(),
-                        new DrawLiquidRegion(),
-                        new DrawRegion("-top")
-                );
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"pulverizer")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeItem(Vars.content.item("ec-"+"scrap"+num),1);
-                consumePower(0.50f);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"sand"+num),1);
-                craftTime = 40f;
-                updateEffect = Fx.pulverizeSmall;
-                craftEffect = Fx.pulverize;
-                drawer = new DrawMulti(new DrawDefault(), new DrawRegion("-rotator"){{
-                    spinSprite = true;
-                    rotateSpeed = 2f;
-                }}, new DrawRegion("-top"));
-            }});
-            ((AnyMtiCrafter)Vars.content.block("ec-"+"coal-centrifuge")).products.add(new AnyMtiCrafter.Formula(){{
-                consumeLiquid(Vars.content.liquid("ec-"+"oil"+num),0.1f);
-                consumePower(0.7f);
-                outputItems = ItemStack.with(Vars.content.item("ec-"+"coal"+num),1);
-                craftTime = 30f;
-                craftEffect = Fx.coalSmeltsmoke;
-            }});
-
-        };
-
         //原版电力
         int powerBase = 5 ;
         double sizeBase = 1.4;
@@ -596,6 +232,7 @@ public class ECBlocks {
         double damageBase = 5;
         for (int i = 1 ; i < 10 ; i++){
             int num = i;
+            /*
             ((ItemTurret) Blocks.duo).ammoTypes.put(Vars.content.item("ec-"+"copper"+num), new BasicBulletType(2.5f, (float) (9*Math.pow(damageBase,num))){{
                 width = (float) (7f*Math.pow(sizeBase,num));
                 height = (float) (9f*Math.pow(sizeBase,num));
@@ -749,7 +386,7 @@ public class ECBlocks {
                 layer = Layer.bullet - 2f;
             }});
 
-            ((ItemTurret) Blocks.swarmer).ammoTypes.put(Vars.content.item("ec-"+"blastCompound"+num), new MissileBulletType(3.7f, (float) (10*Math.pow(damageBase,num))){{
+            ((ItemTurret) Blocks.swarmer).ammoTypes.put(Vars.content.item("ec-"+"blast-compound"+num), new MissileBulletType(3.7f, (float) (10*Math.pow(damageBase,num))){{
                 width = (float) (8f*Math.pow(sizeBase,num));
                 height = (float) (8f*Math.pow(sizeBase,num));
                 shrinkY = 0f;
@@ -776,7 +413,7 @@ public class ECBlocks {
                 hitEffect = Fx.blastExplosion;
                 status = StatusEffects.burning;
             }});
-            ((ItemTurret) Blocks.swarmer).ammoTypes.put(Vars.content.item("ec-"+"surgeAlloy"+num),new MissileBulletType(3.7f, (float) (18*Math.pow(damageBase,num))){{
+            ((ItemTurret) Blocks.swarmer).ammoTypes.put(Vars.content.item("ec-"+"surge-alloy"+num),new MissileBulletType(3.7f, (float) (18*Math.pow(damageBase,num))){{
                 width = (float) (8f*Math.pow(sizeBase,num));
                 height = (float) (8f*Math.pow(sizeBase,num));
                 shrinkY = 0f;
@@ -936,7 +573,7 @@ public class ECBlocks {
                 trailEffect = Fx.incendTrail;
                 ammoMultiplier = 4f;
             }});
-            ((ItemTurret) Blocks.ripple).ammoTypes.put(Vars.content.item("ec-"+"blastCompound"+num),new ArtilleryBulletType(2f, (float) (20*Math.pow(damageBase,num)), "shell"){{
+            ((ItemTurret) Blocks.ripple).ammoTypes.put(Vars.content.item("ec-"+"blast-compound"+num),new ArtilleryBulletType(2f, (float) (20*Math.pow(damageBase,num)), "shell"){{
                 hitEffect = Fx.blastExplosion;
                 knockback = (float) (0.8f*Math.pow(sizeBase,num));
                 lifetime = 80f;
@@ -995,7 +632,7 @@ public class ECBlocks {
                 explodeRange = (float) (20f*Math.pow(sizeBase,num));
                 collidesGround = true;
             }});
-            ((ItemTurret) Blocks.cyclone).ammoTypes.put(Vars.content.item("ec-"+"blastCompound"+num),new FlakBulletType(4f, (float) (8*Math.pow(damageBase,num))){{
+            ((ItemTurret) Blocks.cyclone).ammoTypes.put(Vars.content.item("ec-"+"blast-compound"+num),new FlakBulletType(4f, (float) (8*Math.pow(damageBase,num))){{
                 shootEffect = Fx.shootBig;
                 ammoMultiplier = 5f;
                 splashDamage = (float) (45f*Math.pow(damageBase,num));
@@ -1026,7 +663,7 @@ public class ECBlocks {
                 collidesGround = true;
                 explodeRange = (float) (20f*Math.pow(sizeBase,num));
             }});
-            ((ItemTurret) Blocks.cyclone).ammoTypes.put(Vars.content.item("ec-"+"surgeAlloy"+num),new FlakBulletType(4.5f, (float) (13*Math.pow(damageBase,num))){{
+            ((ItemTurret) Blocks.cyclone).ammoTypes.put(Vars.content.item("ec-"+"surge-alloy"+num),new FlakBulletType(4.5f, (float) (13*Math.pow(damageBase,num))){{
                 ammoMultiplier = 5f;
                 splashDamage = (float) (50f * 1.5f*Math.pow(damageBase,num));
                 splashDamageRadius = (float) (38f*Math.pow(sizeBase,num));
@@ -1037,7 +674,7 @@ public class ECBlocks {
                 explodeRange = (float) (20f*Math.pow(sizeBase,num));
             }});
 
-            ((ItemTurret) Blocks.foreshadow).ammoTypes.put(Vars.content.item("ec-"+"surgeAlloy"+num),new RailBulletType(){{
+            ((ItemTurret) Blocks.foreshadow).ammoTypes.put(Vars.content.item("ec-"+"surge-alloy"+num),new RailBulletType(){{
                 shootEffect = Fx.instShoot;
                 hitEffect = Fx.instHit;
                 pierceEffect = Fx.railHit;
@@ -1090,6 +727,8 @@ public class ECBlocks {
                 splashDamageRadius = (float) (25f*Math.pow(sizeBase,num));
             }});
 
+
+             */
 
 
 

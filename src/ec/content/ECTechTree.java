@@ -1,8 +1,11 @@
 package ec.content;
 
+import arc.func.Boolf;
 import ec.Blocks.ECWalls;
 import mindustry.Vars;
 import mindustry.content.Planets;
+import mindustry.content.TechTree;
+import mindustry.ctype.UnlockableContent;
 
 import static mindustry.content.TechTree.*;
 import static mindustry.content.TechTree.node;
@@ -254,17 +257,17 @@ public class ECTechTree {
 
             });
 
-            //surgeAlloy
-            node(Vars.content.block("ec-surgeAlloyCompressor"), () -> {
-                nodeProduce(Vars.content.item("ec-surgeAlloy1"), () -> {
-                    nodeProduce(Vars.content.item("ec-surgeAlloy2"), () -> {
-                        nodeProduce(Vars.content.item("ec-surgeAlloy3"), () -> {
-                            nodeProduce(Vars.content.item("ec-surgeAlloy4"), () -> {
-                                nodeProduce(Vars.content.item("ec-surgeAlloy5"), () -> {
-                                    nodeProduce(Vars.content.item("ec-surgeAlloy6"), () -> {
-                                        nodeProduce(Vars.content.item("ec-surgeAlloy7"), () -> {
-                                            nodeProduce(Vars.content.item("ec-surgeAlloy8"), () -> {
-                                                nodeProduce(Vars.content.item("ec-surgeAlloy9"), () -> {});
+            //surge-alloy
+            node(Vars.content.block("ec-surge-alloyCompressor"), () -> {
+                nodeProduce(Vars.content.item("ec-surge-alloy1"), () -> {
+                    nodeProduce(Vars.content.item("ec-surge-alloy2"), () -> {
+                        nodeProduce(Vars.content.item("ec-surge-alloy3"), () -> {
+                            nodeProduce(Vars.content.item("ec-surge-alloy4"), () -> {
+                                nodeProduce(Vars.content.item("ec-surge-alloy5"), () -> {
+                                    nodeProduce(Vars.content.item("ec-surge-alloy6"), () -> {
+                                        nodeProduce(Vars.content.item("ec-surge-alloy7"), () -> {
+                                            nodeProduce(Vars.content.item("ec-surge-alloy8"), () -> {
+                                                nodeProduce(Vars.content.item("ec-surge-alloy9"), () -> {});
                                             });
                                         });
                                     });
@@ -273,7 +276,7 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(Vars.content.block("ec-surgeAlloyMultiPress"), () -> {});
+                node(Vars.content.block("ec-surge-alloyMultiPress"), () -> {});
                 node(Vars.content.block("ec-surgeWall1"), () -> {
                     node(Vars.content.block("ec-surgeWall2"), () -> {
                         node(Vars.content.block("ec-surgeWall3"), () -> {
@@ -293,17 +296,17 @@ public class ECTechTree {
                 });
             });
 
-            //phaseFabric
-            node(Vars.content.block("ec-phaseFabricCompressor"), () -> {
-                nodeProduce(Vars.content.item("ec-phaseFabric1"), () -> {
-                    nodeProduce(Vars.content.item("ec-phaseFabric2"), () -> {
-                        nodeProduce(Vars.content.item("ec-phaseFabric3"), () -> {
-                            nodeProduce(Vars.content.item("ec-phaseFabric4"), () -> {
-                                nodeProduce(Vars.content.item("ec-phaseFabric5"), () -> {
-                                    nodeProduce(Vars.content.item("ec-phaseFabric6"), () -> {
-                                        nodeProduce(Vars.content.item("ec-phaseFabric7"), () -> {
-                                            nodeProduce(Vars.content.item("ec-phaseFabric8"), () -> {
-                                                nodeProduce(Vars.content.item("ec-phaseFabric9"), () -> {});
+            //phase-fabric
+            node(Vars.content.block("ec-phase-fabricCompressor"), () -> {
+                nodeProduce(Vars.content.item("ec-phase-fabric1"), () -> {
+                    nodeProduce(Vars.content.item("ec-phase-fabric2"), () -> {
+                        nodeProduce(Vars.content.item("ec-phase-fabric3"), () -> {
+                            nodeProduce(Vars.content.item("ec-phase-fabric4"), () -> {
+                                nodeProduce(Vars.content.item("ec-phase-fabric5"), () -> {
+                                    nodeProduce(Vars.content.item("ec-phase-fabric6"), () -> {
+                                        nodeProduce(Vars.content.item("ec-phase-fabric7"), () -> {
+                                            nodeProduce(Vars.content.item("ec-phase-fabric8"), () -> {
+                                                nodeProduce(Vars.content.item("ec-phase-fabric9"), () -> {});
                                             });
                                         });
                                     });
@@ -312,7 +315,7 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(Vars.content.block("ec-phaseFabricMultiPress"), () -> {});
+                node(Vars.content.block("ec-phase-fabricMultiPress"), () -> {});
                 node(Vars.content.block("ec-phaseWall1"), () -> {
                     node(Vars.content.block("ec-phaseWall2"), () -> {
                         node(Vars.content.block("ec-phaseWall3"), () -> {
@@ -398,17 +401,17 @@ public class ECTechTree {
                 node(Vars.content.block("ec-pyratiteMultiPress"), () -> {});
             });
 
-            //blastCompound
-            node(Vars.content.block("ec-blastCompoundCompressor"), () -> {
-                nodeProduce(Vars.content.item("ec-blastCompound1"), () -> {
-                    nodeProduce(Vars.content.item("ec-blastCompound2"), () -> {
-                        nodeProduce(Vars.content.item("ec-blastCompound3"), () -> {
-                            nodeProduce(Vars.content.item("ec-blastCompound4"), () -> {
-                                nodeProduce(Vars.content.item("ec-blastCompound5"), () -> {
-                                    nodeProduce(Vars.content.item("ec-blastCompound6"), () -> {
-                                        nodeProduce(Vars.content.item("ec-blastCompound7"), () -> {
-                                            nodeProduce(Vars.content.item("ec-blastCompound8"), () -> {
-                                                nodeProduce(Vars.content.item("ec-blastCompound9"), () -> {});
+            //blast-compound
+            node(Vars.content.block("ec-blast-compoundCompressor"), () -> {
+                nodeProduce(Vars.content.item("ec-blast-compound1"), () -> {
+                    nodeProduce(Vars.content.item("ec-blast-compound2"), () -> {
+                        nodeProduce(Vars.content.item("ec-blast-compound3"), () -> {
+                            nodeProduce(Vars.content.item("ec-blast-compound4"), () -> {
+                                nodeProduce(Vars.content.item("ec-blast-compound5"), () -> {
+                                    nodeProduce(Vars.content.item("ec-blast-compound6"), () -> {
+                                        nodeProduce(Vars.content.item("ec-blast-compound7"), () -> {
+                                            nodeProduce(Vars.content.item("ec-blast-compound8"), () -> {
+                                                nodeProduce(Vars.content.item("ec-blast-compound9"), () -> {});
                                             });
                                         });
                                     });
@@ -417,20 +420,20 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(Vars.content.block("ec-blastCompoundMultiPress"), () -> {});
+                node(Vars.content.block("ec-blast-compoundMultiPress"), () -> {});
             });
 
-            //sporePod
-            node(Vars.content.block("ec-sporePodCompressor"), () -> {
-                nodeProduce(Vars.content.item("ec-sporePod1"), () -> {
-                    nodeProduce(Vars.content.item("ec-sporePod2"), () -> {
-                        nodeProduce(Vars.content.item("ec-sporePod3"), () -> {
-                            nodeProduce(Vars.content.item("ec-sporePod4"), () -> {
-                                nodeProduce(Vars.content.item("ec-sporePod5"), () -> {
-                                    nodeProduce(Vars.content.item("ec-sporePod6"), () -> {
-                                        nodeProduce(Vars.content.item("ec-sporePod7"), () -> {
-                                            nodeProduce(Vars.content.item("ec-sporePod8"), () -> {
-                                                nodeProduce(Vars.content.item("ec-sporePod9"), () -> {});
+            //spore-pod
+            node(Vars.content.block("ec-spore-podCompressor"), () -> {
+                nodeProduce(Vars.content.item("ec-spore-pod1"), () -> {
+                    nodeProduce(Vars.content.item("ec-spore-pod2"), () -> {
+                        nodeProduce(Vars.content.item("ec-spore-pod3"), () -> {
+                            nodeProduce(Vars.content.item("ec-spore-pod4"), () -> {
+                                nodeProduce(Vars.content.item("ec-spore-pod5"), () -> {
+                                    nodeProduce(Vars.content.item("ec-spore-pod6"), () -> {
+                                        nodeProduce(Vars.content.item("ec-spore-pod7"), () -> {
+                                            nodeProduce(Vars.content.item("ec-spore-pod8"), () -> {
+                                                nodeProduce(Vars.content.item("ec-spore-pod9"), () -> {});
                                             });
                                         });
                                     });
@@ -439,7 +442,7 @@ public class ECTechTree {
                         });
                     });
                 });
-                node(Vars.content.block("ec-sporePodMultiPress"), () -> {});
+                node(Vars.content.block("ec-spore-podMultiPress"), () -> {});
             });
 
             //plastanium
@@ -908,5 +911,12 @@ public class ECTechTree {
 
 
         });
+
     }
+    /*
+    public static void TechTree(UnlockableContent A, UnlockableContent B){
+        Planets.serpulo.techTree.children.find()
+    }
+
+     */
 }
