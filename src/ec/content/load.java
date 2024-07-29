@@ -7,15 +7,14 @@ import arc.graphics.g2d.TextureRegion;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Eachable;
+import arc.util.Log;
 import ec.Tools.AnyMtiCrafter;
 import ec.Tools.Tool;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.content.TechTree;
 import mindustry.entities.abilities.*;
-import mindustry.entities.bullet.BasicBulletType;
-import mindustry.entities.bullet.BulletType;
-import mindustry.entities.bullet.LaserBulletType;
+import mindustry.entities.bullet.*;
 import mindustry.entities.units.BuildPlan;
 import mindustry.gen.Building;
 import mindustry.type.*;
@@ -29,10 +28,7 @@ import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.liquid.ArmoredConduit;
 import mindustry.world.blocks.liquid.Conduit;
-import mindustry.world.blocks.power.ConsumeGenerator;
-import mindustry.world.blocks.power.LightBlock;
-import mindustry.world.blocks.power.PowerGenerator;
-import mindustry.world.blocks.power.PowerNode;
+import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.Pump;
@@ -1463,6 +1459,7 @@ public class load {
     public static BulletType bullet(BulletType bullet, float damageBase, float sizeBase) {
 
         bullet.knockback *= sizeBase;
+        bullet.lifetime *= sizeBase;
         bullet.hitSize *= sizeBase;
         bullet.damage *= damageBase;
         bullet.splashDamage *= damageBase;
@@ -1478,6 +1475,16 @@ public class load {
         if (bullet.fragBullet != null) bullet.fragBullet = bullet(bullet.fragBullet.copy(), damageBase, sizeBase);
         if (bullet.intervalBullet != null)
             bullet.intervalBullet = bullet(bullet.intervalBullet.copy(), damageBase, sizeBase);
+        if (bullet instanceof BasicBulletType){
+            ((BasicBulletType)bullet).width *= sizeBase;
+            ((BasicBulletType)bullet).height *= sizeBase;
+        } else if (bullet instanceof LiquidBulletType){
+            bullet.puddles = (int)(bullet.puddles * sizeBase);
+            ((LiquidBulletType)bullet).orbSize *= sizeBase;
+        } else if (bullet instanceof ShrapnelBulletType){
+            ((ShrapnelBulletType)bullet).length *= sizeBase;
+            ((ShrapnelBulletType)bullet).width *= sizeBase;
+        }
         return bullet;
     }
 
@@ -1843,6 +1850,102 @@ public class load {
                         if (!Core.atlas.has(prefix + powerNode.name + sprite)) return false;
                         //以原版贴图覆盖新物品贴图
                         Core.atlas.addRegion(prefix + newpowerNode.name + sprite, Core.atlas.find(prefix + powerNode.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
+    //电池
+    public static void battery(Block battery) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Batterys = new Seq<>();
+        Batterys.add(battery);
+        ECBlocks.put(battery, Batterys);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            Battery newbattery = new Battery(battery.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + battery.localizedName;
+                description = battery.description;
+                details = battery.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(battery).add(newbattery);
+
+            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
+            for (TechNode techNode : ECBlocks.get(battery).get(num - 1).techNodes) {
+                techNode.children.add(
+                        nodeProduce(ECBlocks.get(battery).get(num), () -> {
+                        })
+                );
+            }
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(Battery.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //获取属性名
+                String name0 = field.getName();
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(battery);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(newbattery, (int) (160 * attributeBase));
+                            else field.set(newbattery, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[battery.requirements.length];
+                            for (int j = 0; j < battery.requirements.length; j++) {
+                                Item item = ECItems.get(battery.requirements[j].item).get(num);
+                                int amount = battery.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+                            }
+                            field.set(newbattery, requirements);
+                        }
+                        case "buildType" -> {
+                        }
+                        case "consumeBuilder" -> {
+                            Seq<Consume> consumes = new Seq<>();
+                            for (Consume consume : (Seq<Consume>)value0){
+                                if (consume instanceof ConsumePower){
+                                    consumes.add(new ConsumePower(0f, ((ConsumePower) consume).capacity * attributeBase, true));
+                                }else {
+                                    consumes.add(consume);
+                                }
+                            }
+                            field.set(newbattery,consumes);
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newbattery, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-rotator", "-top"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + battery.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newbattery.name + sprite, Core.atlas.find(prefix + battery.name + sprite));
                         return true;
                     });
                 }
