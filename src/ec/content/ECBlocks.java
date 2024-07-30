@@ -5,6 +5,8 @@ import arc.Core;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.type.Item;
+import mindustry.type.Liquid;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.Door;
 import mindustry.world.blocks.defense.Wall;
@@ -28,6 +30,18 @@ public class ECBlocks {
 
     public static void load() throws IllegalAccessException, NoSuchFieldException {
         Seq<Block> blocks = new Seq<>();
+
+        for (Item item : ECItems.ECItems.keys()) {
+            //运行加载物品压缩器的方法
+            load.itemCompressor(item);
+            //运行加载多重物品压缩器的方法
+            load.itemMultiPress(item);
+        }
+
+        for (Liquid liquid : ECLiquids.ECLiquids.keys()) {
+            //运行加载液体压缩器的方法
+            load.liquidCompressor(liquid);
+        }
 
         //判断设置"Compress-other-Mods"(是否对其他Mod生效)的状态
         if (Core.settings.getBool("Compress-other-Mods")) {
@@ -85,7 +99,7 @@ public class ECBlocks {
                 load.lightBlock(block);
             } else if (block instanceof Battery) {
                 load.battery(block);
-            } else if (block instanceof CoreBlock){
+            } else if (block instanceof CoreBlock) {
                 load.coreBlock(block);
             }
         }

@@ -50,10 +50,6 @@ public class ECItems {
         for (Item item : items) {
             //运行加载压缩物品的方法
             load.item(item);
-            //运行加载物品压缩器的方法
-            load.itemCompressor(item);
-            //运行加载多重物品压缩器的方法
-            load.itemMultiPress(item);
         }
 
         load.item(power,"power",10);

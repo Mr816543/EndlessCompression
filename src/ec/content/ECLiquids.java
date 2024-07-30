@@ -30,8 +30,6 @@ public class ECLiquids {
         for (Liquid liquid : liquids) {
             //运行加载压缩液体的方法
             load.liquid(liquid);
-            //运行加载液体压缩器的方法
-            load.liquidCompressor(liquid);
         }
     }
 }
