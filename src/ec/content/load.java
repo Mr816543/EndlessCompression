@@ -7,19 +7,23 @@ import arc.graphics.g2d.TextureRegion;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Eachable;
-import arc.util.Log;
 import ec.Tools.AnyMtiCrafter;
 import ec.Tools.Tool;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.content.TechTree;
 import mindustry.entities.abilities.*;
-import mindustry.entities.bullet.*;
+import mindustry.entities.bullet.BasicBulletType;
+import mindustry.entities.bullet.BulletType;
+import mindustry.entities.bullet.LiquidBulletType;
+import mindustry.entities.bullet.ShrapnelBulletType;
 import mindustry.entities.units.BuildPlan;
+import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.type.*;
 import mindustry.type.weapons.RepairBeamWeapon;
 import mindustry.world.Block;
+import mindustry.world.Tile;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
@@ -33,11 +37,14 @@ import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.production.SolidPump;
+import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.consumers.*;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.draw.DrawRegion;
+import mindustry.world.meta.BuildVisibility;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -46,7 +53,9 @@ import static ec.content.ECBlocks.ECBlocks;
 import static ec.content.ECItems.ECItems;
 import static ec.content.ECLiquids.ECLiquids;
 import static ec.content.ECUnitTypes.ECUnits;
+import static mindustry.Vars.state;
 import static mindustry.content.Items.copper;
+import static mindustry.content.Items.silicon;
 import static mindustry.content.TechTree.*;
 import static mindustry.type.ItemStack.with;
 
@@ -275,7 +284,7 @@ public class load {
                     }
             );
             //其他属性
-            requirements(Category.crafting, with(copper, 30));
+            requirements(Category.crafting, with(silicon, 5));
             size = 2;
             hasLiquids = false;
             itemCapacity = 18;
@@ -398,7 +407,7 @@ public class load {
                     }
             );
             //其他属性
-            requirements(Category.crafting, with(ECItems.get(copper).get(1), 100));
+            requirements(Category.crafting, with(ECItems.get(silicon).get(1), 20));
             size = 3;
             maxList = 5;
             itemCapacity = ((int) Math.pow(9, 9));
@@ -622,7 +631,7 @@ public class load {
                     }
             );
             //其他属性
-            requirements(Category.crafting, with(ECItems.get(copper).get(1), 60));
+            requirements(Category.crafting, with(ECItems.get(silicon).get(1), 15));
             size = 2;
             liquidCapacity = 18 * 60;
             alwaysUnlocked = false;
@@ -1377,17 +1386,6 @@ public class load {
                                     ((RepairBeamWeapon) weapon).repairSpeed *= damageBase;
                                 }
 
-                                //判断子弹类型
-                                if (weapon.bullet instanceof BasicBulletType) {
-                                    //对子弹大小进行增幅
-                                    ((BasicBulletType) (weapon.bullet)).width *= sizeBase;
-                                    ((BasicBulletType) (weapon.bullet)).height *= sizeBase;
-                                } else if (weapon.bullet instanceof LaserBulletType) {
-                                    //对子弹大小进行增幅
-                                    ((LaserBulletType) (weapon.bullet)).width *= sizeBase;
-                                    ((LaserBulletType) (weapon.bullet)).length *= sizeBase;
-                                }
-
                                 //把增强后的武器添加到新单位中
                                 newunit.weapons.addAll(weapon);
                             }
@@ -1454,6 +1452,125 @@ public class load {
         }
     }
 
+    //核心
+    public static void coreBlock(Block coreBlock) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> CoreBlocks = new Seq<>();
+        CoreBlocks.add(coreBlock);
+        ECBlocks.put(coreBlock, CoreBlocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            float attributeBase = (float) Math.pow(5, i);
+            float sizeBase = (float) Math.pow(1.4, i);
+            //创建新钻头
+            int finalI = i;
+            CoreBlock newcoreBlock = new CoreBlock(coreBlock.name + finalI) {
+                {
+                    localizedName = Core.bundle.get("string.Compress" + finalI) + coreBlock.localizedName;
+                    description = coreBlock.description;
+                    details = coreBlock.details;
+                }
+
+                @Override
+                public boolean canPlaceOn(Tile tile, Team team, int rotation) {
+                    if (tile == null) return false;
+                    //in the editor, you can place them anywhere for convenience
+                    if (state.isEditor()) return true;
+
+                    CoreBuild core = team.core();
+
+                    //special floor upon which cores can be placed
+                    tile.getLinkedTilesAs(this, tempTiles);
+                    if (!tempTiles.contains(o -> !o.floor().allowCorePlacement || o.block() instanceof CoreBlock)) {
+                        return true;
+                    }
+
+                    //must have all requirements
+                    if (core == null || (!state.rules.infiniteResources && !core.items.has(requirements, state.rules.buildCostMultiplier)))
+                        return false;
+
+                    return tile.block() instanceof CoreBlock && size >= tile.block().size && (!requiresCoreZone || tempTiles.allMatch(o -> o.floor().allowCorePlacement));
+                }
+
+
+            };
+            //将此钻头加入方块检索表
+            ECBlocks.get(coreBlock).add(newcoreBlock);
+
+            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
+            for (TechNode techNode : ECBlocks.get(coreBlock).get(i - 1).techNodes) {
+                techNode.children.add(
+                        nodeProduce(ECBlocks.get(coreBlock).get(i), () -> {
+                        })
+                );
+            }
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加Drill的属性
+            field0.add(CoreBlock.class.getDeclaredFields());
+            field0.add(StorageBlock.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //获取属性名
+                String name0 = field.getName();
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(coreBlock);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(newcoreBlock, (int) (160 * attributeBase));
+                            else field.set(newcoreBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "alwaysUnlocked", "isFirstTier", "requiresCoreZone" -> field.set(newcoreBlock, false);
+                        case "unitType" -> {
+                            UnitType unitType = ECUnits.get((UnitType) value0).get(i);
+                            field.set(newcoreBlock, unitType);
+                        }
+                        case "unitCapModifier" -> field.set(newcoreBlock, (int) ((int) value0 * sizeBase));
+                        case "itemCapacity" -> field.set(newcoreBlock, (int) ((int) value0 * attributeBase));
+                        case "buildVisibility" -> field.set(newcoreBlock, BuildVisibility.shown);
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[coreBlock.requirements.length];
+                            for (int j = 0; j < coreBlock.requirements.length; j++) {
+                                Item item = ECItems.get(coreBlock.requirements[j].item).get(i);
+                                int amount = coreBlock.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+                            }
+                            field.set(newcoreBlock, requirements);
+                        }
+                        case "buildType" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newcoreBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-team", "-thruster1", "-thruster2"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + coreBlock.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newcoreBlock.name + sprite, Core.atlas.find(prefix + coreBlock.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
 
     //子弹强化
     public static BulletType bullet(BulletType bullet, float damageBase, float sizeBase) {
@@ -1475,15 +1592,15 @@ public class load {
         if (bullet.fragBullet != null) bullet.fragBullet = bullet(bullet.fragBullet.copy(), damageBase, sizeBase);
         if (bullet.intervalBullet != null)
             bullet.intervalBullet = bullet(bullet.intervalBullet.copy(), damageBase, sizeBase);
-        if (bullet instanceof BasicBulletType){
-            ((BasicBulletType)bullet).width *= sizeBase;
-            ((BasicBulletType)bullet).height *= sizeBase;
-        } else if (bullet instanceof LiquidBulletType){
-            bullet.puddles = (int)(bullet.puddles * sizeBase);
-            ((LiquidBulletType)bullet).orbSize *= sizeBase;
-        } else if (bullet instanceof ShrapnelBulletType){
-            ((ShrapnelBulletType)bullet).length *= sizeBase;
-            ((ShrapnelBulletType)bullet).width *= sizeBase;
+        if (bullet instanceof BasicBulletType) {
+            ((BasicBulletType) bullet).width *= sizeBase;
+            ((BasicBulletType) bullet).height *= sizeBase;
+        } else if (bullet instanceof LiquidBulletType) {
+            bullet.puddles = (int) (bullet.puddles * sizeBase);
+            ((LiquidBulletType) bullet).orbSize *= sizeBase;
+        } else if (bullet instanceof ShrapnelBulletType) {
+            ((ShrapnelBulletType) bullet).length *= sizeBase;
+            ((ShrapnelBulletType) bullet).width *= sizeBase;
         }
         return bullet;
     }
@@ -1905,6 +2022,7 @@ public class load {
                             if ((int) value0 == -1) field.set(newbattery, (int) (160 * attributeBase));
                             else field.set(newbattery, (int) ((int) value0 * attributeBase));
                         }
+                        case "baseExplosiveness" -> field.set(newbattery, (float) value0 * attributeBase);
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[battery.requirements.length];
                             for (int j = 0; j < battery.requirements.length; j++) {
@@ -1918,14 +2036,14 @@ public class load {
                         }
                         case "consumeBuilder" -> {
                             Seq<Consume> consumes = new Seq<>();
-                            for (Consume consume : (Seq<Consume>)value0){
-                                if (consume instanceof ConsumePower){
+                            for (Consume consume : (Seq<Consume>) value0) {
+                                if (consume instanceof ConsumePower) {
                                     consumes.add(new ConsumePower(0f, ((ConsumePower) consume).capacity * attributeBase, true));
-                                }else {
+                                } else {
                                     consumes.add(consume);
                                 }
                             }
-                            field.set(newbattery,consumes);
+                            field.set(newbattery, consumes);
                         }
                         //其他没有自定义需求的属性
                         default -> field.set(newbattery, value0);

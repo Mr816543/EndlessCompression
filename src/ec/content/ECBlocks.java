@@ -18,6 +18,7 @@ import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.SolidPump;
+import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.units.UnitFactory;
 
 
@@ -84,6 +85,8 @@ public class ECBlocks {
                 load.lightBlock(block);
             } else if (block instanceof Battery) {
                 load.battery(block);
+            } else if (block instanceof CoreBlock){
+                load.coreBlock(block);
             }
         }
     }
