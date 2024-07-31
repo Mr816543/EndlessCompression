@@ -17,10 +17,10 @@ import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.liquid.ArmoredConduit;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.*;
-import mindustry.world.blocks.production.Drill;
-import mindustry.world.blocks.production.GenericCrafter;
-import mindustry.world.blocks.production.SolidPump;
+import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.storage.Unloader;
+import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 
 
@@ -60,48 +60,32 @@ public class ECBlocks {
         //遍历blocks
         for (Block block : blocks) {
             if (block instanceof Wall) {
-                if (!(block instanceof Door)) {
-                    load.wall(block);
-                }
-            } else if (block instanceof GenericCrafter) {
-                load.genericCrafter(block);
-            } else if (block instanceof Turret) {
-                load.turret(block);
-            } else if (block instanceof UnitFactory) {
-                load.unitFactorys(block);
-            } else if (block instanceof Drill) {
-                load.drill(block);
-            } else if (block instanceof Conveyor) {
-                if (block instanceof ArmoredConveyor) {
-                    load.armoredConveyor(block);
-                } else {
-                    load.conveyor(block);
-                }
-            } else if (block instanceof StackConveyor) {
-                load.stackConveyor(block);
-            } else if (block instanceof SolidPump) {
-                load.solidPump(block);
+                if (!(block instanceof Door)) load.wall(block);
+            } else if (block instanceof GenericCrafter) load.genericCrafter(block);
+            else if (block instanceof Turret) load.turret(block);
+            else if (block instanceof UnitFactory) load.unitFactorys(block);
+            else if (block instanceof Reconstructor) load.Reconstructor(block);
+            else if (block instanceof Drill) load.drill(block);
+            else if (block instanceof BeamDrill) load.BeamDrill(block);
+            else if (block instanceof Conveyor) {
+                if (block instanceof ArmoredConveyor) load.armoredConveyor(block);
+                else load.conveyor(block);
+            } else if (block instanceof StackConveyor) load.stackConveyor(block);
+            else if (block instanceof Pump) {
+                if (block instanceof SolidPump) load.solidPump(block);
+                else load.Pump(block);
             } else if (block instanceof PowerGenerator) {
-                if (block instanceof ConsumeGenerator) {
-                    load.consumeGenerator(block);
-                } else {
+                if (block instanceof ConsumeGenerator) load.consumeGenerator(block);
+                else if (block instanceof SolarGenerator) load.SolarGenerator(block);
+            } else if (block instanceof PowerNode) load.powerNode(block);
+            else if (block instanceof Conduit) {
+                if (block instanceof ArmoredConduit) load.armoredConduit(block);
+                else load.conduit(block);
+            } else if (block instanceof LightBlock) load.lightBlock(block);
+            else if (block instanceof Battery) load.battery(block);
+            else if (block instanceof CoreBlock) load.coreBlock(block);
+            else if (block instanceof Unloader) load.Unloader(block);
 
-                }
-            } else if (block instanceof PowerNode) {
-                load.powerNode(block);
-            } else if (block instanceof Conduit) {
-                if (block instanceof ArmoredConduit) {
-                    load.armoredConduit(block);
-                } else {
-                    load.conduit(block);
-                }
-            } else if (block instanceof LightBlock) {
-                load.lightBlock(block);
-            } else if (block instanceof Battery) {
-                load.battery(block);
-            } else if (block instanceof CoreBlock) {
-                load.coreBlock(block);
-            }
         }
     }
 }

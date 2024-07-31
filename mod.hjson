@@ -11,11 +11,12 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod version
-version:1.0.6
+version:1.0.7
 
 
 #TO DO
 #波次修改出怪
+#E星制造器闪退问题
 
 #the mod description as seen in the mod dialog
 description: "将一些物质进行压缩
@@ -24,6 +25,11 @@ description: "将一些物质进行压缩
 无尽压缩Mod交流群:708031203
 
 更新日志
+v1.0.7
+1.修复了测试功能打开后的闪退问题
+2.修复了科技树不能解锁的问题
+3.新增了部分多重压缩方块
+
 v1.0.6
 1.修复了1.0.5的崩溃问题
 

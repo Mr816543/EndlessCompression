@@ -446,7 +446,7 @@ public class AnyMtiCrafter extends Block {
                 float boPad = 1;
                 Fill.rect(x, realY + realH/2, realW, realH);
                 for(var l : content.liquids()){
-                    if(formula.getConsumeLiquid(l)) {
+                    if(formula.getConsumeLiquid(l)&&this.liquids!=null) {
                         float ly = realY + pad;
                         Draw.color();
                         Draw.rect(l.uiIcon, realX, ly);
@@ -529,7 +529,7 @@ public class AnyMtiCrafter extends Block {
                     Consume cons;
                     for(i = 0; i < cl; i++) {
                         cons = c[i];
-                        minEfficiency = Math.min(minEfficiency, cons.efficiency(this));
+                        if(this.liquids != null ) minEfficiency = Math.min(minEfficiency, cons.efficiency(this));
                     }
 
                     c = formula.optionalConsumers;
@@ -554,7 +554,7 @@ public class AnyMtiCrafter extends Block {
 
                         for(i = 0; i < cl; i++) {
                             cons = c[i];
-                            cons.update(this);
+                            if (this.liquids!=null) cons.update(this);
                         }
                     }
 
@@ -757,7 +757,7 @@ public class AnyMtiCrafter extends Block {
             addBar("liquid-" + liq.name, entity -> !liq.unlockedNow() ? null : new Bar(
                     () -> liq.localizedName,
                     liq::barColor,
-                    () -> entity.liquids.get(liq) / owner.liquidCapacity
+                    () -> entity.liquids!= null ? entity.liquids.get(liq)/ owner.liquidCapacity : 0
             ));
         }
 
