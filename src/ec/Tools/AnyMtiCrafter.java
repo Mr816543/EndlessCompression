@@ -41,8 +41,7 @@ import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.meta.*;
 
-import static ec.Tools.Get.statToTable;
-import static ec.Tools.Get.statTurnTable;
+import static ec.Tools.Get.*;
 import static mindustry.Vars.*;
 
 /**
@@ -50,19 +49,10 @@ import static mindustry.Vars.*;
  * */
 public class AnyMtiCrafter extends Block {
 
-    public static void drawTiledFramesBar(float w, float h, float x, float y, Liquid liquid, float alpha){
-        TextureRegion region = renderer.fluidFrames[liquid.gas ? 1 : 0][liquid.getAnimationFrame()];
-
-        Draw.color(liquid.color, liquid.color.a * alpha);
-        Draw.rect(region, x + w/2f, y + h/2f, w, h);
-        Draw.color();
+    public static String ModName = "ec";
+    public static String name(String add){
+        return ModName + "-" + add;
     }
-
-
-
-    public Effect craftEffect = Fx.none;
-    public Effect updateEffect = Fx.none;
-
 
     /** 配方表 {@link Formula}*/
     public Seq<Formula> products = new Seq<>();
@@ -157,12 +147,11 @@ public class AnyMtiCrafter extends Block {
                     info.add(Core.bundle.get("bar.ec-formula") + finalI + ":").row();
                     Stats stat = new Stats();
                     stat.timePeriod = p.craftTime;
-                    if((hasItems && itemCapacity > 0) || p.outputItems != null){
-                        stat.add(Stat.productionTime, p.craftTime / 60f, StatUnit.seconds);
-                    }
-
                     if(p.hasConsumers) for(var c : p.consumers){
                         c.display(stat);
+                    }
+                    if((hasItems && itemCapacity > 0) || p.outputItems != null){
+                        stat.add(Stat.productionTime, p.craftTime / 60f, StatUnit.seconds);
                     }
 
                     if(p.outputItems != null){
@@ -446,11 +435,11 @@ public class AnyMtiCrafter extends Block {
                 float boPad = 1;
                 Fill.rect(x, realY + realH/2, realW, realH);
                 for(var l : content.liquids()){
-                    if(formula.getConsumeLiquid(l)&&this.liquids!=null) {
+                    if(formula.getConsumeLiquid(l)) {
                         float ly = realY + pad;
                         Draw.color();
                         Draw.rect(l.uiIcon, realX, ly);
-                        drawTiledFramesBar(vts, (height * liquids.get(l)/liquidCapacity), realX + vts/2f, ly, l, 1);
+                        Get.drawTiledFramesBar(vts, (height * liquids.get(l)/liquidCapacity), realX + vts/2f, ly, l, 1);
                         Draw.color();
                         Draw.alpha(1);
                         Draw.rect(canBar, realX + vts, ly + height/2f, vts + boPad, height + boPad);
@@ -464,7 +453,7 @@ public class AnyMtiCrafter extends Block {
                         float ly = realY + pad;
                         Draw.color();
                         Draw.rect(ls.liquid.uiIcon, realX, ly);
-                        drawTiledFramesBar(vts, (height * liquids.get(ls.liquid)/liquidCapacity), realX + vts/2f, ly, ls.liquid, 1);
+                        Get.drawTiledFramesBar(vts, (height * liquids.get(ls.liquid)/liquidCapacity), realX + vts/2f, ly, ls.liquid, 1);
                         Draw.color();
                         Draw.alpha(1);
                         Draw.rect(canBar, realX + vts/2f + vts/2f, ly + height/2f, vts + 1, height + 2);
@@ -529,7 +518,7 @@ public class AnyMtiCrafter extends Block {
                     Consume cons;
                     for(i = 0; i < cl; i++) {
                         cons = c[i];
-                        if(this.liquids != null ) minEfficiency = Math.min(minEfficiency, cons.efficiency(this));
+                        minEfficiency = Math.min(minEfficiency, cons.efficiency(this));
                     }
 
                     c = formula.optionalConsumers;
@@ -554,7 +543,7 @@ public class AnyMtiCrafter extends Block {
 
                         for(i = 0; i < cl; i++) {
                             cons = c[i];
-                            if (this.liquids!=null) cons.update(this);
+                            cons.update(this);
                         }
                     }
 
@@ -677,10 +666,6 @@ public class AnyMtiCrafter extends Block {
             configs[1] = i;
         }
     }
-    public static String ModName = "ec";
-    private String name(String add) {
-        return ModName + "-" + add;
-    }
 
     public static class Formula{
         public Consume[] consumers = {}, optionalConsumers = {}, nonOptionalConsumers = {}, updateConsumers = {};
@@ -757,7 +742,7 @@ public class AnyMtiCrafter extends Block {
             addBar("liquid-" + liq.name, entity -> !liq.unlockedNow() ? null : new Bar(
                     () -> liq.localizedName,
                     liq::barColor,
-                    () -> entity.liquids!= null ? entity.liquids.get(liq)/ owner.liquidCapacity : 0
+                    () -> entity.liquids.get(liq) / owner.liquidCapacity
             ));
         }
 
