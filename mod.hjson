@@ -11,7 +11,7 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod version
-version:1.0.7
+version:1.0.8
 
 
 #TO DO
@@ -25,10 +25,14 @@ description: "将一些物质进行压缩
 无尽压缩Mod交流群:708031203
 
 更新日志
+v1.0.8
+1.修复了部分bug
+
 v1.0.7
 1.修复了测试功能打开后的闪退问题
 2.修复了科技树不能解锁的问题
 3.新增了部分多重压缩方块
+4.修复了bug不够多的问题
 
 v1.0.6
 1.修复了1.0.5的崩溃问题

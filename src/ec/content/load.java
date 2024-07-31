@@ -287,8 +287,6 @@ public class load {
             size = 2;
             hasLiquids = false;
             itemCapacity = 18;
-            craftEffect = Fx.pulverizeMedium;
-            alwaysUnlocked = true;
             //根据物品检索表批量添加压缩配方
             for (int i = 1; i < 10; i++) {
                 int num = i;
@@ -684,6 +682,8 @@ public class load {
                 details = conveyor.details;
             }};
 
+            //将此钻头加入方块检索表
+            ECBlocks.get(conveyor).add(newconveyor);
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
             //添加Drill的属性
@@ -708,12 +708,22 @@ public class load {
                         case "displayedSpeed" -> field.set(newconveyor, newconveyor.speed * 140);
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[conveyor.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[conveyor.requirements.length];
                             for (int j = 0; j < conveyor.requirements.length; j++) {
-                                Item item = ECItems.get(conveyor.requirements[j].item).get(num);
+                                Item item = ECItems.get(conveyor.requirements[j].item).get(i);
                                 int amount = conveyor.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newconveyor, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(conveyor).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -723,16 +733,6 @@ public class load {
                 }
             }
 
-            //将此钻头加入方块检索表
-            ECBlocks.get(conveyor).add(newconveyor);
-
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(conveyor).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(conveyor).get(num), () -> {
-                        })
-                );
-            }
 
             //贴图前缀
             String[] prefixs = {""};
@@ -784,6 +784,8 @@ public class load {
                 details = conveyor.details;
             }};
 
+            //将此钻头加入方块检索表
+            ECBlocks.get(conveyor).add(newconveyor);
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
             //添加Drill的属性
@@ -806,12 +808,22 @@ public class load {
                         case "displayedSpeed" -> field.set(newconveyor, newconveyor.speed * 140);
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[conveyor.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[conveyor.requirements.length];
                             for (int j = 0; j < conveyor.requirements.length; j++) {
-                                Item item = ECItems.get(conveyor.requirements[j].item).get(num);
+                                Item item = ECItems.get(conveyor.requirements[j].item).get(i);
                                 int amount = conveyor.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newconveyor, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(conveyor).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -821,16 +833,7 @@ public class load {
                 }
             }
 
-            //将此钻头加入方块检索表
-            ECBlocks.get(conveyor).add(newconveyor);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(conveyor).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(conveyor).get(num), () -> {
-                        })
-                );
-            }
 
             //贴图前缀
             String[] prefixs = {""};
@@ -882,6 +885,8 @@ public class load {
                 details = conveyor.details;
             }};
 
+            //将此钻头加入方块检索表
+            ECBlocks.get(conveyor).add(newconveyor);
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
             //添加Drill的属性
@@ -903,12 +908,22 @@ public class load {
                         case "itemCapacity" -> field.set(newconveyor, (int) ((int) value0 * attributeBase / 2));
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[conveyor.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[conveyor.requirements.length];
                             for (int j = 0; j < conveyor.requirements.length; j++) {
-                                Item item = ECItems.get(conveyor.requirements[j].item).get(num);
+                                Item item = ECItems.get(conveyor.requirements[j].item).get(i);
                                 int amount = conveyor.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newconveyor, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(conveyor).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -918,16 +933,7 @@ public class load {
                 }
             }
 
-            //将此钻头加入方块检索表
-            ECBlocks.get(conveyor).add(newconveyor);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(conveyor).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(conveyor).get(num), () -> {
-                        })
-                );
-            }
 
             //贴图前缀
             String[] prefixs = {""};
@@ -969,13 +975,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(block).add(newBlock);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(block).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(block).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -999,12 +998,22 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
                             for (int j = 0; j < block.requirements.length; j++) {
-                                Item item = ECItems.get(block.requirements[j].item).get(num);
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "speed" -> field.set(newBlock, (float) value0 / attributeBase);
                         case "buildType" -> {
@@ -1055,14 +1064,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(drill).add(newdrill);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(drill).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(drill).get(num), () -> {
-                        })
-                );
-            }
-
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
             //添加Drill的属性
@@ -1090,12 +1091,22 @@ public class load {
                         case "tier" -> field.set(newdrill, (int) value0 + num);
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[drill.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[drill.requirements.length];
                             for (int j = 0; j < drill.requirements.length; j++) {
-                                Item item = ECItems.get(drill.requirements[j].item).get(num);
+                                Item item = ECItems.get(drill.requirements[j].item).get(i);
                                 int amount = drill.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newdrill, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(drill).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(drill).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -1145,7 +1156,6 @@ public class load {
     }
 
     //墙壁钻头
-
     public static void BeamDrill(Block block) throws IllegalAccessException {
         //创建物品检索表
         Seq<Block> Blocks = new Seq<>();
@@ -1165,13 +1175,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(block).add(newBlock);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(block).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(block).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -1195,12 +1198,22 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
                             for (int j = 0; j < block.requirements.length; j++) {
-                                Item item = ECItems.get(block.requirements[j].item).get(num);
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "tier" -> field.set(newBlock, (int) value0 + i);
                         case "range", "fogRadius" -> field.set(newBlock, (int) ((int) value0 * sizeBase));
@@ -1273,13 +1286,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(block).add(newBlock);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(block).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(block).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -1304,12 +1310,22 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
                             for (int j = 0; j < block.requirements.length; j++) {
-                                Item item = ECItems.get(block.requirements[j].item).get(num);
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "pumpAmount", "liquidCapacity" -> field.set(newBlock, (float) value0 * attributeBase);
                         case "consumeBuilder" -> {
@@ -1379,6 +1395,8 @@ public class load {
                 details = pump.details;
             }};
 
+            //将此钻头加入方块检索表
+            ECBlocks.get(pump).add(newpump);
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
             //添加Drill的属性
@@ -1404,12 +1422,22 @@ public class load {
                                 field.set(newpump, (float) value0 * attributeBase);
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[pump.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[pump.requirements.length];
                             for (int j = 0; j < pump.requirements.length; j++) {
-                                Item item = ECItems.get(pump.requirements[j].item).get(num);
+                                Item item = ECItems.get(pump.requirements[j].item).get(i);
                                 int amount = pump.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newpump, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(pump).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(pump).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -1419,16 +1447,7 @@ public class load {
                 }
             }
 
-            //将此钻头加入方块检索表
-            ECBlocks.get(pump).add(newpump);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(pump).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(pump).get(num), () -> {
-                        })
-                );
-            }
 
             //贴图前缀
             String[] prefixs = {""};
@@ -1472,13 +1491,6 @@ public class load {
             //将此物品加入物品检索表
             ECBlocks.get(wall).add(newwall);
 
-            //遍历上级物品的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(wall).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(wall).get(num), () -> {
-                        })
-                );
-            }
 
             //获取物品的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -1513,12 +1525,22 @@ public class load {
                         case "lightningLength" -> field.set(newwall, (int) ((int) value0 * sizeBase));
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[wall.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[wall.requirements.length];
                             for (int j = 0; j < wall.requirements.length; j++) {
-                                Item item = ECItems.get(wall.requirements[j].item).get(num);
+                                Item item = ECItems.get(wall.requirements[j].item).get(i);
                                 int amount = wall.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newwall, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(wall).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(wall).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         //其他没有自定义需求的属性
                         default -> field.set(newwall, value0);
@@ -1822,13 +1844,7 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(coreBlock).add(newcoreBlock);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(coreBlock).get(i - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(coreBlock).get(i), () -> {
-                        })
-                );
-            }
+
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -1861,12 +1877,22 @@ public class load {
                         case "buildVisibility" -> field.set(newcoreBlock, BuildVisibility.shown);
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[coreBlock.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[coreBlock.requirements.length];
                             for (int j = 0; j < coreBlock.requirements.length; j++) {
                                 Item item = ECItems.get(coreBlock.requirements[j].item).get(i);
                                 int amount = coreBlock.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newcoreBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(coreBlock).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(coreBlock).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -2081,20 +2107,18 @@ public class load {
 
     //单位工厂
     public static void unitFactorys(Block unitFactorys) {
-        if (unitFactorys instanceof UnitFactory unitFactory) {
-            for (UnitFactory.UnitPlan unitPlan : unitFactory.plans.copy()) {
-                for (int i = 1; i < 10; i++) {
-                    if (ECUnits.get(unitPlan.unit) != null) {
-                        UnitType unit = ECUnits.get(unitPlan.unit).get(i);
-                        float time = unitPlan.time;
-                        ItemStack[] requirements = new ItemStack[unitPlan.requirements.length];
-                        for (int j = 0; j < unitPlan.requirements.length; j++) {
-                            ItemStack itemStack = unitPlan.requirements[j];
-                            Item item = ECItems.get(itemStack.item).get(i);
-                            requirements[j] = new ItemStack(item, unitPlan.requirements[j].amount);
-                        }
-                        ((UnitFactory) unitFactorys).plans.add(new UnitFactory.UnitPlan(unit, time, requirements));
+        for (UnitFactory.UnitPlan unitPlan : ((UnitFactory)unitFactorys).plans.copy()) {
+            for (int i = 1; i < 10; i++) {
+                if (ECUnits.get(unitPlan.unit) != null) {
+                    UnitType unit = ECUnits.get(unitPlan.unit).get(i);
+                    float time = unitPlan.time;
+                    ItemStack[] requirements = new ItemStack[unitPlan.requirements.length];
+                    for (int j = 0; j < unitPlan.requirements.length; j++) {
+                        ItemStack itemStack = unitPlan.requirements[j];
+                        Item item = ECItems.get(itemStack.item).get(i);
+                        requirements[j] = new ItemStack(item, unitPlan.requirements[j].amount);
                     }
+                    ((UnitFactory) unitFactorys).plans.add(new UnitFactory.UnitPlan(unit, time, requirements));
                 }
             }
         }
@@ -2119,13 +2143,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(block).add(newBlock);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(block).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(block).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -2150,12 +2167,22 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
                             for (int j = 0; j < block.requirements.length; j++) {
-                                Item item = ECItems.get(block.requirements[j].item).get(num);
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "upgrades" -> {
                             Seq<UnitType[]> upgrades = (Seq<UnitType[]>) value0;
@@ -2232,13 +2259,6 @@ public class load {
         //将此钻头加入方块检索表
         ECBlocks.get(consumeGenerator).add(newconsumeGenerator);
 
-        //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-        for (TechNode techNode : consumeGenerator.techNodes) {
-            techNode.children.add(
-                    node(newconsumeGenerator, () -> {
-                    })
-            );
-        }
 
         //获取Block的全部属性
         Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -2302,7 +2322,7 @@ public class load {
         //贴图前缀
         String[] prefixs = {""};
         //贴图后缀
-        String[] sprites = {"", "-rotator", "-top"};
+        String[] sprites = {"", "-rotator", "-top","-cap","-liquid","-turbine"};
         //遍历贴图后缀
         for (String sprite : sprites) {
             for (String prefix : prefixs) {
@@ -2339,13 +2359,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(powerNode).add(newpowerNode);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(powerNode).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(powerNode).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -2355,10 +2368,10 @@ public class load {
             for (Field field : field0) {
                 //允许通过反射访问私有变量
                 field.setAccessible(true);
-                //获取属性名
-                String name0 = field.getName();
                 //判断是否为final修饰的属性
-                if (!Modifier.isFinal(field.getModifiers())) {
+                if (Modifier.isPublic(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
                     //获取原物品属性的属性值
                     Object value0 = field.get(powerNode);
                     //将新物品的属性设置为和原物品相同
@@ -2369,14 +2382,24 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[powerNode.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[powerNode.requirements.length];
                             for (int j = 0; j < powerNode.requirements.length; j++) {
-                                Item item = ECItems.get(powerNode.requirements[j].item).get(num);
+                                Item item = ECItems.get(powerNode.requirements[j].item).get(i);
                                 int amount = powerNode.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newpowerNode, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(powerNode).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(powerNode).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
-                        case "buildType" -> {
+                        case "buildType" ,"otherReq","returnInt","graphs","maxRange" -> {
                         }
                         case "maxNodes" -> field.set(newpowerNode, (int) ((int) value0 * attributeBase));
                         case "laserRange" -> field.set(newpowerNode, (float) value0 * sizeBase);
@@ -2425,13 +2448,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(battery).add(newbattery);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(battery).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(battery).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -2456,12 +2472,22 @@ public class load {
                         case "baseExplosiveness" -> field.set(newbattery, (float) value0 * attributeBase);
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[battery.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[battery.requirements.length];
                             for (int j = 0; j < battery.requirements.length; j++) {
-                                Item item = ECItems.get(battery.requirements[j].item).get(num);
+                                Item item = ECItems.get(battery.requirements[j].item).get(i);
                                 int amount = battery.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newbattery, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(battery).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(battery).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -2522,13 +2548,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(lightBlock).add(newlightBlock);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(lightBlock).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(lightBlock).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -2552,12 +2571,22 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[lightBlock.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[lightBlock.requirements.length];
                             for (int j = 0; j < lightBlock.requirements.length; j++) {
-                                Item item = ECItems.get(lightBlock.requirements[j].item).get(num);
+                                Item item = ECItems.get(lightBlock.requirements[j].item).get(i);
                                 int amount = lightBlock.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newlightBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(lightBlock).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(lightBlock).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -2607,13 +2636,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(block).add(newBlock);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(block).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(block).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -2638,12 +2660,22 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
                             for (int j = 0; j < block.requirements.length; j++) {
-                                Item item = ECItems.get(block.requirements[j].item).get(num);
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "powerProduction" -> field.set(newBlock, (float) value0 * attributeBase);
                         case "buildType" -> {
@@ -2695,13 +2727,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(conduit).add(newconduit);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(conduit).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(conduit).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -2725,12 +2750,22 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[conduit.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[conduit.requirements.length];
                             for (int j = 0; j < conduit.requirements.length; j++) {
-                                Item item = ECItems.get(conduit.requirements[j].item).get(num);
+                                Item item = ECItems.get(conduit.requirements[j].item).get(i);
                                 int amount = conduit.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newconduit, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(conduit).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(conduit).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
@@ -2789,13 +2824,6 @@ public class load {
             //将此钻头加入方块检索表
             ECBlocks.get(conduit).add(newconduit);
 
-            //遍历上级钻头的全部科技节点,将本物品作为子节点添加
-            for (TechNode techNode : ECBlocks.get(conduit).get(num - 1).techNodes) {
-                techNode.children.add(
-                        node(ECBlocks.get(conduit).get(num), () -> {
-                        })
-                );
-            }
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
@@ -2820,12 +2848,22 @@ public class load {
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[conduit.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[conduit.requirements.length];
                             for (int j = 0; j < conduit.requirements.length; j++) {
-                                Item item = ECItems.get(conduit.requirements[j].item).get(num);
+                                Item item = ECItems.get(conduit.requirements[j].item).get(i);
                                 int amount = conduit.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount*30);
                             }
                             field.set(newconduit, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(conduit).get(i - 1).techNodes) {
+                                techNode.children.add(
+                                        node(ECBlocks.get(conduit).get(i),TechRequirements,() -> {
+                                        })
+                                );
+                            }
                         }
                         case "buildType" -> {
                         }
