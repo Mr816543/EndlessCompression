@@ -2,7 +2,11 @@ package ec.content;
 
 import arc.Core;
 import arc.graphics.Color;
+import arc.graphics.Pixmap;
+import arc.graphics.Texture;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.PixmapRegion;
+import arc.graphics.g2d.TextureAtlas;
 import arc.graphics.g2d.TextureRegion;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
@@ -49,6 +53,7 @@ import mindustry.world.meta.BuildVisibility;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import static ec.Tools.AnyMtiCrafter.name;
 import static ec.content.ECBlocks.ECBlocks;
 import static ec.content.ECItems.ECItems;
 import static ec.content.ECLiquids.ECLiquids;
@@ -112,11 +117,37 @@ public class load {
             int num = i;
             float attributeBase = (float) Math.pow(attributeIndex, num);
             //创建新物品
-            Item newitem = new Item(name + num) {{
-                localizedName = Core.bundle.get("string.Compress" + num) + item.localizedName;
-                description = item.description;
-                details = item.details;
-            }};
+            Item newitem = new Item(name + num) {
+                {
+                    localizedName = Core.bundle.get("string.Compress" + num) + item.localizedName;
+                    description = item.description;
+                    details = item.details;
+                }
+            };
+
+            int size = 40;
+            int finalI = i;
+            Tool.forceRun(() -> {
+                //如果uiIcon是null就稍后重新执行
+                if (item.uiIcon == null) return false;
+                //获取原uiIcon对应的Pixmap
+                PixmapRegion base = Core.atlas.getPixmap(item.uiIcon);
+                //新建画布??
+                Pixmap mix = base.crop();
+                //获取数字的AtlasRegion
+                TextureAtlas.AtlasRegion number = Core.atlas.find(name("num-" + finalI));
+                //不为null或ohno
+                if (number.found()) {
+                    //获取数字对应的Pixmap
+                    PixmapRegion region = TextureAtlas.blankAtlas().getPixmap(number);
+                    //mix叠加上number
+                    mix.draw(region.pixmap, region.x, region.y, region.width, region.height, 0, base.height - size, size, size, false, true);
+                }
+                //把mix设置为新内容的uiIcon和fullIcon
+                newitem.uiIcon = newitem.fullIcon = new TextureRegion(new Texture(mix));
+                return true;
+            });
+
             //将此物品加入物品检索表
             ECItems.get(item).add(newitem);
 
@@ -149,34 +180,11 @@ public class load {
                         //爆炸性,燃烧性,放射性,放电性,血量缩放额外系数自定义
                         case "explosiveness", "flammability", "radioactivity", "charge", "healthScaling" ->
                                 field.set(newitem, (float) value0 * attributeBase);
+                        case "uiIcon", "fullIcon" -> {
+                        }
                         //其他没有自定义需求的属性
                         default -> field.set(newitem, value0);
                     }
-                }
-            }
-
-            //贴图前缀
-            String[] prefixs = {"", "item-"};
-            //贴图后缀
-            String[] sprites = {""};
-            //动态物品贴图后缀添加
-            if (item.frames > 0) {
-                sprites = new String[item.frames];
-                for (int num1 = 0; num1 < item.frames; num1++) {
-                    sprites[num1] = Integer.toString(num1 + 1);
-                }
-            }
-            //遍历贴图后缀
-            for (String sprite : sprites) {
-                for (String prefix : prefixs) {
-                    //延时运行,来自@(I hope...)
-                    Tool.forceRun(() -> {
-                        //判断原版是否有该后缀贴图
-                        if (!Core.atlas.has(prefix + name + sprite)) return false;
-                        //以原版贴图覆盖新物品贴图
-                        Core.atlas.addRegion(prefix + newitem.name + sprite, Core.atlas.find(prefix + name + sprite));
-                        return true;
-                    });
                 }
             }
         }
@@ -206,7 +214,15 @@ public class load {
 
                         @Override
                         public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{Core.atlas.find("ec-Compressor"), Core.atlas.find("ec-Compressor-icon")};
+                            TextureRegion[] textureRegions = new TextureRegion[3];
+                            textureRegions[0] = Core.atlas.find("ec-Compressor");
+                            textureRegions[1] = Core.atlas.find("ec-Compressor-icon");
+                            if (Core.atlas.find("item-" + item.name) != null) {
+                                textureRegions[2] = Core.atlas.find("item-" + item.name);
+                            } else if (Core.atlas.find(item.name) != null) {
+                                textureRegions[2] = Core.atlas.find(item.name);
+                            } else textureRegions[2] = textureRegions[1];
+                            return textureRegions;
                         }
                     },
                     new DrawRegion() {
@@ -327,7 +343,15 @@ public class load {
 
                         @Override
                         public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{Core.atlas.find("ec-MultiPress"), Core.atlas.find("ec-MultiPress-icon")};
+                            TextureRegion[] textureRegions = new TextureRegion[3];
+                            textureRegions[0] = Core.atlas.find("ec-MultiPress");
+                            textureRegions[1] = Core.atlas.find("ec-MultiPress-icon");
+                            if (Core.atlas.find("item-" + item.name) != null) {
+                                textureRegions[2] = Core.atlas.find("item-" + item.name);
+                            } else if (Core.atlas.find(item.name) != null) {
+                                textureRegions[2] = Core.atlas.find(item.name);
+                            } else textureRegions[2] = textureRegions[1];
+                            return textureRegions;
                         }
                     },
                     new DrawRegion() {
@@ -465,6 +489,30 @@ public class load {
                 description = liquid.description;
                 details = liquid.details;
             }};
+
+            int size = 40;
+            int finalI = i;
+            Tool.forceRun(() -> {
+                //如果uiIcon是null就稍后重新执行
+                if (liquid.uiIcon == null) return false;
+                //获取原uiIcon对应的Pixmap
+                PixmapRegion base = Core.atlas.getPixmap(liquid.uiIcon);
+                //新建画布??
+                Pixmap mix = base.crop();
+                //获取数字的AtlasRegion
+                TextureAtlas.AtlasRegion number = Core.atlas.find(name("num-" + finalI));
+                //不为null或ohno
+                if (number.found()) {
+                    //获取数字对应的Pixmap
+                    PixmapRegion region = TextureAtlas.blankAtlas().getPixmap(number);
+                    //mix叠加上number
+                    mix.draw(region.pixmap, region.x, region.y, region.width, region.height, 0, base.height - size, size, size, false, true);
+                }
+                //把mix设置为新内容的uiIcon和fullIcon
+                newliquid.uiIcon = newliquid.fullIcon = new TextureRegion(new Texture(mix));
+                return true;
+            });
+
             //把新液体添加进检索表
             ECLiquids.get(liquid).add(newliquid);
             //加入上一级液体的子科技节点
@@ -496,40 +544,15 @@ public class load {
                                 field.set(newliquid, (float) value0 * attributeBase);
                         //温度自定义
                         case "temperature" -> field.set(newliquid, 0.5f - (0.5f - (float) value0) * attributeBase);
-
+                        case "uiIcon", "fullIcon" -> {
+                        }
 
                         //其他没有自定义需求的属性
                         default -> field.set(newliquid, value0);
                     }
                 }
-
-
             }
-
-
-            //贴图前缀
-            String[] prefixs = {"", "liquid-"};
-            //贴图后缀
-            String[] sprites = {""};
-            //遍历贴图后缀
-            for (String sprite : sprites) {
-                for (String prefix : prefixs) {
-                    //延时运行,来自@(I hope...)
-                    Tool.forceRun(() -> {
-                        //判断原版是否有该后缀贴图
-                        if (!Core.atlas.has(prefix + liquid.name + sprite)) return false;
-                        //以原版贴图覆盖新液体贴图
-                        Core.atlas.addRegion(prefix + newliquid.name + sprite, Core.atlas.find(prefix + liquid.name + sprite));
-                        return true;
-                    });
-                }
-
-            }
-
-
         }
-
-
     }
 
     //液体压缩器
@@ -550,7 +573,15 @@ public class load {
 
                         @Override
                         public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{Core.atlas.find("ec-Compressor"), Core.atlas.find("ec-Compressor-icon")};
+                            TextureRegion[] textureRegions = new TextureRegion[3];
+                            textureRegions[0] = Core.atlas.find("ec-Compressor");
+                            textureRegions[1] = Core.atlas.find("ec-Compressor-icon");
+                            if (Core.atlas.find("liquid-" + liquid.name) != null) {
+                                textureRegions[2] = Core.atlas.find("liquid-" + liquid.name);
+                            } else if (Core.atlas.find(liquid.name) != null) {
+                                textureRegions[2] = Core.atlas.find(liquid.name);
+                            } else textureRegions[2] = textureRegions[1];
+                            return textureRegions;
                         }
                     },
                     new DrawRegion() {
@@ -714,13 +745,13 @@ public class load {
                                 int amount = conveyor.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newconveyor, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(conveyor).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -814,13 +845,13 @@ public class load {
                                 int amount = conveyor.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newconveyor, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(conveyor).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -832,7 +863,6 @@ public class load {
                     }
                 }
             }
-
 
 
             //贴图前缀
@@ -914,13 +944,13 @@ public class load {
                                 int amount = conveyor.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newconveyor, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(conveyor).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -932,7 +962,6 @@ public class load {
                     }
                 }
             }
-
 
 
             //贴图前缀
@@ -1004,13 +1033,13 @@ public class load {
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(block).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -1055,6 +1084,7 @@ public class load {
         for (int i = 1; i < 10; i++) {
             int num = i;
             float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float)Math.pow(1.4,num);
             //创建新钻头
             Drill newdrill = new Drill(drill.name + num) {{
                 localizedName = Core.bundle.get("string.Compress" + num) + drill.localizedName;
@@ -1087,7 +1117,7 @@ public class load {
                         case "hardnessDrillMultiplier", "drillTime" ->
                                 field.set(newdrill, (float) value0 / attributeBase);
                         case "itemCapacity" -> field.set(newdrill, (int) ((int) value0 * attributeBase));
-                        case "rotateSpeed" -> field.set(newdrill, (float) value0 * attributeBase);
+                        case "rotateSpeed" -> field.set(newdrill, (float) value0 * sizeBase);
                         case "tier" -> field.set(newdrill, (int) value0 + num);
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[drill.requirements.length];
@@ -1097,13 +1127,13 @@ public class load {
                                 int amount = drill.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newdrill, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(drill).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(drill).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(drill).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -1114,8 +1144,7 @@ public class load {
                             Seq<Consume> consumeBuilder = (Seq<Consume>) value0;
                             Seq<Consume> newconsumeBuilder = new Seq<>();
                             for (Consume consume : consumeBuilder) {
-                                if (consume instanceof ConsumeLiquid) {
-                                    ConsumeLiquid consume0 = (ConsumeLiquid) consume;
+                                if (consume instanceof ConsumeLiquid consume0) {
                                     Liquid liquid = ECLiquids.get(consume0.liquid).get(i);
                                     float amount = consume0.amount;
                                     ConsumeLiquid newconsume = new ConsumeLiquid(liquid, amount) {{
@@ -1138,7 +1167,7 @@ public class load {
             //贴图前缀
             String[] prefixs = {""};
             //贴图后缀
-            String[] sprites = {"", "-rotator", "-top","-arrow","-arrow-blur","-glow","-item","-top-invert"};
+            String[] sprites = {"", "-rotator", "-top", "-arrow", "-arrow-blur", "-glow", "-item", "-top-invert"};
             //遍历贴图后缀
             for (String sprite : sprites) {
                 for (String prefix : prefixs) {
@@ -1204,13 +1233,13 @@ public class load {
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(block).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -1316,13 +1345,13 @@ public class load {
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(block).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -1428,13 +1457,13 @@ public class load {
                                 int amount = pump.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newpump, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(pump).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(pump).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(pump).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -1446,7 +1475,6 @@ public class load {
                     }
                 }
             }
-
 
 
             //贴图前缀
@@ -1531,13 +1559,13 @@ public class load {
                                 int amount = wall.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newwall, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(wall).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(wall).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(wall).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -1836,14 +1864,13 @@ public class load {
                     if (core == null || (!state.rules.infiniteResources && !core.items.has(requirements, state.rules.buildCostMultiplier)))
                         return false;
 
-                    return tile.block() instanceof CoreBlock && size >= tile.block().size && (!requiresCoreZone || tempTiles.allMatch(o -> o.floor().allowCorePlacement));
+                    return tile.block() instanceof CoreBlock && (size > tile.block().size) || ECBlocks.get(coreBlock).indexOf(this) > ECBlocks.get(coreBlock).indexOf(tile.block()) && (!requiresCoreZone || tempTiles.allMatch(o -> o.floor().allowCorePlacement));
                 }
 
 
             };
             //将此钻头加入方块检索表
             ECBlocks.get(coreBlock).add(newcoreBlock);
-
 
 
             //获取Block的全部属性
@@ -1883,13 +1910,13 @@ public class load {
                                 int amount = coreBlock.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newcoreBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(coreBlock).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(coreBlock).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(coreBlock).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -2107,7 +2134,7 @@ public class load {
 
     //单位工厂
     public static void unitFactorys(Block unitFactorys) {
-        for (UnitFactory.UnitPlan unitPlan : ((UnitFactory)unitFactorys).plans.copy()) {
+        for (UnitFactory.UnitPlan unitPlan : ((UnitFactory) unitFactorys).plans.copy()) {
             for (int i = 1; i < 10; i++) {
                 if (ECUnits.get(unitPlan.unit) != null) {
                     UnitType unit = ECUnits.get(unitPlan.unit).get(i);
@@ -2173,13 +2200,13 @@ public class load {
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(block).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -2322,7 +2349,7 @@ public class load {
         //贴图前缀
         String[] prefixs = {""};
         //贴图后缀
-        String[] sprites = {"", "-rotator", "-top","-cap","-liquid","-turbine"};
+        String[] sprites = {"", "-rotator", "-top", "-cap", "-liquid", "-turbine"};
         //遍历贴图后缀
         for (String sprite : sprites) {
             for (String prefix : prefixs) {
@@ -2389,18 +2416,18 @@ public class load {
                                 int amount = powerNode.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newpowerNode, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(powerNode).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(powerNode).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(powerNode).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
                         }
-                        case "buildType" ,"otherReq","returnInt","graphs","maxRange" -> {
+                        case "buildType", "otherReq", "returnInt", "graphs", "maxRange" -> {
                         }
                         case "maxNodes" -> field.set(newpowerNode, (int) ((int) value0 * attributeBase));
                         case "laserRange" -> field.set(newpowerNode, (float) value0 * sizeBase);
@@ -2479,13 +2506,13 @@ public class load {
                                 int amount = battery.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newbattery, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(battery).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(battery).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(battery).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -2578,13 +2605,13 @@ public class load {
                                 int amount = lightBlock.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newlightBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(lightBlock).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(lightBlock).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(lightBlock).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -2667,13 +2694,13 @@ public class load {
                                 int amount = block.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(block).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(block).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -2757,13 +2784,13 @@ public class load {
                                 int amount = conduit.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newconduit, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conduit).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(conduit).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(conduit).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }
@@ -2855,13 +2882,13 @@ public class load {
                                 int amount = conduit.requirements[j].amount;
                                 requirements[j] = new ItemStack(item, amount);
 
-                                TechRequirements[j] = new ItemStack(item, amount*30);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
                             }
                             field.set(newconduit, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conduit).get(i - 1).techNodes) {
                                 techNode.children.add(
-                                        node(ECBlocks.get(conduit).get(i),TechRequirements,() -> {
+                                        node(ECBlocks.get(conduit).get(i), TechRequirements, () -> {
                                         })
                                 );
                             }

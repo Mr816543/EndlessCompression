@@ -11,7 +11,7 @@ author: "816543"
 main: "ec.EndlessCompression"
 
 #the mod version
-version:1.0.8
+version:1.0.9
 
 
 #TO DO
@@ -24,6 +24,9 @@ description: "将一些物质进行压缩
 无尽压缩Mod交流群:708031203
 
 更新日志
+v1.0.9
+1.压缩材料,压缩器,多重压缩器新增的角标贴图以便分辨
+
 v1.0.8
 1.修复了部分bug
 
