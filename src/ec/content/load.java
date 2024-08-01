@@ -2363,6 +2363,7 @@ public class load {
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
             //添加属性
+            field0.add(PowerBlock.class.getDeclaredFields());
             field0.add(PowerNode.class.getDeclaredFields());
             //遍历全部属性
             for (Field field : field0) {
