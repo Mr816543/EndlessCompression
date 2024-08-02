@@ -1868,7 +1868,7 @@ public class load {
                     if (core == null || (!state.rules.infiniteResources && !core.items.has(requirements, state.rules.buildCostMultiplier)))
                         return false;
 
-                    return tile.block() instanceof CoreBlock && (size > tile.block().size) || ECBlocks.get(coreBlock).indexOf(this) > ECBlocks.get(coreBlock).indexOf(tile.block()) && (!requiresCoreZone || tempTiles.allMatch(o -> o.floor().allowCorePlacement));
+                    return tile.block() instanceof CoreBlock && (size > tile.block().size) || (ECBlocks.get(coreBlock).indexOf(tile.block()) != -1 &&ECBlocks.get(coreBlock).indexOf(this) > ECBlocks.get(coreBlock).indexOf(tile.block())) && (!requiresCoreZone || tempTiles.allMatch(o -> o.floor().allowCorePlacement));
                 }
 
 
@@ -2668,6 +2668,7 @@ public class load {
         for (int i = 1; i < 10; i++) {
             int num = i;
             float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
             //创建新钻头
             NuclearReactor newBlock = new NuclearReactor(block.name + num) {{
                 localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
@@ -2719,9 +2720,7 @@ public class load {
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
-                        }
-
-                        case "consumeBuilder" -> {
+                        }case "consumeBuilder" -> {
                             Seq<Consume> consumeBuilder = ((Seq<Consume>) field.get(block)).copy();
                             Seq<Consume> newconsumeBuilder = new Seq<>();
                             for (int j = 0; j < consumeBuilder.size; j++) {
@@ -2747,9 +2746,17 @@ public class load {
                             }
                             field.set(newBlock, newconsumeBuilder);
                         }
+                        case "fuelItem" -> {
+                            Item item = ECItems.get((Item) value0).get(i);
+                            field.set(newBlock,item);
+                        }
 
+                        case "powerProduction" -> field.set(newBlock,(float)value0*attributeBase);
+                        case "explosionPuddleRange" ,"explosionPuddleAmount" -> field.set(newBlock,(float)value0*sizeBase);
+                        case "explosionDamage" -> field.set(newBlock,(int)((int)value0*attributeBase));
+                        case "explosionRadius" , "explosionPuddles" -> field.set(newBlock,(int)((int)value0*sizeBase));
 
-                        case "buildType" , "barMap" -> {
+                        case "buildType" , "barMap"  -> {
                         }
                         //其他没有自定义需求的属性
                         default -> field.set(newBlock, value0);
