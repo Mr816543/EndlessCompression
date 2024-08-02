@@ -77,6 +77,7 @@ public class ECBlocks {
             } else if (block instanceof PowerGenerator) {
                 if (block instanceof ConsumeGenerator) load.consumeGenerator(block);
                 else if (block instanceof SolarGenerator) load.SolarGenerator(block);
+                else if (block instanceof NuclearReactor) load.NuclearReactor(block);
             } else if (block instanceof PowerNode) load.powerNode(block);
             else if (block instanceof Conduit) {
                 if (block instanceof ArmoredConduit) load.armoredConduit(block);

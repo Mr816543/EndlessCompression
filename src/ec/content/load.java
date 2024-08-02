@@ -153,7 +153,8 @@ public class load {
 
             //遍历上级物品的全部科技节点,将本物品作为子节点添加
             for (TechNode techNode : ECItems.get(item).get(num - 1).techNodes) {
-                TechNode node = nodeProduce(ECItems.get(item).get(num), () -> {});
+                TechNode node = nodeProduce(ECItems.get(item).get(num), () -> {
+                });
                 node.parent = techNode;
                 techNode.children.add(node);
             }
@@ -316,7 +317,8 @@ public class load {
         }};
         //加入原版物品的科技节点
         for (TechNode techNode : item.techNodes) {
-            TechNode node = node(anyMtiCrafter, () -> {});
+            TechNode node = node(anyMtiCrafter, () -> {
+            });
             node.parent = techNode;
             techNode.children.add(node);
         }
@@ -461,7 +463,8 @@ public class load {
         //加入压缩器的子科技节点
         if (Vars.content.block("ec-" + item.name + "Compressor") != null) {
             for (TechNode techNode : Vars.content.block("ec-" + item.name + "Compressor").techNodes) {
-                TechNode node = node(anyMtiCrafter, () -> {});
+                TechNode node = node(anyMtiCrafter, () -> {
+                });
                 node.parent = techNode;
                 techNode.children.add(node);
             }
@@ -503,7 +506,7 @@ public class load {
                     //获取数字对应的Pixmap
                     PixmapRegion region = TextureAtlas.blankAtlas().getPixmap(number);
                     //mix叠加上number
-                    mix.draw(region.pixmap, region.x, region.y, region.width, region.height, 0, base.height - size, size, size, false, true);
+                    mix.draw(region.pixmap, region.x+2, region.y, region.width, region.height, 0, base.height - size, size, size, false, true);
                 }
                 //把mix设置为新内容的uiIcon和fullIcon
                 newliquid.uiIcon = newliquid.fullIcon = new TextureRegion(new Texture(mix));
@@ -514,7 +517,8 @@ public class load {
             ECLiquids.get(liquid).add(newliquid);
             //加入上一级液体的子科技节点
             for (TechNode techNode : ECLiquids.get(liquid).get(num - 1).techNodes) {
-                TechNode node = nodeProduce(ECLiquids.get(liquid).get(num), () -> {});
+                TechNode node = nodeProduce(ECLiquids.get(liquid).get(num), () -> {
+                });
                 node.parent = techNode;
                 techNode.children.add(node);
             }
@@ -681,7 +685,8 @@ public class load {
         }};
         //加入原液体的子科技节点
         for (TechNode techNode : liquid.techNodes) {
-            TechNode node = node(anyMtiCrafter, () -> {});
+            TechNode node = node(anyMtiCrafter, () -> {
+            });
             node.parent = techNode;
             techNode.children.add(node);
         }
@@ -745,7 +750,8 @@ public class load {
                             field.set(newconveyor, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -844,7 +850,8 @@ public class load {
                             field.set(newconveyor, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -942,7 +949,8 @@ public class load {
                             field.set(newconveyor, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conveyor).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(conveyor).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -1030,7 +1038,8 @@ public class load {
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -1075,7 +1084,7 @@ public class load {
         for (int i = 1; i < 10; i++) {
             int num = i;
             float attributeBase = (float) Math.pow(5, num);
-            float sizeBase = (float)Math.pow(1.4,num);
+            float sizeBase = (float) Math.pow(1.4, num);
             //创建新钻头
             Drill newdrill = new Drill(drill.name + num) {{
                 localizedName = Core.bundle.get("string.Compress" + num) + drill.localizedName;
@@ -1123,12 +1132,13 @@ public class load {
                             field.set(newdrill, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(drill).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(drill).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(drill).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
                         }
-                        case "buildType" -> {
+                        case "buildType", "barMap" -> {
                         }
                         case "consumeBuilder" -> {
                             Seq<Consume> consumeBuilder = (Seq<Consume>) value0;
@@ -1213,7 +1223,7 @@ public class load {
                     switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
-                            else field.set(block, (int) ((int) value0 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[block.requirements.length];
@@ -1228,7 +1238,8 @@ public class load {
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -1339,7 +1350,8 @@ public class load {
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -1450,7 +1462,8 @@ public class load {
                             field.set(newpump, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(pump).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(pump).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(pump).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -1551,7 +1564,8 @@ public class load {
                             field.set(newwall, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(wall).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(wall).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(wall).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -1683,7 +1697,8 @@ public class load {
             ECUnits.get(unit).add(newunit);
             //加入上一级单位的子科技节点
             for (TechNode techNode : ECUnits.get(unit).get(num - 1).techNodes) {
-                TechNode node = node(ECUnits.get(unit).get(num), () -> {});
+                TechNode node = node(ECUnits.get(unit).get(num), () -> {
+                });
                 node.parent = techNode;
                 techNode.children.add(node);
             }
@@ -1792,12 +1807,15 @@ public class load {
                 }
             }
             //贴图后缀
-            String[] sprites = {
-                    "", "-base", "-cell", "-leg",
-                    "-blade", "-blade-heat", "-heat",
-                    "-preview", "-side", "-missile", "-missile-fin",
-                    "-weapon", "-weapon-blade", "-weapon-preview"
-            };
+            Seq<String> sprites = new Seq<>(
+                    new String[]{
+                            "", "-base", "-cell", "-leg",
+                            "-blade", "-blade-heat", "-heat",
+                            "-preview", "-side", "-missile", "-missile-fin",
+                            "-weapon", "-weapon-blade", "-weapon-preview"
+                    }
+            );
+
             //遍历贴图后缀
             for (String sprite : sprites) {
                 //延时运行,来自I hope... 大佬
@@ -1809,6 +1827,7 @@ public class load {
                     return true;
                 });
             }
+
         }
     }
 
@@ -1900,7 +1919,8 @@ public class load {
                             field.set(newcoreBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(coreBlock).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(coreBlock).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(coreBlock).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -1939,8 +1959,8 @@ public class load {
 
 
         bullet.knockback *= sizeBase;
-        bullet.lifetime *= sizeBase;
-        bullet.hitSize *= damageBase;
+        //bullet.lifetime *= sizeBase;
+        //bullet.hitSize *= damageBase;
         bullet.damage *= damageBase;
         bullet.splashDamage *= damageBase;
         bullet.splashDamageRadius *= sizeBase;
@@ -2004,7 +2024,8 @@ public class load {
 
         //遍历block的所有科技节点,把anyMtiCrafter作为子节点添加
         for (TechTree.TechNode techNode : genericCrafter.techNodes) {
-            TechNode node = node(anyMtiCrafter, () -> {});
+            TechNode node = node(anyMtiCrafter, () -> {
+            });
             node.parent = techNode;
             techNode.children.add(node);
         }
@@ -2173,7 +2194,7 @@ public class load {
                     switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
-                            else field.set(block, (int) ((int) value0 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[block.requirements.length];
@@ -2188,7 +2209,8 @@ public class load {
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -2299,7 +2321,8 @@ public class load {
                         field.set(newconsumeGenerator, requirements);
                         //遍历block的所有科技节点,把anyMtiCrafter作为子节点添加
                         for (TechTree.TechNode techNode : consumeGenerator.techNodes) {
-                            TechNode node = node(newconsumeGenerator, () -> {});
+                            TechNode node = node(newconsumeGenerator, () -> {
+                            });
                             node.parent = techNode;
                             techNode.children.add(node);
                         }
@@ -2386,7 +2409,7 @@ public class load {
                 //允许通过反射访问私有变量
                 field.setAccessible(true);
                 //判断是否为final修饰的属性
-                if (Modifier.isPublic(field.getModifiers())) {
+                if (!Modifier.isFinal(field.getModifiers())) {
                     //获取属性名
                     String name0 = field.getName();
                     //获取原物品属性的属性值
@@ -2410,12 +2433,13 @@ public class load {
                             field.set(newpowerNode, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(powerNode).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(powerNode).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(powerNode).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
                         }
-                        case "buildType", "otherReq", "returnInt", "graphs", "maxRange" -> {
+                        case "buildType", "barMap" -> {
                         }
                         case "maxNodes" -> field.set(newpowerNode, (int) ((int) value0 * attributeBase));
                         case "laserRange" -> field.set(newpowerNode, (float) value0 * sizeBase);
@@ -2473,10 +2497,10 @@ public class load {
             for (Field field : field0) {
                 //允许通过反射访问私有变量
                 field.setAccessible(true);
-                //获取属性名
-                String name0 = field.getName();
                 //判断是否为final修饰的属性
                 if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
                     //获取原物品属性的属性值
                     Object value0 = field.get(battery);
                     //将新物品的属性设置为和原物品相同
@@ -2499,12 +2523,13 @@ public class load {
                             field.set(newbattery, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(battery).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(battery).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(battery).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
                         }
-                        case "buildType" -> {
+                        case "buildType", "consPower", "barMap" -> {
                         }
                         case "consumeBuilder" -> {
                             Seq<Consume> consumes = new Seq<>();
@@ -2572,10 +2597,10 @@ public class load {
             for (Field field : field0) {
                 //允许通过反射访问私有变量
                 field.setAccessible(true);
-                //获取属性名
-                String name0 = field.getName();
                 //判断是否为final修饰的属性
-                if (!Modifier.isFinal(field.getModifiers())) {
+                if (Modifier.isPublic(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
                     //获取原物品属性的属性值
                     Object value0 = field.get(lightBlock);
                     //将新物品的属性设置为和原物品相同
@@ -2597,12 +2622,13 @@ public class load {
                             field.set(newlightBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(lightBlock).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(lightBlock).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(lightBlock).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
                         }
-                        case "buildType" -> {
+                        case "buildType","clipSize","lightRadius" -> {
                         }
                         case "radius", "brightness" -> field.set(newlightBlock, (float) value0 * sizeBase);
                         //其他没有自定义需求的属性
@@ -2630,6 +2656,126 @@ public class load {
             }
         }
     }
+
+    //核反应堆
+    public static void NuclearReactor(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            //创建新钻头
+            NuclearReactor newBlock = new NuclearReactor(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(NuclearReactor.class.getDeclaredFields());
+            field0.add(PowerGenerator.class.getDeclaredFields());
+            field0.add(PowerDistributor.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //获取属性名
+                String name0 = field.getName();
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+
+                        case "consumeBuilder" -> {
+                            Seq<Consume> consumeBuilder = ((Seq<Consume>) field.get(block)).copy();
+                            Seq<Consume> newconsumeBuilder = new Seq<>();
+                            for (int j = 0; j < consumeBuilder.size; j++) {
+                                if (consumeBuilder.get(j) instanceof ConsumeItems consume) {
+                                    ItemStack[] items = new ItemStack[consume.items.length];
+                                    for (int k = 0; k < consume.items.length; k++) {
+                                        Item item = ECItems.get(consume.items[k].item).get(i);
+                                        int amount = consume.items[k].amount;
+                                        items[k] = new ItemStack(item, amount);
+                                    }
+                                    newconsumeBuilder.add(new ConsumeItems(items));
+                                } else if (consumeBuilder.get(j) instanceof ConsumeLiquid consume) {
+                                    Liquid liquid = ECLiquids.get(consume.liquid).get(i);
+                                    float amount = consume.amount;
+                                    ConsumeLiquid newconsume = new ConsumeLiquid(liquid, amount) {{
+                                        optional = consume.optional;
+                                        booster = consume.booster;
+                                        update = consume.update;
+                                        multiplier = consume.multiplier;
+                                    }};
+                                    newconsumeBuilder.add(newconsume);
+                                } else newconsumeBuilder.add(consumeBuilder.get(j));
+                            }
+                            field.set(newBlock, newconsumeBuilder);
+                        }
+
+
+                        case "buildType" , "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-top" , "-light"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
 
     //太阳能
     public static void SolarGenerator(Block block) throws IllegalAccessException {
@@ -2670,7 +2816,7 @@ public class load {
                     switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
-                            else field.set(block, (int) ((int) value0 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
                         }
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[block.requirements.length];
@@ -2685,7 +2831,8 @@ public class load {
                             field.set(newBlock, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -2720,7 +2867,6 @@ public class load {
     }
 
     //液体
-
     public static void conduit(Block conduit) throws IllegalAccessException {
         //创建物品检索表
         Seq<Block> Conduits = new Seq<>();
@@ -2774,7 +2920,8 @@ public class load {
                             field.set(newconduit, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conduit).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(conduit).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(conduit).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }
@@ -2871,7 +3018,8 @@ public class load {
                             field.set(newconduit, requirements);
                             //遍历上级的全部科技节点,将本方块作为子节点添加
                             for (TechNode techNode : ECBlocks.get(conduit).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(conduit).get(i), TechRequirements, () -> {});
+                                TechNode node = node(ECBlocks.get(conduit).get(i), TechRequirements, () -> {
+                                });
                                 node.parent = techNode;
                                 techNode.children.add(node);
                             }

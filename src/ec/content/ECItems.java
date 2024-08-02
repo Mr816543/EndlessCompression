@@ -3,23 +3,8 @@ package ec.content;
 import arc.Core;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
-import ec.Tools.AnyMtiCrafter;
 import mindustry.Vars;
-import mindustry.content.Fx;
-import mindustry.gen.Sounds;
-import mindustry.type.Category;
 import mindustry.type.Item;
-import mindustry.type.ItemStack;
-import mindustry.world.blocks.power.ConsumeGenerator;
-import mindustry.world.consumers.ConsumeItemCharged;
-import mindustry.world.consumers.ConsumeItemExplode;
-import mindustry.world.draw.DrawDefault;
-import mindustry.world.draw.DrawLiquidRegion;
-import mindustry.world.draw.DrawMulti;
-import mindustry.world.draw.DrawWarmupRegion;
-
-import static mindustry.content.Items.*;
-import static mindustry.type.ItemStack.with;
 
 
 @SuppressWarnings("SpellCheckingInspection")
