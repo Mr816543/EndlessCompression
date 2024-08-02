@@ -1959,7 +1959,8 @@ public class load {
 
 
         bullet.knockback *= sizeBase;
-        //bullet.lifetime *= sizeBase;
+        bullet.lifetime *= sizeBase;
+        //手机会卡
         //bullet.hitSize *= damageBase;
         bullet.damage *= damageBase;
         bullet.splashDamage *= damageBase;
