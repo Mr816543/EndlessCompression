@@ -9,6 +9,8 @@ import mindustry.type.Item;
 import mindustry.type.Liquid;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.Door;
+import mindustry.world.blocks.defense.ForceProjector;
+import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.distribution.ArmoredConveyor;
@@ -23,6 +25,8 @@ import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 
+import static ec.content.ECItems.All;
+
 
 @SuppressWarnings("ALL")
 public class ECBlocks {
@@ -30,18 +34,6 @@ public class ECBlocks {
 
     public static void load() throws IllegalAccessException, NoSuchFieldException {
         Seq<Block> blocks = new Seq<>();
-
-        for (Item item : ECItems.ECItems.keys()) {
-            //运行加载物品压缩器的方法
-            load.itemCompressor(item);
-            //运行加载多重物品压缩器的方法
-            load.itemMultiPress(item);
-        }
-
-        for (Liquid liquid : ECLiquids.ECLiquids.keys()) {
-            //运行加载液体压缩器的方法
-            load.liquidCompressor(liquid);
-        }
 
         //判断设置"Compress-other-Mods"(是否对其他Mod生效)的状态
         if (Core.settings.getBool("Compress-other-Mods")) {
@@ -57,12 +49,26 @@ public class ECBlocks {
             }
         }
 
+        for (Item item : All) {
+            //运行加载物品压缩器的方法
+            load.itemCompressor(item);
+            //运行加载多重物品压缩器的方法
+            load.itemMultiPress(item);
+        }
+
+        for (Liquid liquid : ECLiquids.ECLiquids.keys()) {
+            //运行加载液体压缩器的方法
+            load.liquidCompressor(liquid);
+        }
+
+
         //遍历blocks
         for (Block block : blocks) {
             if (block instanceof Wall) {
                 if (!(block instanceof Door)) load.wall(block);
-            } else if (block instanceof GenericCrafter) load.genericCrafter(block);
-            else if (block instanceof Turret) load.turret(block);
+            } else if (block instanceof GenericCrafter) {
+                load.genericCrafter(block);
+            } else if (block instanceof Turret) load.turret(block);
             else if (block instanceof UnitFactory) load.unitFactorys(block);
             else if (block instanceof Reconstructor) load.Reconstructor(block);
             else if (block instanceof Drill) load.drill(block);
@@ -86,6 +92,9 @@ public class ECBlocks {
             else if (block instanceof Battery) load.battery(block);
             else if (block instanceof CoreBlock) load.coreBlock(block);
             else if (block instanceof Unloader) load.Unloader(block);
+            else if (block instanceof Separator) load.Separator(block);
+            else if (block instanceof OverdriveProjector) load.OverdriveProjector(block);
+            else if (block instanceof ForceProjector) load.ForceProjector(block);
 
         }
     }

@@ -3,14 +3,17 @@ package ec.content;
 import arc.Core;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import arc.util.Log;
 import mindustry.Vars;
 import mindustry.type.Item;
+
+import java.util.Arrays;
 
 
 @SuppressWarnings("SpellCheckingInspection")
 public class ECItems {
     public static ObjectMap<Item, Seq<Item>> ECItems = new ObjectMap<>();
-
+    public static Item[] All;
     public static void load() throws IllegalAccessException {
 
         Seq<Item> items = new Seq<>();
@@ -29,10 +32,15 @@ public class ECItems {
             }
         }
 
+        All = new Item[items.size];
+        int i = 0;
         //遍历items
         for (Item item : items) {
             //运行加载压缩物品的方法
+
             load.item(item);
+            All[i] = item;
+            i++;
         }
     }
 }

@@ -267,7 +267,6 @@ public class AnyMtiCrafter extends Block {
             if(progress >= 1f){
                 craft(formula);
             }
-
             dumpOutputs(formula);
         }
 
@@ -314,14 +313,13 @@ public class AnyMtiCrafter extends Block {
         public void dumpOutputs(Formula formula){
             if(formula.outputItems != null && timer(timerDump, dumpTime / timeScale)){
                 for(ItemStack output : formula.outputItems){
-                    dump(output.item);
+                    for (int i = 0 ; i < Math.min(items.get(output.item),816543/600);i++ ) dump(output.item);
                 }
             }
 
             if(formula.outputLiquids != null){
                 for(int i = 0; i < formula.outputLiquids.length; i++){
                     int dir = formula.liquidOutputDirections.length > i ? formula.liquidOutputDirections[i] : -1;
-
                     dumpLiquid(formula.outputLiquids[i].liquid, 2f, dir);
                 }
             }

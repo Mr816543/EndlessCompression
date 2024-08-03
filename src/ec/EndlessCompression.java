@@ -2,6 +2,7 @@ package ec;
 
 import arc.Events;
 import arc.util.Log;
+import ec.Tools.GradualDisplayName;
 import ec.content.*;
 import mindustry.Vars;
 import mindustry.content.Blocks;
@@ -11,6 +12,7 @@ import mindustry.mod.Mod;
 public class EndlessCompression extends Mod {
 
     public EndlessCompression() {
+        //Vars.ui.settings.game.find("Compress-other-Mods").remove();
         Events.on(EventType.ClientLoadEvent.class, e -> Vars.ui.settings.game.checkPref("Compress-other-Mods", false));
     }
 
@@ -21,7 +23,7 @@ public class EndlessCompression extends Mod {
 
     @Override
     public void loadContent() {
-
+        GradualDisplayName.load();
         try {
             ECItems.load();
             ECLiquids.load();
