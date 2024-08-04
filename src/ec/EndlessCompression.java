@@ -1,11 +1,9 @@
 package ec;
 
 import arc.Events;
-import arc.util.Log;
 import ec.Tools.GradualDisplayName;
 import ec.content.*;
 import mindustry.Vars;
-import mindustry.content.Blocks;
 import mindustry.game.EventType;
 import mindustry.mod.Mod;
 

@@ -16,7 +16,6 @@ import ec.Tools.Tool;
 import ec.cType.ECDrill;
 import mindustry.Vars;
 import mindustry.content.Fx;
-import mindustry.content.Items;
 import mindustry.content.TechTree;
 import mindustry.entities.abilities.*;
 import mindustry.entities.bullet.BasicBulletType;
@@ -31,6 +30,7 @@ import mindustry.type.weapons.RepairBeamWeapon;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.defense.ForceProjector;
+import mindustry.world.blocks.defense.MendProjector;
 import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
@@ -41,6 +41,7 @@ import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.liquid.ArmoredConduit;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBlock;
+import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.payloads.PayloadBlock;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
@@ -68,20 +69,22 @@ import static mindustry.content.TechTree.*;
 import static mindustry.type.ItemStack.with;
 
 public class load {
-    //物品颜色
-    public static Color itemColor(Item item, int num, boolean deepen) {
+    //颜色
+    public static Color Color(Color color, int num, boolean deepen) {
 
         Color color0 = Color.rgb(255, 255, 255);
-
 
         if (deepen) {
             color0 = Color.rgb(0, 0, 0);
         }
 
-        Color color = item.color.cpy();
-
         return color.cpy().lerp(color0, 0.035f * num);
 
+    }
+
+    //物品颜色
+    public static Color itemColor(Item item, int num, boolean deepen) {
+        return Color(item.color, num, deepen);
     }
 
     public static Color itemColor(Item item, int num) {
@@ -89,25 +92,13 @@ public class load {
     }
 
     //液体颜色
-    public static Color liquidColor(String name0, int num, boolean deepen) {
-
-        Color color0 = Color.rgb(255, 255, 255);
-
-
-        if (deepen) {
-            color0 = Color.rgb(0, 0, 0);
-        }
-
-        Color color = Vars.content.liquid(name0).color.cpy();
-
-        return color.cpy().lerp(color0, 0.035f * num);
-
+    public static Color liquidColor(Liquid liquid, int num, boolean deepen) {
+        return Color(liquid.color, num, deepen);
     }
 
-    public static Color liquidColor(String name0, int num) {
-        return liquidColor(name0, num, true);
+    public static Color liquidColor(Liquid liquid, int num) {
+        return liquidColor(liquid, num, true);
     }
-
 
     //物品
     public static void item(Item item, String name, int attributeIndex) throws IllegalAccessException {
@@ -337,6 +328,7 @@ public class load {
             localizedName = Core.bundle.get("string.MultiPress.name0") + item.localizedName + Core.bundle.get("string.MultiPress.name1");
             description = Core.bundle.get("string.MultiPress.description");
             details = Core.bundle.get("string.MultiPress.details");
+            AiItemCapacity = true;
             //贴图
             useBlockDrawer = true;
             drawer = new DrawMulti(
@@ -436,7 +428,7 @@ public class load {
             requirements(Category.crafting, with(ECItems.get(silicon).get(1), 20));
             size = 3;
             maxList = 5;
-            itemCapacity = ((int) Math.pow(9, 9));
+            itemCapacity = 10;
             hasItems = true;
             hasLiquids = true;
             hasPower = true;
@@ -475,7 +467,6 @@ public class load {
             }
         }
     }
-
 
     //液体
     public static void liquid(Liquid liquid) throws IllegalAccessException {
@@ -543,7 +534,7 @@ public class load {
                     //将新液体的属性设置为和原物品相同
                     switch (name0) {
                         //颜色自定义
-                        case "color" -> field.set(newliquid, load.liquidColor(liquid.name, num));
+                        case "color" -> field.set(newliquid, load.liquidColor(liquid, num));
                         //燃烧性,爆炸性,比热容,沸点自定义
                         case "flammability", "explosiveness", "heatCapacity", "boilPoint" ->
                                 field.set(newliquid, (float) value0 * attributeBase);
@@ -1078,7 +1069,6 @@ public class load {
         }
     }
 
-
     //钻头
     public static void drill(Block drill) throws IllegalAccessException {
         //创建物品检索表
@@ -1091,11 +1081,12 @@ public class load {
             float attributeBase = (float) Math.pow(5, num);
             float sizeBase = (float) Math.pow(1.4, num);
             //创建新钻头
-            ECDrill newdrill = new ECDrill(drill.name + num,num) {{
-                localizedName = Core.bundle.get("string.Compress" + num) + drill.localizedName;
-                description = drill.description;
-                details = drill.details;
-            }
+            ECDrill newdrill = new ECDrill(drill.name + num, num) {
+                {
+                    localizedName = Core.bundle.get("string.Compress" + num) + drill.localizedName;
+                    description = drill.description;
+                    details = drill.details;
+                }
 
             };
             //将此钻头加入方块检索表
@@ -1148,6 +1139,7 @@ public class load {
                         case "buildType", "barMap" -> {
                         }
                         case "consumeBuilder" -> {
+
                             Seq<Consume> consumeBuilder = (Seq<Consume>) value0;
                             Seq<Consume> newconsumeBuilder = new Seq<>();
                             for (Consume consume : consumeBuilder) {
@@ -1260,8 +1252,7 @@ public class load {
                             Seq<Consume> consumeBuilder = (Seq<Consume>) value0;
                             Seq<Consume> newconsumeBuilder = new Seq<>();
                             for (Consume consume : consumeBuilder) {
-                                if (consume instanceof ConsumeLiquid) {
-                                    ConsumeLiquid consume0 = (ConsumeLiquid) consume;
+                                if (consume instanceof ConsumeLiquid consume0) {
                                     Liquid liquid = ECLiquids.get(consume0.liquid).get(i);
                                     float amount = consume0.amount;
                                     ConsumeLiquid newconsume = new ConsumeLiquid(liquid, amount) {{
@@ -1797,7 +1788,7 @@ public class load {
                             ConsumeItems itemConsumer = (ConsumeItems) value0;
                             Item item = ECItems.get(itemConsumer.items[0].item).get(i);
                             int amount = itemConsumer.items[0].amount;
-                            field.set(newBlock, block.consumeItem(item,amount).boost());
+                            field.set(newBlock, block.consumeItem(item, amount).boost());
                         }
                         case "radius", "phaseRadiusBoost" -> field.set(newBlock, (float) value0 * sizeBase);
                         case "shieldHealth", "phaseShieldBoost" -> field.set(newBlock, (float) value0 * attributeBase);
@@ -1829,77 +1820,205 @@ public class load {
         }
     }
 
-    //炮台
-    public static void turret(Block turret) throws IllegalAccessException {
-        if (turret instanceof ItemTurret) {
-            ObjectMap<Item, BulletType> newAmmoTypes = new ObjectMap<>();
-            for (Item item : ((ItemTurret) turret).ammoTypes.keys()) {
-                if (ECItems.get(item) != null) {
-                    for (int i = 1; i < 10; i++) {
-                        Item ammoItem = ECItems.get(item).get(i);
-                        BulletType bulletType = ((ItemTurret) turret).ammoTypes.get(item).copy();
-                        load.bullet(bulletType, i);
-                        newAmmoTypes.put(ammoItem, bulletType);
-                    }
-                }
+    //修理投影
+    public static void MendProjector(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            MendProjector newBlock = new MendProjector(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
 
-            }
-            ((ItemTurret) turret).ammoTypes.putAll(newAmmoTypes);
 
             //获取Block的全部属性
             Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(MendProjector.class.getDeclaredFields());
             //遍历全部属性
             for (Field field : field0) {
                 //允许通过反射访问私有变量
                 field.setAccessible(true);
-                //获取属性名
-                String name0 = field.getName();
                 //判断是否为final修饰的属性
                 if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
                     //获取原物品属性的属性值
-                    Object value0 = field.get(turret);
+                    Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    if (name0.equals("consumeBuilder")) {
-                        Seq<Consume> newconsumes = new Seq<>();
-                        for (Consume consume : ((Seq<Consume>) value0)) {
-                            if (consume instanceof ConsumeLiquid) {
-                                Liquid liquid = ((ConsumeLiquid) consume).liquid;
-                                float amount = ((ConsumeLiquid) consume).amount;
-                                if (ECLiquids.get(liquid) != null) for (int i = 1; i < 10; i++) {
-
-                                    ConsumeLiquid consumeLiquid = new ConsumeLiquid(ECLiquids.get(liquid).get(i), amount) {{
-                                        booster = true;
-                                        multiplier = consume.multiplier;
-                                        optional = true;
-                                        update = consume.update;
-                                    }};
-                                    newconsumes.add(consumeLiquid);
-                                }
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
                             }
                         }
-                        ((Seq<Consume>) value0).add(newconsumes);
+                        case "range" , "phaseRangeBoost" -> field.set(newBlock,(float)value0*sizeBase);
+                        case "reload" -> field.set(newBlock, (float) value0 / sizeBase);
+                        case "scaledHealth" -> field.set(newBlock, (float) value0 * attributeBase);
+
+                        case "consumeBuilder" -> {
+                            Seq<Consume> consumeBuilder = (Seq<Consume>) value0;
+                            Seq<Consume> newconsumeBuilder = new Seq<>();
+                            for (Consume consume : consumeBuilder) {
+                                if (consume instanceof ConsumeLiquid consume0) {
+                                    Liquid liquid = ECLiquids.get(consume0.liquid).get(i);
+                                    float amount = consume0.amount;
+                                    ConsumeLiquid newconsume = new ConsumeLiquid(liquid, amount) {{
+                                        optional = consume.optional;
+                                        booster = consume.booster;
+                                        update = consume.update;
+                                        multiplier = consume.multiplier;
+                                    }};
+                                    newconsumeBuilder.add(newconsume);
+                                } else if (consume instanceof ConsumeItems) {
+                                    ItemStack[] itemStacks = new ItemStack[((ConsumeItems) consume).items.length];
+                                    for (int j = 0; j < ((ConsumeItems) consume).items.length; j++) {
+                                        Item item = ECItems.get(((ConsumeItems) consume).items[j].item).get(i);
+                                        int amount = ((ConsumeItems) consume).items[j].amount;
+                                        itemStacks[j] = new ItemStack(item, amount);
+                                    }
+                                    newconsumeBuilder.add(new ConsumeItems(itemStacks) {{
+                                        optional = consume.optional;
+                                        booster = consume.booster;
+                                        update = consume.update;
+                                        multiplier = consume.multiplier;
+                                    }});
+                                }else if (consume instanceof ConsumePower consumePower){
+                                    float u = consumePower.usage * attributeBase;
+                                    float c = consumePower.capacity;
+                                    boolean b = consumePower.booster;
+                                    newconsumeBuilder.add(new ConsumePower(u,c,b));
+                                }
+
+                                else newconsumeBuilder.add(consume);
+                            }
+                            field.set(newBlock, newconsumeBuilder);
+                        }
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
                     }
                 }
             }
 
-
-        } else if (turret instanceof LiquidTurret) {
-            ObjectMap<Liquid, BulletType> newAmmoTypes = new ObjectMap<>();
-            for (Liquid liquid : ((LiquidTurret) turret).ammoTypes.keys()) {
-                if (!liquid.isModded()) {
-                    for (int i = 1; i < 10; i++) {
-                        Liquid ammoLiquid = ECLiquids.get(liquid).get(i);
-                        BulletType bulletType = ((LiquidTurret) turret).ammoTypes.get(liquid).copy();
-                        load.bullet(bulletType, i);
-                        newAmmoTypes.put(ammoLiquid, bulletType);
-                    }
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-liquid","-top","-bottom"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
+                        return true;
+                    });
                 }
-
             }
-            ((LiquidTurret) turret).ammoTypes.putAll(newAmmoTypes);
         }
     }
 
+    //炮台
+    public static void ItemTurret(Block turret) throws IllegalAccessException {
+        ObjectMap<Item, BulletType> newAmmoTypes = new ObjectMap<>();
+        for (Item item : ((ItemTurret) turret).ammoTypes.keys()) {
+            if (ECItems.get(item) != null) {
+                for (int i = 1; i < 10; i++) {
+                    Item ammoItem = ECItems.get(item).get(i);
+                    BulletType bulletType = ((ItemTurret) turret).ammoTypes.get(item).copy();
+                    load.bullet(bulletType, i);
+                    newAmmoTypes.put(ammoItem, bulletType);
+                }
+            }
+
+        }
+        ((ItemTurret) turret).ammoTypes.putAll(newAmmoTypes);
+
+        //获取Block的全部属性
+        Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+        //遍历全部属性
+        for (Field field : field0) {
+            //允许通过反射访问私有变量
+            field.setAccessible(true);
+            //获取属性名
+            String name0 = field.getName();
+            //判断是否为final修饰的属性
+            if (!Modifier.isFinal(field.getModifiers())) {
+                //获取原物品属性的属性值
+                Object value0 = field.get(turret);
+                //将新物品的属性设置为和原物品相同
+                if (name0.equals("consumeBuilder")) {
+                    Seq<Consume> newconsumes = new Seq<>();
+                    for (Consume consume : ((Seq<Consume>) value0)) {
+                        if (consume instanceof ConsumeLiquid) {
+                            Liquid liquid = ((ConsumeLiquid) consume).liquid;
+                            float amount = ((ConsumeLiquid) consume).amount;
+                            if (ECLiquids.get(liquid) != null) for (int i = 1; i < 10; i++) {
+
+                                ConsumeLiquid consumeLiquid = new ConsumeLiquid(ECLiquids.get(liquid).get(i), amount) {{
+                                    booster = true;
+                                    multiplier = consume.multiplier;
+                                    optional = true;
+                                    update = consume.update;
+                                }};
+                                newconsumes.add(consumeLiquid);
+                            }
+                        }
+                    }
+                    ((Seq<Consume>) value0).add(newconsumes);
+                }
+            }
+        }
+
+
+    }
+
+    public static void LiquidTurret(Block turret){
+        ObjectMap<Liquid, BulletType> newAmmoTypes = new ObjectMap<>();
+        for (Liquid liquid : ((LiquidTurret) turret).ammoTypes.keys()) {
+            if (!liquid.isModded()) {
+                for (int i = 1; i < 10; i++) {
+                    Liquid ammoLiquid = ECLiquids.get(liquid).get(i);
+                    BulletType bulletType = ((LiquidTurret) turret).ammoTypes.get(liquid).copy();
+                    load.bullet(bulletType, i);
+                    newAmmoTypes.put(ammoLiquid, bulletType);
+                }
+            }
+
+        }
+        ((LiquidTurret) turret).ammoTypes.putAll(newAmmoTypes);
+    }
 
     //单位
     public static void unit(UnitType unit) throws IllegalAccessException {
@@ -2059,6 +2178,96 @@ public class load {
         }
     }
 
+
+    //容器
+    public static void StorageBlock(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            StorageBlock newBlock = new StorageBlock(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(StorageBlock.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "itemCapacity" -> field.set(newBlock,(int)((int)value0*attributeBase));
+                        case "scaledHealth" -> field.set(newBlock, (float) value0 * attributeBase);
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-team"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
     //核心
     public static void coreBlock(Block coreBlock) throws IllegalAccessException {
         //创建物品检索表
@@ -2070,37 +2279,7 @@ public class load {
             float attributeBase = (float) Math.pow(5, i);
             float sizeBase = (float) Math.pow(1.4, i);
             //创建新钻头
-            int finalI = i;
-            CoreBlock newcoreBlock = new CoreBlock(coreBlock.name + finalI) {
-                {
-                    localizedName = Core.bundle.get("string.Compress" + finalI) + coreBlock.localizedName;
-                    description = coreBlock.description;
-                    details = coreBlock.details;
-                }
-
-                @Override
-                public boolean canPlaceOn(Tile tile, Team team, int rotation) {
-                    if (tile == null) return false;
-                    //in the editor, you can place them anywhere for convenience
-                    if (state.isEditor()) return true;
-
-                    CoreBuild core = team.core();
-
-                    //special floor upon which cores can be placed
-                    tile.getLinkedTilesAs(this, tempTiles);
-                    if (!tempTiles.contains(o -> !o.floor().allowCorePlacement || o.block() instanceof CoreBlock)) {
-                        return true;
-                    }
-
-                    //must have all requirements
-                    if (core == null || (!state.rules.infiniteResources && !core.items.has(requirements, state.rules.buildCostMultiplier)))
-                        return false;
-
-                    return tile.block() instanceof CoreBlock && (size > tile.block().size) || (ECBlocks.get(coreBlock).indexOf(tile.block()) != -1 && ECBlocks.get(coreBlock).indexOf(this) > ECBlocks.get(coreBlock).indexOf(tile.block())) && (!requiresCoreZone || tempTiles.allMatch(o -> o.floor().allowCorePlacement));
-                }
-
-
-            };
+            CoreBlock newcoreBlock = getCoreBlock(coreBlock, i);
             //将此钻头加入方块检索表
             ECBlocks.get(coreBlock).add(newcoreBlock);
 
@@ -2181,6 +2360,39 @@ public class load {
         }
     }
 
+    private static CoreBlock getCoreBlock(Block coreBlock, int i) {
+        return new CoreBlock(coreBlock.name + i) {
+            {
+                localizedName = Core.bundle.get("string.Compress" + i) + coreBlock.localizedName;
+                description = coreBlock.description;
+                details = coreBlock.details;
+            }
+
+            @Override
+            public boolean canPlaceOn(Tile tile, Team team, int rotation) {
+                if (tile == null) return false;
+                //in the editor, you can place them anywhere for convenience
+                if (state.isEditor()) return true;
+
+                CoreBuild core = team.core();
+
+                //special floor upon which cores can be placed
+                tile.getLinkedTilesAs(this, tempTiles);
+                if (!tempTiles.contains(o -> !o.floor().allowCorePlacement || o.block() instanceof CoreBlock)) {
+                    return true;
+                }
+
+                //must have all requirements
+                if (core == null || (!state.rules.infiniteResources && !core.items.has(requirements, state.rules.buildCostMultiplier)))
+                    return false;
+
+                return tile.block() instanceof CoreBlock && (size > tile.block().size) || (ECBlocks.get(coreBlock).indexOf(tile.block()) != -1 && ECBlocks.get(coreBlock).indexOf(this) > ECBlocks.get(coreBlock).indexOf(tile.block())) && (!requiresCoreZone || tempTiles.allMatch(o -> o.floor().allowCorePlacement));
+            }
+
+
+        };
+    }
+
 
     //子弹强化
     public static BulletType bullet(BulletType bullet, float damageBase, float sizeBase) {
@@ -2250,6 +2462,13 @@ public class load {
             //drawer = ((GenericCrafter)genericCrafter).drawer;
             region = genericCrafter.region;
         }};
+        int num0 = 0;
+        for (ItemStack itemStack : anyMtiCrafter.requirements) {
+            Item item = ECItems.get(itemStack.item).get(1);
+            int amount = itemStack.amount;
+            anyMtiCrafter.requirements[num0] = new ItemStack(item, amount);
+            num0++;
+        }
 
         //遍历block的所有科技节点,把anyMtiCrafter作为子节点添加
         for (TechTree.TechNode techNode : genericCrafter.techNodes) {
@@ -2342,7 +2561,6 @@ public class load {
         }
 
         //贴图前缀
-        Seq<String> prefixs = new Seq<>(new String[]{""});
         //贴图后缀
         Seq<String> sprites = new Seq<>(new String[]{"", "-bottom", "-middle", "-top"});
         if (anyMtiCrafter.variants > 0) {
@@ -2448,14 +2666,16 @@ public class load {
                             field.set(newBlock, newconsumeBuilder);
                         }
                         case "results" -> {
-                            ItemStack[] results = (ItemStack[]) value0;
-                            ItemStack[] newresults = new ItemStack[results.length];
-                            for (int j = 0; j < results.length; j++) {
-                                Item item = ECItems.get(results[j].item).get(i);
-                                int amount = results[j].amount;
-                                newresults[j] = new ItemStack(item, amount);
+                            if (value0 != null) {
+                                ItemStack[] results = (ItemStack[]) value0;
+                                ItemStack[] newresults = new ItemStack[results.length];
+                                for (int j = 0; j < results.length; j++) {
+                                    Item item = ECItems.get(results[j].item).get(i);
+                                    int amount = results[j].amount;
+                                    newresults[j] = new ItemStack(item, amount);
+                                }
+                                field.set(newBlock, newresults);
                             }
-                            field.set(newBlock, newresults);
                         }
                         case "buildType", "barMap" -> {
                         }
@@ -2580,8 +2800,7 @@ public class load {
                             Seq<Consume> consumeBuilder = ((Seq<Consume>) field.get(block)).copy();
                             Seq<Consume> newconsumeBuilder = new Seq<>();
                             for (int j = 0; j < consumeBuilder.size; j++) {
-                                if (consumeBuilder.get(j) instanceof ConsumeItems) {
-                                    ConsumeItems consume = (ConsumeItems) consumeBuilder.get(j);
+                                if (consumeBuilder.get(j) instanceof ConsumeItems consume) {
                                     ItemStack[] items = new ItemStack[consume.items.length];
                                     for (int k = 0; k < consume.items.length; k++) {
                                         Item item = ECItems.get(consume.items[k].item).get(i);
@@ -2621,7 +2840,6 @@ public class load {
         }
     }
 
-
     //电力
     //发电厂
     public static void consumeGenerator(Block consumeGenerator) throws IllegalAccessException, NoSuchFieldException {
@@ -2632,13 +2850,14 @@ public class load {
         for (Consume consume : (Seq<Consume>) consumes.get(consumeGenerator)) {
             if (consume instanceof ConsumeItemFilter) {
                 isConsume = false;
+                break;
             }
         }
+        Seq<Block> ConsumeGenerators = new Seq<>();
+        ConsumeGenerators.add(consumeGenerator);
+        ECBlocks.put(consumeGenerator, ConsumeGenerators);
         if (isConsume) {
             //创建物品检索表
-            Seq<Block> ConsumeGenerators = new Seq<>();
-            ConsumeGenerators.add(consumeGenerator);
-            ECBlocks.put(consumeGenerator, ConsumeGenerators);
             //根据原物品批量创建压缩物品
             for (int i = 1; i < 10; i++) {
                 //创建新钻头
@@ -2683,7 +2902,7 @@ public class load {
                                 field.set(newconsumeGenerator, requirements);
                                 //遍历block的所有科技节点,把anyMtiCrafter作为子节点添加
                                 for (TechTree.TechNode techNode : ECBlocks.get(consumeGenerator).get(i - 1).techNodes) {
-                                    TechNode node = node(newconsumeGenerator, () -> {
+                                    TechNode node = node(newconsumeGenerator, TechRequirements, () -> {
                                     });
                                     node.parent = techNode;
                                     techNode.children.add(node);
@@ -2740,9 +2959,6 @@ public class load {
             }
         } else {
             //创建物品检索表
-            Seq<Block> ConsumeGenerators = new Seq<>();
-            ConsumeGenerators.add(consumeGenerator);
-            ECBlocks.put(consumeGenerator, ConsumeGenerators);
             //根据原物品批量创建压缩物品
             //创建新钻头
             ConsumeGenerator newconsumeGenerator = new ConsumeGenerator(consumeGenerator.name) {{
@@ -2784,7 +3000,7 @@ public class load {
                             field.set(newconsumeGenerator, requirements);
                             //遍历block的所有科技节点,把anyMtiCrafter作为子节点添加
                             for (TechTree.TechNode techNode : consumeGenerator.techNodes) {
-                                TechNode node = node(newconsumeGenerator, () -> {
+                                TechNode node = node(newconsumeGenerator, TechRequirements, () -> {
                                 });
                                 node.parent = techNode;
                                 techNode.children.add(node);
@@ -3251,6 +3467,94 @@ public class load {
         }
     }
 
+    //地热
+    public static void ThermalGenerator(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            ThermalGenerator newBlock = new ThermalGenerator(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(PowerGenerator.class.getDeclaredFields());
+            field0.add(ThermalGenerator.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "powerProduction" -> field.set(newBlock, (float) value0 * attributeBase);
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-team"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
 
     //太阳能
     public static void SolarGenerator(Block block) throws IllegalAccessException {
@@ -3416,7 +3720,7 @@ public class load {
             Seq<String> sprites = new Seq<>();
             String[] sprites1 = {"-bottom", "-top"};
 
-            String[] sprites2 = {"" + "-0", "-1", "-2", "-3", "-4"};
+            String[] sprites2 = {"", "-0", "-1", "-2", "-3", "-4"};
             for (String string1 : sprites1) {
                 for (String string2 : sprites2) {
                     sprites.add(string1 + string2);
@@ -3514,7 +3818,7 @@ public class load {
             Seq<String> sprites = new Seq<>();
             String[] sprites1 = {"-bottom", "-top", "-arrow", "-end", "bridge", "-cap"};
 
-            String[] sprites2 = {"" + "-0", "-1", "-2", "-3", "-4"};
+            String[] sprites2 = {"", "-0", "-1", "-2", "-3", "-4"};
             for (String string1 : sprites1) {
                 for (String string2 : sprites2) {
                     sprites.add(string1 + string2);
@@ -3529,6 +3833,95 @@ public class load {
                         if (!Core.atlas.has(prefix + conduit.name + sprite)) return false;
                         //以原版贴图覆盖新物品贴图
                         Core.atlas.addRegion(prefix + newconduit.name + sprite, Core.atlas.find(prefix + conduit.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
+    //液体容器/路由器
+    public static void LiquidRouter(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            LiquidRouter newBlock = new LiquidRouter(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(LiquidBlock.class.getDeclaredFields());
+            field0.add(LiquidRouter.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "liquidCapacity" -> field.set(newBlock, (float) value0 * attributeBase);
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-liquid","-top","-bottom"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
                         return true;
                     });
                 }

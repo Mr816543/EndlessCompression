@@ -8,6 +8,7 @@ import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.math.geom.Geometry;
+import arc.math.geom.Position;
 import arc.scene.style.TextureRegionDrawable;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.ScrollPane;
@@ -16,18 +17,18 @@ import arc.struct.EnumSet;
 import arc.struct.ObjectMap;
 import arc.struct.OrderedMap;
 import arc.struct.Seq;
-import arc.util.Align;
-import arc.util.Eachable;
-import arc.util.Nullable;
-import arc.util.Time;
+import arc.util.*;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.content.Fx;
+import mindustry.core.World;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.Effect;
 import mindustry.entities.units.BuildPlan;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
+import mindustry.logic.LAccess;
+import mindustry.logic.Ranged;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
 import mindustry.type.Liquid;
@@ -36,6 +37,7 @@ import mindustry.ui.Bar;
 import mindustry.ui.Fonts;
 import mindustry.ui.Styles;
 import mindustry.world.Block;
+import mindustry.world.blocks.ControlBlock;
 import mindustry.world.consumers.*;
 import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
@@ -53,6 +55,9 @@ public class AnyMtiCrafter extends Block {
     public static String name(String add){
         return ModName + "-" + add;
     }
+
+    /** 根据配方智能选择容量 @816543 */
+    public boolean AiItemCapacity = false;
 
     /** 配方表 {@link Formula}*/
     public Seq<Formula> products = new Seq<>();
@@ -194,6 +199,7 @@ public class AnyMtiCrafter extends Block {
     }
 
     public class AnyMtiCrafterBuild extends Building{
+        public int thisItemCapacity;
         public Formula formula = products.size > 0 ? products.get(0) : null;
         public float progress;
         public float totalProgress;
@@ -238,6 +244,8 @@ public class AnyMtiCrafter extends Block {
 
         @Override
         public void updateTile(){
+
+
             if(lastRotation != rotation){
                 Fx.placeBlock.at(x, y, size);
                 lastRotation = rotation;
@@ -268,6 +276,142 @@ public class AnyMtiCrafter extends Block {
                 craft(formula);
             }
             dumpOutputs(formula);
+
+            //物品容量修改
+            if (AiItemCapacity){
+                int MaxItem = 0 ;
+                for (Consume consume : formula.consumeBuilder){
+                    if (consume instanceof ConsumeItems){
+                        for (ItemStack itemStack : ((ConsumeItems)consume).items){
+                            MaxItem = Math.max(MaxItem,itemStack.amount);
+                        }
+                    }
+                }
+                for (ItemStack itemStack : formula.outputItems)MaxItem = Math.max(MaxItem,itemStack.amount);
+                thisItemCapacity = MaxItem*2;
+            }else thisItemCapacity = itemCapacity;
+
+
+        }
+
+
+        @Override
+        public boolean acceptItem(Building source, Item item) {
+            if(formula == null) return false;
+            return formula.getConsumeItem(item) && this.items.get(item) < this.getMaximumAccepted(item);
+        }
+
+        @Override
+        public int explosionItemCap() {
+            return thisItemCapacity;
+        }
+
+        @Override
+        public int getMaximumAccepted(Item item) {
+            return thisItemCapacity;
+        }
+        @Override
+        public double sense(LAccess sensor) {
+            double var10000;
+            switch (sensor) {
+                case x:
+                    var10000 = (double) World.conv(this.x);
+                    break;
+                case y:
+                    var10000 = (double)World.conv(this.y);
+                    break;
+                case color:
+                    var10000 = Color.toDoubleBits(this.team.color.r, this.team.color.g, this.team.color.b, 1.0F);
+                    break;
+                case dead:
+                    var10000 = !this.isValid() ? 1.0 : 0.0;
+                    break;
+                case team:
+                    var10000 = (double)this.team.id;
+                    break;
+                case health:
+                    var10000 = (double)this.health;
+                    break;
+                case maxHealth:
+                    var10000 = (double)this.maxHealth;
+                    break;
+                case efficiency:
+                    var10000 = (double)this.efficiency;
+                    break;
+                case timescale:
+                    var10000 = (double)this.timeScale;
+                    break;
+                case range:
+                    if (this instanceof Ranged) {
+                        Ranged r = (Ranged)this;
+                        var10000 = (double)(r.range() / 8.0F);
+                    } else {
+                        var10000 = 0.0;
+                    }
+                    break;
+                case rotation:
+                    var10000 = (double)this.rotation;
+                    break;
+                case totalItems:
+                    var10000 = this.items == null ? 0.0 : (double)this.items.total();
+                    break;
+                case totalLiquids:
+                    var10000 = this.liquids == null ? 0.0 : (double)this.liquids.currentAmount();
+                    break;
+                case totalPower:
+                    var10000 = this.power != null && this.block.consPower != null ? (double)(this.power.status * (this.block.consPower.buffered ? this.block.consPower.capacity : 1.0F)) : 0.0;
+                    break;
+                case itemCapacity:
+                    var10000 = this.block.hasItems ? (double)thisItemCapacity : 0.0;
+                    break;
+                case liquidCapacity:
+                    var10000 = this.block.hasLiquids ? (double)this.block.liquidCapacity : 0.0;
+                    break;
+                case powerCapacity:
+                    var10000 = this.block.consPower != null ? (double)this.block.consPower.capacity : 0.0;
+                    break;
+                case powerNetIn:
+                    var10000 = this.power == null ? 0.0 : (double)(this.power.graph.getLastScaledPowerIn() * 60.0F);
+                    break;
+                case powerNetOut:
+                    var10000 = this.power == null ? 0.0 : (double)(this.power.graph.getLastScaledPowerOut() * 60.0F);
+                    break;
+                case powerNetStored:
+                    var10000 = this.power == null ? 0.0 : (double)this.power.graph.getLastPowerStored();
+                    break;
+                case powerNetCapacity:
+                    var10000 = this.power == null ? 0.0 : (double)this.power.graph.getLastCapacity();
+                    break;
+                case enabled:
+                    var10000 = this.enabled ? 1.0 : 0.0;
+                    break;
+                case controlled:
+                    byte var5;
+                    label86: {
+                        if (this instanceof ControlBlock) {
+                            ControlBlock c = (ControlBlock)this;
+                            if (c.isControlled()) {
+                                var5 = 2;
+                                break label86;
+                            }
+                        }
+
+                        var5 = 0;
+                    }
+
+                    var10000 = (double)var5;
+                    break;
+                case payloadCount:
+                    var10000 = this.getPayload() != null ? 1.0 : 0.0;
+                    break;
+                case size:
+                    var10000 = (double)this.block.size;
+                    break;
+                default:
+                    var10000 = Double.NaN;
+            }
+
+            return var10000;
         }
 
         @Override
@@ -353,11 +497,6 @@ public class AnyMtiCrafter extends Block {
             return enabled;
         }
 
-        @Override
-        public boolean acceptItem(Building source, Item item) {
-            if(formula == null) return false;
-            return formula.getConsumeItem(item) && this.items.get(item) < itemCapacity;
-        }
 
         @Override
         public boolean acceptLiquid(Building source, Liquid liquid) {
