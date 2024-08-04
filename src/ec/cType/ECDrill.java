@@ -14,7 +14,7 @@ public class ECDrill extends Drill {
     public class DrillBuild extends Drill.DrillBuild {
         @Override
         public void updateTile() {
-            if (timer(timerDump, dumpTime)) {
+            if (timer(timerDump, Math.min(dumpTime,1))) {
                 dump(dominantItem != null && items.has(dominantItem) ? dominantItem : null);
             }
 
@@ -41,12 +41,16 @@ public class ECDrill extends Drill {
                 return;
             }
 
+            int Effects = 0 ;
             while (dominantItems > 0 && progress >= delay && items.total() < itemCapacity) {
                 offload(dominantItem);
                 progress -= delay;
+                if (wasVisible && Mathf.chanceDelta(updateEffectChance * warmup)&&Effects < 2) {
+                    Effects++;
+                    drillEffect.at(x + Mathf.range(drillEffectRnd), y + Mathf.range(drillEffectRnd), dominantItem.color);
+                }
             }
-            if (wasVisible && Mathf.chanceDelta(updateEffectChance * warmup))
-                drillEffect.at(x + Mathf.range(drillEffectRnd), y + Mathf.range(drillEffectRnd), dominantItem.color);
+
         }
     }
 }

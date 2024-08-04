@@ -4,13 +4,16 @@ version '1.0'
 
 dependencies {
     compileOnly files('libs/MultiCrafterLib-1.8.jar')
+    compileOnly files('libs/Mindustry.jar')
 }
 
 sourceSets.main.java.srcDirs = ["src"]
 
 repositories{
+    mavenLocal()
     mavenCentral()
     maven{ url "https://raw.githubusercontent.com/Zelaux/MindustryRepo/master/repository" }
+    //maven{ url "https://github.com/Anuken/Mindustry.git"}
     maven{ url 'https://www.jitpack.io' }
 }
 

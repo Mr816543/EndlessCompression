@@ -8,24 +8,25 @@ import mindustry.Vars;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
 import mindustry.world.Block;
-import mindustry.world.blocks.defense.Door;
 import mindustry.world.blocks.defense.ForceProjector;
+import mindustry.world.blocks.defense.MendProjector;
 import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.world.blocks.defense.Wall;
-import mindustry.world.blocks.defense.turrets.Turret;
+import mindustry.world.blocks.defense.turrets.ItemTurret;
+import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.distribution.ArmoredConveyor;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.liquid.ArmoredConduit;
 import mindustry.world.blocks.liquid.Conduit;
+import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
-
-import static ec.content.ECItems.All;
 
 
 @SuppressWarnings("ALL")
@@ -49,14 +50,14 @@ public class ECBlocks {
             }
         }
 
-        for (Item item : All) {
+        for (Item item : ECItems.All) {
             //运行加载物品压缩器的方法
             load.itemCompressor(item);
             //运行加载多重物品压缩器的方法
             load.itemMultiPress(item);
         }
 
-        for (Liquid liquid : ECLiquids.ECLiquids.keys()) {
+        for (Liquid liquid : ECLiquids.All) {
             //运行加载液体压缩器的方法
             load.liquidCompressor(liquid);
         }
@@ -64,37 +65,82 @@ public class ECBlocks {
 
         //遍历blocks
         for (Block block : blocks) {
-            if (block instanceof Wall) {
-                if (!(block instanceof Door)) load.wall(block);
-            } else if (block instanceof GenericCrafter) {
-                load.genericCrafter(block);
-            } else if (block instanceof Turret) load.turret(block);
-            else if (block instanceof UnitFactory) load.unitFactorys(block);
-            else if (block instanceof Reconstructor) load.Reconstructor(block);
-            else if (block instanceof Drill) load.drill(block);
-            else if (block instanceof BeamDrill) load.BeamDrill(block);
-            else if (block instanceof Conveyor) {
-                if (block instanceof ArmoredConveyor) load.armoredConveyor(block);
-                else load.conveyor(block);
-            } else if (block instanceof StackConveyor) load.stackConveyor(block);
-            else if (block instanceof Pump) {
-                if (block instanceof SolidPump) load.solidPump(block);
-                else load.Pump(block);
-            } else if (block instanceof PowerGenerator) {
-                if (block instanceof ConsumeGenerator) load.consumeGenerator(block);
-                else if (block instanceof SolarGenerator) load.SolarGenerator(block);
-                else if (block instanceof NuclearReactor) load.NuclearReactor(block);
-            } else if (block instanceof PowerNode) load.powerNode(block);
-            else if (block instanceof Conduit) {
-                if (block instanceof ArmoredConduit) load.armoredConduit(block);
-                else load.conduit(block);
-            } else if (block instanceof LightBlock) load.lightBlock(block);
-            else if (block instanceof Battery) load.battery(block);
-            else if (block instanceof CoreBlock) load.coreBlock(block);
-            else if (block instanceof Unloader) load.Unloader(block);
-            else if (block instanceof Separator) load.Separator(block);
-            else if (block instanceof OverdriveProjector) load.OverdriveProjector(block);
-            else if (block instanceof ForceProjector) load.ForceProjector(block);
+            Class<?> clazz = block.getClass().getSuperclass();
+            if (false) {
+            } else if (clazz.equals(Drill.class)) load.drill(block);
+            else if (clazz.equals(Wall.class)) load.wall(block);
+            else if (clazz.equals(UnitFactory.class)) load.unitFactorys(block);
+            else if (clazz.equals(Reconstructor.class)) load.Reconstructor(block);
+            else if (clazz.equals(BeamDrill.class)) load.BeamDrill(block);
+            else if (clazz.equals(Conveyor.class)) load.conveyor(block);
+            else if (clazz.equals(ArmoredConveyor.class)) load.armoredConveyor(block);
+            else if (clazz.equals(StackConveyor.class)) load.stackConveyor(block);
+            else if (clazz.equals(Pump.class)) load.Pump(block);
+            else if (clazz.equals(SolidPump.class)) load.solidPump(block);
+            else if (clazz.equals(ConsumeGenerator.class)) load.consumeGenerator(block);
+            else if (clazz.equals(SolarGenerator.class)) load.SolarGenerator(block);
+            else if (clazz.equals(NuclearReactor.class)) load.NuclearReactor(block);
+            else if (clazz.equals(PowerNode.class)) load.powerNode(block);
+            else if (clazz.equals(Conduit.class)) load.conduit(block);
+            else if (clazz.equals(ArmoredConduit.class)) load.armoredConduit(block);
+            else if (clazz.equals(LightBlock.class)) load.lightBlock(block);
+            else if (clazz.equals(Battery.class)) load.battery(block);
+            else if (clazz.equals(CoreBlock.class)) load.coreBlock(block);
+            else if (clazz.equals(Unloader.class)) load.Unloader(block);
+            else if (clazz.equals(Separator.class)) load.Separator(block);
+            else if (clazz.equals(OverdriveProjector.class)) load.OverdriveProjector(block);
+            else if (clazz.equals(ForceProjector.class)) load.ForceProjector(block);
+            else if (clazz.equals(GenericCrafter.class)) load.genericCrafter(block);
+
+            else if (clazz.equals(ItemTurret.class)) load.ItemTurret(block);
+            else if (clazz.equals(LiquidTurret.class)) load.LiquidTurret(block);
+
+            else if (clazz.equals(StorageBlock.class)) load.StorageBlock(block);
+            else if (clazz.equals(ThermalGenerator.class)) load.ThermalGenerator(block);
+            else if (clazz.equals(LiquidRouter.class)) load.LiquidRouter(block);
+            else if (clazz.equals(MendProjector.class)) load.MendProjector(block);
+
+
+            // if (block instanceof Turret) load.turret(block);
+            //else if (block instanceof GenericCrafter) {
+            //      load.genericCrafter(block);
+            // }
+
+            // else if (block instanceof Wall) if (!(block instanceof Door)) load.wall(block);
+            //else if (block instanceof UnitFactory) load.unitFactorys(block);
+            // else if (block instanceof Reconstructor) load.Reconstructor(block);
+
+            //else if (block instanceof Drill) load.drill(block);
+            //else if (block instanceof BeamDrill) load.BeamDrill(block);
+            //else if (block instanceof Conveyor) {
+            //if (block instanceof ArmoredConveyor) load.armoredConveyor(block);
+            //else load.conveyor(block);
+            // } else if (block instanceof StackConveyor) load.stackConveyor(block);
+            //else if (block instanceof Pump) {
+            // if (block instanceof SolidPump) load.solidPump(block);
+            // else load.Pump(block);
+            //}
+            // else if (block instanceof PowerGenerator) {
+            //    if (block instanceof ConsumeGenerator) load.consumeGenerator(block);
+            //   else if (block instanceof SolarGenerator) load.SolarGenerator(block);
+            //   else if (block instanceof NuclearReactor) load.NuclearReactor(block);
+            // }
+
+
+            //else if (block instanceof PowerNode) load.powerNode(block);
+            //else if (block instanceof Conduit) {
+            //    if (block instanceof ArmoredConduit) load.armoredConduit(block);
+            //   else load.conduit(block);
+            // }
+
+
+            //else if (block instanceof LightBlock) load.lightBlock(block);
+            //else if (block instanceof Battery) load.battery(block);
+            //else if (block instanceof CoreBlock) load.coreBlock(block);
+            //else if (block instanceof Unloader) load.Unloader(block);
+            //  else if (block instanceof Separator) load.Separator(block);
+            //else if (block instanceof OverdriveProjector) load.OverdriveProjector(block);
+            // else if (block instanceof ForceProjector) load.ForceProjector(block);
 
         }
     }

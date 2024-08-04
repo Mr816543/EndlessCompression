@@ -7,6 +7,7 @@ import mindustry.Vars;
 import mindustry.type.Liquid;
 
 public class ECLiquids {
+    public static Liquid[] All;
     public static ObjectMap<Liquid, Seq<Liquid>> ECLiquids = new ObjectMap<>();
 
     public static void load() throws IllegalAccessException {
@@ -25,11 +26,14 @@ public class ECLiquids {
                 }
             }
         }
-
+        All = new Liquid[liquids.size];
+        int i = 0;
         //遍历liquids
         for (Liquid liquid : liquids) {
             //运行加载压缩液体的方法
             load.liquid(liquid);
+            All[i] = liquid;
+            i++;
         }
     }
 }
