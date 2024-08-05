@@ -14,6 +14,7 @@ import arc.util.Eachable;
 import ec.Tools.AnyMtiCrafter;
 import ec.Tools.Tool;
 import ec.cType.ECDrill;
+import ec.cType.ECMassDriver;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.content.TechTree;
@@ -37,6 +38,7 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.distribution.ArmoredConveyor;
 import mindustry.world.blocks.distribution.Conveyor;
+import mindustry.world.blocks.distribution.MassDriver;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.liquid.ArmoredConduit;
 import mindustry.world.blocks.liquid.Conduit;
@@ -45,6 +47,9 @@ import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.payloads.PayloadBlock;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
+import mindustry.world.blocks.sandbox.ItemSource;
+import mindustry.world.blocks.sandbox.LiquidSource;
+import mindustry.world.blocks.sandbox.PowerSource;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.blocks.storage.Unloader;
@@ -68,6 +73,7 @@ import static mindustry.content.Items.silicon;
 import static mindustry.content.TechTree.*;
 import static mindustry.type.ItemStack.with;
 
+@SuppressWarnings("ALL")
 public class load {
     //颜色
     public static Color Color(Color color, int num, boolean deepen) {
@@ -137,7 +143,7 @@ public class load {
                     //获取数字对应的Pixmap
                     PixmapRegion region = TextureAtlas.blankAtlas().getPixmap(number);
                     //mix叠加上number
-                    mix.draw(region.pixmap, region.x, region.y, region.width, region.height, 0, base.height - size, size, size, false, true);
+                    mix.draw(region.pixmap, region.x, region.y + 10, region.width, region.height, 0, base.height - size, size, size, false, true);
                 }
                 //把mix设置为新内容的uiIcon和fullIcon
                 newitem.uiIcon = newitem.fullIcon = new TextureRegion(new Texture(mix));
@@ -201,99 +207,94 @@ public class load {
 
             //贴图方面
             useBlockDrawer = true;
-            drawer = new DrawMulti(
-                    new DrawRegion() {
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-Compressor");
-                        }
+            drawer = new DrawMulti(new DrawRegion() {
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-Compressor");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            TextureRegion[] textureRegions = new TextureRegion[3];
-                            textureRegions[0] = Core.atlas.find("ec-Compressor");
-                            textureRegions[1] = Core.atlas.find("ec-Compressor-icon");
-                            if (Core.atlas.find("item-" + item.name) != null) {
-                                textureRegions[2] = Core.atlas.find("item-" + item.name);
-                            } else if (Core.atlas.find(item.name) != null) {
-                                textureRegions[2] = Core.atlas.find(item.name);
-                            } else textureRegions[2] = textureRegions[1];
-                            return textureRegions;
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECItems.get(item).get(1).color);
-                            Draw.rect(Core.atlas.find("ec-Compressor-top0"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    TextureRegion[] textureRegions = new TextureRegion[3];
+                    textureRegions[0] = Core.atlas.find("ec-Compressor");
+                    textureRegions[1] = Core.atlas.find("ec-Compressor-icon");
+                    if (Core.atlas.find("item-" + item.name) != null) {
+                        textureRegions[2] = Core.atlas.find("item-" + item.name);
+                    } else if (Core.atlas.find(item.name) != null) {
+                        textureRegions[2] = Core.atlas.find(item.name);
+                    } else textureRegions[2] = textureRegions[1];
+                    return textureRegions;
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECItems.get(item).get(1).color);
+                    Draw.rect(Core.atlas.find("ec-Compressor-top0"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECItems.get(item).get(1).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECItems.get(item).get(1).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-Compressor" + "-top0");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-Compressor" + "-top0");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECItems.get(item).get(5).color);
-                            Draw.rect(Core.atlas.find("ec-Compressor-top1"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECItems.get(item).get(5).color);
+                    Draw.rect(Core.atlas.find("ec-Compressor-top1"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECItems.get(item).get(5).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECItems.get(item).get(5).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-Compressor" + "-top1");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-Compressor" + "-top1");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECItems.get(item).get(9).color);
-                            Draw.rect(Core.atlas.find("ec-Compressor-top2"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECItems.get(item).get(9).color);
+                    Draw.rect(Core.atlas.find("ec-Compressor-top2"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECItems.get(item).get(9).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECItems.get(item).get(9).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-Compressor" + "-top2");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-Compressor" + "-top2");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    }
-            );
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            });
             //其他属性
             requirements(Category.crafting, with(silicon, 5));
             size = 2;
@@ -331,99 +332,94 @@ public class load {
             AiItemCapacity = true;
             //贴图
             useBlockDrawer = true;
-            drawer = new DrawMulti(
-                    new DrawRegion() {
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-MultiPress");
-                        }
+            drawer = new DrawMulti(new DrawRegion() {
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-MultiPress");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            TextureRegion[] textureRegions = new TextureRegion[3];
-                            textureRegions[0] = Core.atlas.find("ec-MultiPress");
-                            textureRegions[1] = Core.atlas.find("ec-MultiPress-icon");
-                            if (Core.atlas.find("item-" + item.name) != null) {
-                                textureRegions[2] = Core.atlas.find("item-" + item.name);
-                            } else if (Core.atlas.find(item.name) != null) {
-                                textureRegions[2] = Core.atlas.find(item.name);
-                            } else textureRegions[2] = textureRegions[1];
-                            return textureRegions;
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECItems.get(item).get(1).color);
-                            Draw.rect(Core.atlas.find("ec-MultiPress-top0"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    TextureRegion[] textureRegions = new TextureRegion[3];
+                    textureRegions[0] = Core.atlas.find("ec-MultiPress");
+                    textureRegions[1] = Core.atlas.find("ec-MultiPress-icon");
+                    if (Core.atlas.find("item-" + item.name) != null) {
+                        textureRegions[2] = Core.atlas.find("item-" + item.name);
+                    } else if (Core.atlas.find(item.name) != null) {
+                        textureRegions[2] = Core.atlas.find(item.name);
+                    } else textureRegions[2] = textureRegions[1];
+                    return textureRegions;
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECItems.get(item).get(1).color);
+                    Draw.rect(Core.atlas.find("ec-MultiPress-top0"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECItems.get(item).get(1).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECItems.get(item).get(1).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-MultiPress" + "-top0");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-MultiPress" + "-top0");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECItems.get(item).get(5).color);
-                            Draw.rect(Core.atlas.find("ec-MultiPress-top1"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECItems.get(item).get(5).color);
+                    Draw.rect(Core.atlas.find("ec-MultiPress-top1"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECItems.get(item).get(5).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECItems.get(item).get(5).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-MultiPress" + "-top1");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-MultiPress" + "-top1");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECItems.get(item).get(9).color);
-                            Draw.rect(Core.atlas.find("ec-MultiPress-top2"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECItems.get(item).get(9).color);
+                    Draw.rect(Core.atlas.find("ec-MultiPress-top2"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECItems.get(item).get(9).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECItems.get(item).get(9).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-MultiPress" + "-top2");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-MultiPress" + "-top2");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    }
-            );
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            });
             //其他属性
             requirements(Category.crafting, with(ECItems.get(silicon).get(1), 20));
             size = 3;
@@ -502,7 +498,7 @@ public class load {
                     //获取数字对应的Pixmap
                     PixmapRegion region = TextureAtlas.blankAtlas().getPixmap(number);
                     //mix叠加上number
-                    mix.draw(region.pixmap, region.x + 2, region.y, region.width, region.height, 0, base.height - size, size, size, false, true);
+                    mix.draw(region.pixmap, region.x + 2, region.y + 10, region.width, region.height, 0, base.height - size, size, size, false, true);
                 }
                 //把mix设置为新内容的uiIcon和fullIcon
                 newliquid.uiIcon = newliquid.fullIcon = new TextureRegion(new Texture(mix));
@@ -560,99 +556,94 @@ public class load {
             description = Core.bundle.get("string.Compressor.description");
             details = Core.bundle.get("string.Compressor.details");
             //贴图
-            drawer = new DrawMulti(
-                    new DrawRegion() {
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-Compressor");
-                        }
+            drawer = new DrawMulti(new DrawRegion() {
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-Compressor");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            TextureRegion[] textureRegions = new TextureRegion[3];
-                            textureRegions[0] = Core.atlas.find("ec-Compressor");
-                            textureRegions[1] = Core.atlas.find("ec-Compressor-icon");
-                            if (Core.atlas.find("liquid-" + liquid.name) != null) {
-                                textureRegions[2] = Core.atlas.find("liquid-" + liquid.name);
-                            } else if (Core.atlas.find(liquid.name) != null) {
-                                textureRegions[2] = Core.atlas.find(liquid.name);
-                            } else textureRegions[2] = textureRegions[1];
-                            return textureRegions;
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECLiquids.get(liquid).get(1).color);
-                            Draw.rect(Core.atlas.find("ec-Compressor-top0"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    TextureRegion[] textureRegions = new TextureRegion[3];
+                    textureRegions[0] = Core.atlas.find("ec-Compressor");
+                    textureRegions[1] = Core.atlas.find("ec-Compressor-icon");
+                    if (Core.atlas.find("liquid-" + liquid.name) != null) {
+                        textureRegions[2] = Core.atlas.find("liquid-" + liquid.name);
+                    } else if (Core.atlas.find(liquid.name) != null) {
+                        textureRegions[2] = Core.atlas.find(liquid.name);
+                    } else textureRegions[2] = textureRegions[1];
+                    return textureRegions;
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECLiquids.get(liquid).get(1).color);
+                    Draw.rect(Core.atlas.find("ec-Compressor-top0"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECLiquids.get(liquid).get(1).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECLiquids.get(liquid).get(1).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-Compressor" + "-top0");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-Compressor" + "-top0");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECLiquids.get(liquid).get(5).color);
-                            Draw.rect(Core.atlas.find("ec-Compressor-top1"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECLiquids.get(liquid).get(5).color);
+                    Draw.rect(Core.atlas.find("ec-Compressor-top1"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECLiquids.get(liquid).get(5).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECLiquids.get(liquid).get(5).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-Compressor" + "-top1");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-Compressor" + "-top1");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    },
-                    new DrawRegion() {
-                        @Override
-                        public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
-                            if (!drawPlan) return;
-                            Draw.color(ECLiquids.get(liquid).get(9).color);
-                            Draw.rect(Core.atlas.find("ec-Compressor-top2"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
-                        }
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            }, new DrawRegion() {
+                @Override
+                public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list) {
+                    if (!drawPlan) return;
+                    Draw.color(ECLiquids.get(liquid).get(9).color);
+                    Draw.rect(Core.atlas.find("ec-Compressor-top2"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+                }
 
-                        @Override
-                        public void draw(Building build) {
-                            Draw.color(ECLiquids.get(liquid).get(9).color);
-                            super.draw(build);
-                        }
+                @Override
+                public void draw(Building build) {
+                    Draw.color(ECLiquids.get(liquid).get(9).color);
+                    super.draw(build);
+                }
 
-                        @Override
-                        public void load(Block block) {
-                            region = Core.atlas.find("ec-Compressor" + "-top2");
-                        }
+                @Override
+                public void load(Block block) {
+                    region = Core.atlas.find("ec-Compressor" + "-top2");
+                }
 
-                        @Override
-                        public TextureRegion[] icons(Block block) {
-                            return new TextureRegion[]{};
-                        }
-                    }
-            );
+                @Override
+                public TextureRegion[] icons(Block block) {
+                    return new TextureRegion[]{};
+                }
+            });
             //其他属性
             requirements(Category.crafting, with(ECItems.get(silicon).get(1), 15));
             size = 2;
@@ -974,6 +965,129 @@ public class load {
                         if (!Core.atlas.has(prefix + conveyor.name + sprite)) return false;
                         //以原版贴图覆盖新物品贴图
                         Core.atlas.addRegion(prefix + newconveyor.name + sprite, Core.atlas.find(prefix + conveyor.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
+    //质量驱动器
+    public static void MassDriver(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            ECMassDriver newBlock = new ECMassDriver(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(MassDriver.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //获取属性名
+                String name0 = field.getName();
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "consumeBuilder" -> {
+                            Seq<Consume> consumeBuilder = ((Seq<Consume>) field.get(block)).copy();
+                            Seq<Consume> newconsumeBuilder = new Seq<>();
+                            for (int j = 0; j < consumeBuilder.size; j++) {
+                                if (consumeBuilder.get(j) instanceof ConsumeItems consume) {
+                                    ItemStack[] items = new ItemStack[consume.items.length];
+                                    for (int k = 0; k < consume.items.length; k++) {
+                                        Item item = ECItems.get(consume.items[k].item).get(i);
+                                        int amount = consume.items[k].amount;
+                                        items[k] = new ItemStack(item, amount);
+                                    }
+                                    newconsumeBuilder.add(new ConsumeItems(items));
+                                } else if (consumeBuilder.get(j) instanceof ConsumeLiquid consume) {
+                                    Liquid liquid = ECLiquids.get(consume.liquid).get(i);
+                                    float amount = consume.amount;
+                                    ConsumeLiquid newconsume = new ConsumeLiquid(liquid, amount) {{
+                                        optional = consume.optional;
+                                        booster = consume.booster;
+                                        update = consume.update;
+                                        multiplier = consume.multiplier;
+                                    }};
+                                    newconsumeBuilder.add(newconsume);
+                                } else if (consumeBuilder.get(j) instanceof ConsumePower consume) {
+                                    float usage = consume.usage * attributeBase;
+                                    float capacity = consume.capacity;
+                                    boolean buffered = consume.buffered;
+                                    newconsumeBuilder.add(new ConsumePower(usage, capacity, buffered));
+                                } else newconsumeBuilder.add(consumeBuilder.get(j));
+                            }
+                            field.set(newBlock, newconsumeBuilder);
+                        }
+                        case "itemCapacity" -> field.set(newBlock,(int)((int)value0*attributeBase));
+                        case "reload" -> field.set(newBlock, (float) value0 / attributeBase);
+                        case "range" -> field.set(newBlock, (float) value0 * sizeBase);
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-base"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
                         return true;
                     });
                 }
@@ -1879,7 +1993,7 @@ public class load {
                                 techNode.children.add(node);
                             }
                         }
-                        case "range" , "phaseRangeBoost" -> field.set(newBlock,(float)value0*sizeBase);
+                        case "range", "phaseRangeBoost" -> field.set(newBlock, (float) value0 * sizeBase);
                         case "reload" -> field.set(newBlock, (float) value0 / sizeBase);
                         case "scaledHealth" -> field.set(newBlock, (float) value0 * attributeBase);
 
@@ -1910,14 +2024,12 @@ public class load {
                                         update = consume.update;
                                         multiplier = consume.multiplier;
                                     }});
-                                }else if (consume instanceof ConsumePower consumePower){
+                                } else if (consume instanceof ConsumePower consumePower) {
                                     float u = consumePower.usage * attributeBase;
                                     float c = consumePower.capacity;
                                     boolean b = consumePower.booster;
-                                    newconsumeBuilder.add(new ConsumePower(u,c,b));
-                                }
-
-                                else newconsumeBuilder.add(consume);
+                                    newconsumeBuilder.add(new ConsumePower(u, c, b));
+                                } else newconsumeBuilder.add(consume);
                             }
                             field.set(newBlock, newconsumeBuilder);
                         }
@@ -1932,7 +2044,7 @@ public class load {
             //贴图前缀
             String[] prefixs = {""};
             //贴图后缀
-            String[] sprites = {"", "-liquid","-top","-bottom"};
+            String[] sprites = {"", "-liquid", "-top", "-bottom"};
             //遍历贴图后缀
             for (String sprite : sprites) {
                 for (String prefix : prefixs) {
@@ -2004,7 +2116,7 @@ public class load {
 
     }
 
-    public static void LiquidTurret(Block turret){
+    public static void LiquidTurret(Block turret) {
         ObjectMap<Liquid, BulletType> newAmmoTypes = new ObjectMap<>();
         for (Liquid liquid : ((LiquidTurret) turret).ammoTypes.keys()) {
             if (!liquid.isModded()) {
@@ -2154,14 +2266,7 @@ public class load {
                 }
             }
             //贴图后缀
-            Seq<String> sprites = new Seq<>(
-                    new String[]{
-                            "", "-base", "-cell", "-leg",
-                            "-blade", "-blade-heat", "-heat",
-                            "-preview", "-side", "-missile", "-missile-fin",
-                            "-weapon", "-weapon-blade", "-weapon-preview"
-                    }
-            );
+            Seq<String> sprites = new Seq<>(new String[]{"", "-base", "-cell", "-leg", "-blade", "-blade-heat", "-heat", "-preview", "-side", "-missile", "-missile-fin", "-weapon", "-weapon-blade", "-weapon-preview"});
 
             //遍历贴图后缀
             for (String sprite : sprites) {
@@ -2238,7 +2343,7 @@ public class load {
                                 techNode.children.add(node);
                             }
                         }
-                        case "itemCapacity" -> field.set(newBlock,(int)((int)value0*attributeBase));
+                        case "itemCapacity" -> field.set(newBlock, (int) ((int) value0 * attributeBase));
                         case "scaledHealth" -> field.set(newBlock, (float) value0 * attributeBase);
                         case "buildType", "barMap" -> {
                         }
@@ -2441,8 +2546,7 @@ public class load {
         Field field = Block.class.getDeclaredField("consumeBuilder");
         field.setAccessible(true);
 
-        @SuppressWarnings("unchecked")
-        Seq<Consume> consumeBuilder = (Seq<Consume>) field.get(genericCrafter);
+        @SuppressWarnings("unchecked") Seq<Consume> consumeBuilder = (Seq<Consume>) field.get(genericCrafter);
 
         //新建多合成工厂anyMtiCrafter
         AnyMtiCrafter anyMtiCrafter = new AnyMtiCrafter(genericCrafter.name) {{
@@ -2706,19 +2810,123 @@ public class load {
     }
 
     //单位工厂
-    public static void unitFactorys(Block unitFactorys) {
-        for (UnitFactory.UnitPlan unitPlan : ((UnitFactory) unitFactorys).plans.copy()) {
-            for (int i = 1; i < 10; i++) {
-                if (ECUnits.get(unitPlan.unit) != null) {
-                    UnitType unit = ECUnits.get(unitPlan.unit).get(i);
-                    float time = unitPlan.time;
-                    ItemStack[] requirements = new ItemStack[unitPlan.requirements.length];
-                    for (int j = 0; j < unitPlan.requirements.length; j++) {
-                        ItemStack itemStack = unitPlan.requirements[j];
-                        Item item = ECItems.get(itemStack.item).get(i);
-                        requirements[j] = new ItemStack(item, unitPlan.requirements[j].amount);
+    public static void UnitFactory(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            //创建新钻头
+            UnitFactory newBlock = new UnitFactory(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(PayloadBlock.class.getDeclaredFields());
+            field0.add(UnitFactory.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //获取属性名
+                String name0 = field.getName();
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "plans" -> {
+                            Seq<UnitFactory.UnitPlan> plans = (Seq<UnitFactory.UnitPlan>) value0;
+                            Seq<UnitFactory.UnitPlan> newplans = new Seq<>();
+                            for (UnitFactory.UnitPlan unitPlan : plans) {
+                                UnitType unit = ECUnits.get(unitPlan.unit).get(i);
+                                float time = unitPlan.time;
+                                ItemStack[] requirements = unitPlan.requirements;
+                                ItemStack[] newrequirements = new ItemStack[unitPlan.requirements.length];
+                                int j = 0;
+                                for (ItemStack itemStack : requirements) {
+                                    Item item = ECItems.get(itemStack.item).get(i);
+                                    int amount = itemStack.amount;
+                                    newrequirements[j] = new ItemStack(item, amount);
+                                    j++;
+                                }
+                                newplans.add(new UnitFactory.UnitPlan(unit, time, newrequirements));
+                            }
+                            field.set(newBlock, newplans);
+                        }
+                        case "consumeBuilder" -> {
+                            Seq<Consume> consumeBuilder = ((Seq<Consume>) field.get(block)).copy();
+                            Seq<Consume> newconsumeBuilder = new Seq<>();
+                            for (int j = 0; j < consumeBuilder.size; j++) {
+                                if (consumeBuilder.get(j) instanceof ConsumeItems consume) {
+                                    ItemStack[] items = new ItemStack[consume.items.length];
+                                    for (int k = 0; k < consume.items.length; k++) {
+                                        Item item = ECItems.get(consume.items[k].item).get(i);
+                                        int amount = consume.items[k].amount;
+                                        items[k] = new ItemStack(item, amount);
+                                    }
+                                    newconsumeBuilder.add(new ConsumeItems(items));
+                                } else newconsumeBuilder.add(consumeBuilder.get(j));
+                            }
+                            field.set(newBlock, newconsumeBuilder);
+                        }
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
                     }
-                    ((UnitFactory) unitFactorys).plans.add(new UnitFactory.UnitPlan(unit, time, requirements));
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-top"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
+                        return true;
+                    });
                 }
             }
         }
@@ -2808,6 +3016,10 @@ public class load {
                                         items[k] = new ItemStack(item, amount);
                                     }
                                     newconsumeBuilder.add(new ConsumeItems(items));
+                                } else if (consumeBuilder.get(j) instanceof ConsumeLiquid consume) {
+                                    Liquid liquid = ECLiquids.get(consume.liquid).get(i);
+                                    float amount = consume.amount;
+                                    newconsumeBuilder.add(new ConsumeLiquid(liquid, amount));
                                 } else newconsumeBuilder.add(consumeBuilder.get(j));
                             }
                             field.set(newBlock, newconsumeBuilder);
@@ -2893,7 +3105,7 @@ public class load {
                                 ItemStack[] requirements = new ItemStack[consumeGenerator.requirements.length];
                                 ItemStack[] TechRequirements = new ItemStack[consumeGenerator.requirements.length];
                                 for (int j = 0; j < consumeGenerator.requirements.length; j++) {
-                                    Item item = ECItems.get(consumeGenerator.requirements[j].item).get(1);
+                                    Item item = ECItems.get(consumeGenerator.requirements[j].item).get(i);
                                     int amount = consumeGenerator.requirements[j].amount;
                                     requirements[j] = new ItemStack(item, amount);
 
@@ -2906,6 +3118,14 @@ public class load {
                                     });
                                     node.parent = techNode;
                                     techNode.children.add(node);
+                                }
+                            }
+                            case "outputLiquid" -> {
+                                if (value0 != null) {
+                                    LiquidStack outputLiquid = (LiquidStack) value0;
+                                    Liquid liquid = ECLiquids.get(outputLiquid.liquid).get(i);
+                                    float amount = outputLiquid.amount;
+                                    field.set(newconsumeGenerator, new LiquidStack(liquid, amount));
                                 }
                             }
                             case "buildType", "barMap" -> {
@@ -2929,6 +3149,16 @@ public class load {
                                         Liquid liquid = ECLiquids.get(((ConsumeLiquid) consumeBuilder.get(j)).liquid).get(i);
                                         float amount = ((ConsumeLiquid) consumeBuilder.get(j)).amount;
                                         newconsumeBuilder.add(new ConsumeLiquid(liquid, amount));
+                                    } else if (consumeBuilder.get(j) instanceof ConsumeLiquids consume) {
+                                        LiquidStack[] newliquids = new LiquidStack[consume.liquids.length];
+                                        int k = 0;
+                                        for (LiquidStack liquidStack : consume.liquids) {
+                                            Liquid liquid = ECLiquids.get(liquidStack.liquid).get(i);
+                                            float amount = liquidStack.amount;
+                                            newliquids[k] = new LiquidStack(liquid, amount);
+                                            k++;
+                                        }
+                                        newconsumeBuilder.add(new ConsumeLiquids(newliquids));
                                     } else newconsumeBuilder.add(consumeBuilder.get(j));
                                 }
                                 field.set(newconsumeGenerator, newconsumeBuilder);
@@ -2942,7 +3172,7 @@ public class load {
                 //贴图前缀
                 String[] prefixs = {""};
                 //贴图后缀
-                String[] sprites = {"", "-rotator", "-top", "-cap", "-liquid", "-turbine"};
+                String[] sprites = {"", "-rotator", "-top", "-cap", "-liquid", "-turbine", "-bottom", "-mid", "-glow", "-piston0", "-piston1", "-piston-icon"};
                 //遍历贴图后缀
                 for (String sprite : sprites) {
                     for (String prefix : prefixs) {
@@ -3076,7 +3306,7 @@ public class load {
                 description = powerNode.description;
                 details = powerNode.details;
             }};
-            //将此钻头加入方块检索表
+            //加入方块检索表
             ECBlocks.get(powerNode).add(newpowerNode);
 
 
@@ -3467,6 +3697,142 @@ public class load {
         }
     }
 
+    //冲击反应堆
+    public static void ImpactReactor(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            ImpactReactor newBlock = new ImpactReactor(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(PowerGenerator.class.getDeclaredFields());
+            field0.add(ImpactReactor.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //获取属性名
+                String name0 = field.getName();
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "consumeBuilder" -> {
+                            Seq<Consume> consumeBuilder = ((Seq<Consume>) field.get(block)).copy();
+                            Seq<Consume> newconsumeBuilder = new Seq<>();
+                            for (int j = 0; j < consumeBuilder.size; j++) {
+                                if (consumeBuilder.get(j) instanceof ConsumeItems consume) {
+                                    ItemStack[] items = new ItemStack[consume.items.length];
+                                    for (int k = 0; k < consume.items.length; k++) {
+                                        Item item = ECItems.get(consume.items[k].item).get(i);
+                                        int amount = consume.items[k].amount;
+                                        items[k] = new ItemStack(item, amount);
+                                    }
+                                    newconsumeBuilder.add(new ConsumeItems(items));
+                                } else if (consumeBuilder.get(j) instanceof ConsumeLiquid consume) {
+                                    Liquid liquid = ECLiquids.get(consume.liquid).get(i);
+                                    float amount = consume.amount;
+                                    ConsumeLiquid newconsume = new ConsumeLiquid(liquid, amount) {{
+                                        optional = consume.optional;
+                                        booster = consume.booster;
+                                        update = consume.update;
+                                        multiplier = consume.multiplier;
+                                    }};
+                                    newconsumeBuilder.add(newconsume);
+                                } else if (consumeBuilder.get(j) instanceof ConsumePower consume) {
+                                    float usage = consume.usage * attributeBase;
+                                    float capacity = consume.capacity;
+                                    boolean buffered = consume.buffered;
+                                    newconsumeBuilder.add(new ConsumePower(usage, capacity, buffered));
+                                } else newconsumeBuilder.add(consumeBuilder.get(j));
+                            }
+                            field.set(newBlock, newconsumeBuilder);
+                        }
+                        case "fuelItem" -> {
+                            Item item = ECItems.get((Item) value0).get(i);
+                            field.set(newBlock, item);
+                        }
+
+                        case "powerProduction" -> field.set(newBlock, (float) value0 * attributeBase);
+                        case "explosionPuddleRange", "explosionPuddleAmount", "explosionShake",
+                             "explosionShakeDuration" -> field.set(newBlock, (float) value0 * sizeBase);
+                        case "explosionDamage" -> field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        case "explosionRadius", "explosionPuddles" ->
+                                field.set(newBlock, (int) ((int) value0 * sizeBase));
+
+                        case "explosionPuddleLiquid" -> {
+                            if (value0 != null) field.set(newBlock, ECLiquids.get((Liquid) value0).get(i));
+                        }
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-bottom", "-light", "-plasma-0", "-plasma-1", "-plasma-2", "-plasma-3", "-plasma-4"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
     //地热
     public static void ThermalGenerator(Block block) throws IllegalAccessException {
         //创建物品检索表
@@ -3539,7 +3905,7 @@ public class load {
             //贴图前缀
             String[] prefixs = {""};
             //贴图后缀
-            String[] sprites = {"", "-team"};
+            String[] sprites = {"", "-rotator"};
             //遍历贴图后缀
             for (String sprite : sprites) {
                 for (String prefix : prefixs) {
@@ -3912,7 +4278,7 @@ public class load {
             //贴图前缀
             String[] prefixs = {""};
             //贴图后缀
-            String[] sprites = {"", "-liquid","-top","-bottom"};
+            String[] sprites = {"", "-liquid", "-top", "-bottom"};
             //遍历贴图后缀
             for (String sprite : sprites) {
                 for (String prefix : prefixs) {
@@ -3929,8 +4295,188 @@ public class load {
         }
     }
 
+    //电力源
+    public static void PowerSource(Block powerNode) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> PowerNodes = new Seq<>();
+        PowerNodes.add(powerNode);
+        ECBlocks.put(powerNode, PowerNodes);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            PowerSource newpowerNode = new PowerSource(powerNode.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + powerNode.localizedName;
+                description = powerNode.description;
+                details = powerNode.details;
+            }};
+            //加入方块检索表
+            ECBlocks.get(powerNode).add(newpowerNode);
 
-    //波次
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(PowerBlock.class.getDeclaredFields());
+            field0.add(PowerNode.class.getDeclaredFields());
+            field0.add(PowerSource.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(powerNode);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(newpowerNode, (int) (160 * attributeBase));
+                            else field.set(newpowerNode, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[powerNode.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[powerNode.requirements.length];
+                            for (int j = 0; j < powerNode.requirements.length; j++) {
+                                Item item = ECItems.get(powerNode.requirements[j].item).get(i);
+                                int amount = powerNode.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newpowerNode, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(powerNode).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(powerNode).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "buildType", "barMap" -> {
+                        }
+                        case "maxNodes" -> field.set(newpowerNode, (int) ((int) value0 * attributeBase));
+                        case "laserRange" -> field.set(newpowerNode, (float) value0 * sizeBase);
+                        case "powerProduction" -> field.set(newpowerNode,(float)value0*attributeBase);
+                        //其他没有自定义需求的属性
+                        default -> field.set(newpowerNode, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-rotator", "-top"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + powerNode.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newpowerNode.name + sprite, Core.atlas.find(prefix + powerNode.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
+    public static void ItemSource(Block powerNode) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> PowerNodes = new Seq<>();
+        PowerNodes.add(powerNode);
+        ECBlocks.put(powerNode, PowerNodes);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            ItemSource newpowerNode = new ItemSource(powerNode.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + powerNode.localizedName;
+                description = powerNode.description;
+                details = powerNode.details;
+            }};
+            //加入方块检索表
+            ECBlocks.get(powerNode).add(newpowerNode);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(ItemSource.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(powerNode);
+                    //将新物品的属性设置为和原物品相同
+                    switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(newpowerNode, (int) (160 * attributeBase));
+                            else field.set(newpowerNode, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[powerNode.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[powerNode.requirements.length];
+                            for (int j = 0; j < powerNode.requirements.length; j++) {
+                                Item item = ECItems.get(powerNode.requirements[j].item).get(i);
+                                int amount = powerNode.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newpowerNode, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(powerNode).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(powerNode).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "buildType", "barMap" -> {
+                        }
+                        case "itemsPerSecond" -> field.set(newpowerNode,(int)((int)value0*attributeBase));
+                        //其他没有自定义需求的属性
+                        default -> field.set(newpowerNode, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-rotator", "-top"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + powerNode.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newpowerNode.name + sprite, Core.atlas.find(prefix + powerNode.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
+
 
 
 }

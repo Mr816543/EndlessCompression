@@ -16,12 +16,15 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.distribution.ArmoredConveyor;
 import mindustry.world.blocks.distribution.Conveyor;
+import mindustry.world.blocks.distribution.MassDriver;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.liquid.ArmoredConduit;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
+import mindustry.world.blocks.sandbox.ItemSource;
+import mindustry.world.blocks.sandbox.PowerSource;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.blocks.storage.Unloader;
@@ -69,7 +72,7 @@ public class ECBlocks {
             if (false) {
             } else if (clazz.equals(Drill.class)) load.drill(block);
             else if (clazz.equals(Wall.class)) load.wall(block);
-            else if (clazz.equals(UnitFactory.class)) load.unitFactorys(block);
+            else if (clazz.equals(UnitFactory.class)) load.UnitFactory(block);
             else if (clazz.equals(Reconstructor.class)) load.Reconstructor(block);
             else if (clazz.equals(BeamDrill.class)) load.BeamDrill(block);
             else if (clazz.equals(Conveyor.class)) load.conveyor(block);
@@ -99,6 +102,10 @@ public class ECBlocks {
             else if (clazz.equals(ThermalGenerator.class)) load.ThermalGenerator(block);
             else if (clazz.equals(LiquidRouter.class)) load.LiquidRouter(block);
             else if (clazz.equals(MendProjector.class)) load.MendProjector(block);
+            else if (clazz.equals(ImpactReactor.class)) load.ImpactReactor(block);
+            else if (clazz.equals(MassDriver.class)) load.MassDriver(block);
+            else if (clazz.equals(PowerSource.class)) load.PowerSource(block);
+            else if (clazz.equals(ItemSource.class)) load.ItemSource(block);
 
 
             // if (block instanceof Turret) load.turret(block);
