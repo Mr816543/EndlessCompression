@@ -2553,7 +2553,6 @@ public class load {
             //设置一些基本属性
             localizedName = Core.bundle.get("string.GenericCrafter.name") + genericCrafter.localizedName;
             category = genericCrafter.category;
-            requirements = genericCrafter.requirements;
             buildVisibility = genericCrafter.buildVisibility;
             description = genericCrafter.description;
             details = genericCrafter.details;
@@ -2567,12 +2566,14 @@ public class load {
             region = genericCrafter.region;
         }};
         int num0 = 0;
-        for (ItemStack itemStack : anyMtiCrafter.requirements) {
+        ItemStack[] newrequirements = new ItemStack[genericCrafter.requirements.length];
+        for (ItemStack itemStack : genericCrafter.requirements) {
             Item item = ECItems.get(itemStack.item).get(1);
             int amount = itemStack.amount;
-            anyMtiCrafter.requirements[num0] = new ItemStack(item, amount);
+            newrequirements[num0] = new ItemStack(item, amount);
             num0++;
         }
+        anyMtiCrafter.requirements = newrequirements;
 
         //遍历block的所有科技节点,把anyMtiCrafter作为子节点添加
         for (TechTree.TechNode techNode : genericCrafter.techNodes) {
