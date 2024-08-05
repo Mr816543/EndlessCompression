@@ -4,7 +4,6 @@ version '1.0'
 
 dependencies {
     compileOnly files('libs/MultiCrafterLib-1.8.jar')
-    compileOnly files('libs/Mindustry.jar')
 }
 
 sourceSets.main.java.srcDirs = ["src"]
