@@ -38,7 +38,7 @@ public class ECOnly {
 
         Item power = new Item("power", load.itemColor(surgeAlloy, 0, true)){{charge = 1f;minfo.mod = null;}};
         for (TechTree.TechNode techNode : copper.techNodes){
-            TechTree.TechNode node = nodeProduce(power, () -> {});
+            TechTree.TechNode node = node(power, new ItemStack[]{new ItemStack(silicon,1)},() -> {});
             node.parent = techNode;
             techNode.children.add(node);
         }

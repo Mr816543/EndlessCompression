@@ -12,8 +12,7 @@ import mindustry.world.blocks.defense.ForceProjector;
 import mindustry.world.blocks.defense.MendProjector;
 import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.world.blocks.defense.Wall;
-import mindustry.world.blocks.defense.turrets.ItemTurret;
-import mindustry.world.blocks.defense.turrets.LiquidTurret;
+import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.blocks.distribution.ArmoredConveyor;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.MassDriver;
@@ -63,6 +62,7 @@ public class ECBlocks {
         for (Liquid liquid : ECLiquids.All) {
             //运行加载液体压缩器的方法
             load.liquidCompressor(liquid);
+            load.liquidMultiPress(liquid);
         }
 
 
@@ -106,6 +106,10 @@ public class ECBlocks {
             else if (clazz.equals(MassDriver.class)) load.MassDriver(block);
             else if (clazz.equals(PowerSource.class)) load.PowerSource(block);
             else if (clazz.equals(ItemSource.class)) load.ItemSource(block);
+
+            else if (clazz.equals(PowerTurret.class)) load.PowerTurret(block);
+            else if (clazz.equals(TractorBeamTurret.class)) load.TractorBeamTurret(block);
+            else if (clazz.equals(PointDefenseTurret.class)) load.PointDefenseTurret(block);
 
 
             // if (block instanceof Turret) load.turret(block);
