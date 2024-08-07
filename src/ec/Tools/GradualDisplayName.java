@@ -8,29 +8,33 @@ import mindustry.Vars;
 import java.util.Random;
 
 public class GradualDisplayName {
-    public static void load(){
+    public static void load() {
         Random random = new Random();
         String r = Integer.toHexString(random.nextInt(256));
         String g = Integer.toHexString(random.nextInt(256));
         String b = Integer.toHexString(random.nextInt(256));
-        var startColor = Color.valueOf(r+g+b+"ff"); //初始颜色
+        var startColor = Color.valueOf(r + g + b + "ff"); //初始颜色
 
-        var shiftValue = random.nextInt(10)+10; //颜色跨度，360度为一次轮回
+        var shiftValue = random.nextInt(10) + 10; //颜色跨度，360度为一次轮回
 
         var mod = Vars.mods.locateMod("ec");//mod.(h)json里面写的name
 
         var st = mod.meta.displayName;
+
+        int sj = random.nextInt(10);
+
+        if (sj == 0) st = Core.bundle.get("mod.displayName.bug");
 
         var fin = new java.lang.StringBuilder();
 
         var version = mod.meta.version;
 
 
-        for(var i = 0; i < st.length(); i++){
+        for (var i = 0; i < st.length(); i++) {
 
             var s = java.lang.String.valueOf(st.charAt(i));
 
-            var c = startColor.shiftHue(i * ((float) shiftValue /st.length()));
+            var c = startColor.shiftHue(i * ((float) shiftValue / st.length()));
 
             var ci = c.rgb888();
 
@@ -98,7 +102,105 @@ public class GradualDisplayName {
 
 
 
-        if ((r+g+b).equals("ffffff")){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if ((r + g + b).equals("ffffff")) {
             mod.meta.displayName = Core.bundle.get("Egg");
             mod.meta.description = Core.bundle.get("Egg1");
 
@@ -106,11 +208,11 @@ public class GradualDisplayName {
 
             var fin0 = new java.lang.StringBuilder();
 
-            for(var i = 0; i < st0.length(); i++){
+            for (var i = 0; i < st0.length(); i++) {
 
                 var s = java.lang.String.valueOf(st0.charAt(i));
 
-                var c = startColor.shiftHue(i * ((float) shiftValue /st0.length()));
+                var c = startColor.shiftHue(i * ((float) shiftValue / st0.length()));
 
                 var ci = c.rgb888();
 

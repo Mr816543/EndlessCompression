@@ -6,14 +6,13 @@ import arc.graphics.Color;
 import arc.graphics.Pixmap;
 import arc.graphics.Texture;
 import arc.graphics.g2d.*;
-import arc.math.geom.Point2;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Eachable;
-import arc.util.Log;
 import ec.Tools.AnyMtiCrafter;
 import ec.Tools.Tool;
 import ec.cType.ECDrill;
+import ec.cType.ECLaunchPad;
 import ec.cType.ECMassDriver;
 import mindustry.Vars;
 import mindustry.content.Fx;
@@ -32,6 +31,7 @@ import mindustry.type.*;
 import mindustry.type.weapons.RepairBeamWeapon;
 import mindustry.world.Block;
 import mindustry.world.Tile;
+import mindustry.world.blocks.campaign.LaunchPad;
 import mindustry.world.blocks.defense.ForceProjector;
 import mindustry.world.blocks.defense.MendProjector;
 import mindustry.world.blocks.defense.OverdriveProjector;
@@ -176,7 +176,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(item);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         //矿物等级属性自定义
                         case "hardness" -> field.set(newitem, (int) value0 + num);
                         //颜色属性自定义
@@ -530,7 +530,7 @@ public class load {
                     //获取原液体属性的属性值
                     Object value0 = field.get(liquid);
                     //将新液体的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         //颜色自定义
                         case "color" -> field.set(newliquid, load.liquidColor(liquid, num));
                         //燃烧性,爆炸性,比热容,沸点自定义
@@ -784,7 +784,7 @@ public class load {
                 products.add(new Formula() {{
                     consumeLiquid(liquid, (int) Math.pow(9, num));
                     outputLiquids = LiquidStack.with(ECLiquids.get(liquid).get(num), 1);
-                    int timeBase = 1;
+                    int timeBase = num * num;
                     craftTime = 60f * timeBase;
                     craftEffect = Fx.pulverizeMedium;
                     consumePower(108f / 60);
@@ -796,7 +796,7 @@ public class load {
                 products.add(new Formula() {{
                     consumeLiquid(ECLiquids.get(liquid).get(num), 1);
                     outputLiquids = LiquidStack.with(liquid, (int) Math.pow(9, num));
-                    int timeBase = 1;
+                    int timeBase = num * num;
                     craftTime = 60f * timeBase;
                     craftEffect = Fx.pulverizeMedium;
                     consumePower(108f / 60);
@@ -852,7 +852,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(conveyor);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newconveyor, (int) (160 * attributeBase));
                             else field.set(newconveyor, (int) ((int) value0 * attributeBase));
@@ -955,7 +955,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(conveyor);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> field.set(newconveyor, (int) ((int) value0 * attributeBase));
                         case "speed" -> field.set(newconveyor, (float) value0 * attributeBase);
                         case "displayedSpeed" -> field.set(newconveyor, newconveyor.speed * 140);
@@ -1054,7 +1054,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(conveyor);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> field.set(newconveyor, (int) ((int) value0 * attributeBase));
                         case "speed" -> field.set(newconveyor, (float) value0 * 2);
                         case "itemCapacity" -> field.set(newconveyor, (int) ((int) value0 * attributeBase / 2));
@@ -1143,7 +1143,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
 
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
@@ -1201,7 +1201,7 @@ public class load {
                         }
                         case "itemCapacity" -> field.set(newBlock, (int) ((int) value0 * attributeBase));
                         case "reload" -> field.set(newBlock, (float) value0 / attributeBase);
-                        case "range" -> field.set(newBlock, (float) value0 * sizeBase);
+                        case "range", "bulletLifetime" -> field.set(newBlock, (float) value0 * sizeBase);
                         case "buildType", "barMap" -> {
                         }
                         //其他没有自定义需求的属性
@@ -1265,7 +1265,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -1302,6 +1302,129 @@ public class load {
             String[] prefixs = {""};
             //贴图后缀
             String[] sprites = {"", "-center"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
+    //发射台
+    public static void LaunchPad(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            ECLaunchPad newBlock = new ECLaunchPad(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+                minLaunchCapacity = (int)(100*sizeBase);
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(LaunchPad.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //获取属性名
+                String name0 = field.getName();
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    if (value0 != null) switch (name0) {
+
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "consumeBuilder" -> {
+                            Seq<Consume> consumeBuilder = ((Seq<Consume>) field.get(block)).copy();
+                            Seq<Consume> newconsumeBuilder = new Seq<>();
+                            for (int j = 0; j < consumeBuilder.size; j++) {
+                                if (consumeBuilder.get(j) instanceof ConsumeItems consume) {
+                                    ItemStack[] items = new ItemStack[consume.items.length];
+                                    for (int k = 0; k < consume.items.length; k++) {
+                                        Item item = ECItems.get(consume.items[k].item).get(i);
+                                        int amount = consume.items[k].amount;
+                                        items[k] = new ItemStack(item, amount);
+                                    }
+                                    newconsumeBuilder.add(new ConsumeItems(items));
+                                } else if (consumeBuilder.get(j) instanceof ConsumeLiquid consume) {
+                                    Liquid liquid = ECLiquids.get(consume.liquid).get(i);
+                                    float amount = consume.amount;
+                                    ConsumeLiquid newconsume = new ConsumeLiquid(liquid, amount) {{
+                                        optional = consume.optional;
+                                        booster = consume.booster;
+                                        update = consume.update;
+                                        multiplier = consume.multiplier;
+                                    }};
+                                    newconsumeBuilder.add(newconsume);
+                                } else if (consumeBuilder.get(j) instanceof ConsumePower consume) {
+                                    float usage = consume.usage * attributeBase;
+                                    float capacity = consume.capacity;
+                                    boolean buffered = consume.buffered;
+                                    newconsumeBuilder.add(new ConsumePower(usage, capacity, buffered));
+                                } else newconsumeBuilder.add(consumeBuilder.get(j));
+                            }
+                            field.set(newBlock, newconsumeBuilder);
+                        }
+                        case "itemCapacity" -> field.set(newBlock,(int)((int)value0*attributeBase));
+                        case "launchTime" -> field.set(newBlock,(float)value0 / sizeBase);
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-light","-pod"};
             //遍历贴图后缀
             for (String sprite : sprites) {
                 for (String prefix : prefixs) {
@@ -1356,7 +1479,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(drill);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newdrill, (int) (160 * attributeBase));
                             else field.set(newdrill, (int) ((int) value0 * attributeBase));
@@ -1432,6 +1555,133 @@ public class load {
         }
     }
 
+    //培养机
+    public static void AttributeCrafter(Block block) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> Blocks = new Seq<>();
+        Blocks.add(block);
+        ECBlocks.put(block, Blocks);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            AttributeCrafter newBlock = new AttributeCrafter(block.name + num) {{
+                localizedName = Core.bundle.get("string.Compress" + num) + block.localizedName;
+                description = block.description;
+                details = block.details;
+            }};
+            //将此钻头加入方块检索表
+            ECBlocks.get(block).add(newBlock);
+
+
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(GenericCrafter.class.getDeclaredFields());
+            field0.add(AttributeCrafter.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //获取属性名
+                String name0 = field.getName();
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(block);
+                    //将新物品的属性设置为和原物品相同
+                    if (value0 != null) switch (name0) {
+
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
+                            else field.set(newBlock, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[block.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[block.requirements.length];
+                            for (int j = 0; j < block.requirements.length; j++) {
+                                Item item = ECItems.get(block.requirements[j].item).get(i);
+                                int amount = block.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newBlock, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(block).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(block).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "consumeBuilder" -> {
+                            Seq<Consume> consumeBuilder = ((Seq<Consume>) field.get(block)).copy();
+                            Seq<Consume> newconsumeBuilder = new Seq<>();
+                            for (int j = 0; j < consumeBuilder.size; j++) {
+                                if (consumeBuilder.get(j) instanceof ConsumeItems consume) {
+                                    ItemStack[] items = new ItemStack[consume.items.length];
+                                    for (int k = 0; k < consume.items.length; k++) {
+                                        Item item = ECItems.get(consume.items[k].item).get(i);
+                                        int amount = consume.items[k].amount;
+                                        items[k] = new ItemStack(item, amount);
+                                    }
+                                    newconsumeBuilder.add(new ConsumeItems(items));
+                                } else if (consumeBuilder.get(j) instanceof ConsumeLiquid consume) {
+                                    Liquid liquid = ECLiquids.get(consume.liquid).get(i);
+                                    float amount = consume.amount;
+                                    ConsumeLiquid newconsume = new ConsumeLiquid(liquid, amount) {{
+                                        optional = consume.optional;
+                                        booster = consume.booster;
+                                        update = consume.update;
+                                        multiplier = consume.multiplier;
+                                    }};
+                                    newconsumeBuilder.add(newconsume);
+                                } else if (consumeBuilder.get(j) instanceof ConsumePower consume) {
+                                    float usage = consume.usage;
+                                    float capacity = consume.capacity;
+                                    boolean buffered = consume.buffered;
+                                    newconsumeBuilder.add(new ConsumePower(usage, capacity, buffered));
+                                } else newconsumeBuilder.add(consumeBuilder.get(j));
+                            }
+                            field.set(newBlock, newconsumeBuilder);
+                        }
+                        case "outputItem" -> {
+                            ItemStack outputItem = (ItemStack) value0;
+                            Item item = ECItems.get(outputItem.item).get(i);
+                            int amount = outputItem.amount;
+                            field.set(newBlock, new ItemStack(item, amount));
+                        }
+                        case "buildType", "barMap" -> {
+                        }
+                        //其他没有自定义需求的属性
+                        default -> field.set(newBlock, value0);
+                    }
+                }
+            }
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-bottom", "-middle", "-top" , "-rotator" , "-rotator-blur" , " mid"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + block.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newBlock.name + sprite, Core.atlas.find(prefix + block.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
     //墙壁钻头
     public static void BeamDrill(Block block) throws IllegalAccessException {
         //创建物品检索表
@@ -1468,7 +1718,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -1515,7 +1765,7 @@ public class load {
                             }
                             field.set(newBlock, newconsumeBuilder);
                         }
-                        case "buildType" -> {
+                        case "buildType", "barMap" -> {
                         }
                         //其他没有自定义需求的属性
                         default -> field.set(newBlock, value0);
@@ -1579,7 +1829,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -1695,7 +1945,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(pump);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newpump, (int) (160 * attributeBase));
                             else field.set(newpump, (int) ((int) value0 * attributeBase));
@@ -1788,7 +2038,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(wall);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> field.set(newwall, (int) ((int) value0 * damageBase));
 
                         case "armor", "lightningDamage" -> field.set(newwall, (float) value0 * damageBase);
@@ -1890,7 +2140,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -2010,7 +2260,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -2115,7 +2365,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -2318,7 +2568,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
 
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
@@ -2398,7 +2648,15 @@ public class load {
             //贴图前缀
             String[] prefixs = {""};
             //贴图后缀
-            String[] sprites = {"", "-base"};
+            String[] sprites = {
+                    "", "-back-heat", "-back-l", "-back-r",
+                    "-end", "-front-heat", "-front-l", "-front-r",
+                    "-main", "-mid", "-mid-heat", "-mouth",
+                    "-mouth-heat", "-preview", "-spine-heat", "-spine-l",
+                    "-spine-r"
+
+
+            };
             //遍历贴图后缀
             for (String sprite : sprites) {
                 for (String prefix : prefixs) {
@@ -2452,7 +2710,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
 
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
@@ -2576,7 +2834,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
 
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
@@ -2705,7 +2963,7 @@ public class load {
                     //获取原版单位属性的属性值
                     Object value0 = field.get(unit);
                     //判断是否为血量
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" ->
                             //对血量进行增强
                                 field.set(newunit, (float) value0 * healthBase);
@@ -2814,7 +3072,6 @@ public class load {
         }
     }
 
-
     //容器
     public static void StorageBlock(Block block) throws IllegalAccessException {
         //创建物品检索表
@@ -2851,7 +3108,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -2936,7 +3193,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(coreBlock);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newcoreBlock, (int) (160 * attributeBase));
                             else field.set(newcoreBlock, (int) ((int) value0 * attributeBase));
@@ -3095,7 +3352,7 @@ public class load {
                 //获取原物品属性的属性值
                 Object value0 = field.get(effect);
                 //将新物品的属性设置为和原物品相同
-                switch (name0) {
+                if (value0 != null) switch (name0) {
                     case "renderer" -> {
                         field.set(neweffect, effectContainerCons);
                     }
@@ -3314,7 +3571,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -3439,7 +3696,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -3567,7 +3824,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -3699,7 +3956,7 @@ public class load {
                         //获取原物品属性的属性值
                         Object value0 = field.get(consumeGenerator);
                         //将新物品的属性设置为和原物品相同
-                        switch (name0) {
+                        if (value0 != null) switch (name0) {
                             case "requirements" -> {
                                 ItemStack[] requirements = new ItemStack[consumeGenerator.requirements.length];
                                 ItemStack[] TechRequirements = new ItemStack[consumeGenerator.requirements.length];
@@ -3815,7 +4072,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(consumeGenerator);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "requirements" -> {
                             ItemStack[] requirements = new ItemStack[consumeGenerator.requirements.length];
                             ItemStack[] TechRequirements = new ItemStack[consumeGenerator.requirements.length];
@@ -3888,8 +4145,8 @@ public class load {
 
     }
 
-    //电力节点
     //不同的实现方法,之前的方法有bug但我找不到
+    //电力节点
     public static void powerNode(Block powerNode) throws IllegalAccessException {
         //创建物品检索表
         Seq<Block> PowerNodes = new Seq<>();
@@ -3901,29 +4158,30 @@ public class load {
             float attributeBase = (float) Math.pow(5, num);
             float sizeBase = (float) Math.pow(1.4, num);
             //创建新钻头
-            PowerNode newpowerNode = new PowerNode(powerNode.name + num) {{
-                localizedName = Core.bundle.get("string.Compress" + num) + powerNode.localizedName;
-                description = powerNode.description;
-                details = powerNode.details;
+            PowerNode newpowerNode = new PowerNode(powerNode.name + num) {
+                {
+                    localizedName = Core.bundle.get("string.Compress" + num) + powerNode.localizedName;
+                    description = powerNode.description;
+                    details = powerNode.details;
 
 
-                size = powerNode.size;
-                maxNodes = (int) (((PowerNode)powerNode).maxNodes * attributeBase);
-                laserRange = ((PowerNode)powerNode).laserRange*sizeBase;
-                schematicPriority = powerNode.schematicPriority;
+                    size = powerNode.size;
+                    maxNodes = (int) (((PowerNode) powerNode).maxNodes * attributeBase);
+                    laserRange = ((PowerNode) powerNode).laserRange * sizeBase;
+                    schematicPriority = powerNode.schematicPriority;
 
-                ItemStack[] newrequirements = new ItemStack[powerNode.requirements.length];
-                int j = 0;
-                for (ItemStack itemStack : powerNode.requirements){
-                    Item item = ECItems.get(itemStack.item).get(num);
-                    int amount = itemStack.amount;
-                    newrequirements[j] = new ItemStack(item,amount);
-                    j++;
+                    ItemStack[] newrequirements = new ItemStack[powerNode.requirements.length];
+                    int j = 0;
+                    for (ItemStack itemStack : powerNode.requirements) {
+                        Item item = ECItems.get(itemStack.item).get(num);
+                        int amount = itemStack.amount;
+                        newrequirements[j] = new ItemStack(item, amount);
+                        j++;
+                    }
+                    requirements(powerNode.category, powerNode.buildVisibility, newrequirements);
+
+
                 }
-                requirements(powerNode.category,powerNode.buildVisibility,newrequirements);
-
-
-            }
             };
             //加入方块检索表
             ECBlocks.get(powerNode).add(newpowerNode);
@@ -3948,7 +4206,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(powerNode);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newpowerNode, (int) (160 * attributeBase));
                             else field.set(newpowerNode, (int) ((int) value0 * attributeBase));
@@ -4006,6 +4264,122 @@ public class load {
         }
     }
 
+    //电力源
+    public static void PowerSource(Block powerNode) throws IllegalAccessException {
+        //创建物品检索表
+        Seq<Block> PowerNodes = new Seq<>();
+        PowerNodes.add(powerNode);
+        ECBlocks.put(powerNode, PowerNodes);
+        //根据原物品批量创建压缩物品
+        for (int i = 1; i < 10; i++) {
+            int num = i;
+            float attributeBase = (float) Math.pow(5, num);
+            float sizeBase = (float) Math.pow(1.4, num);
+            //创建新钻头
+            PowerSource newpowerNode = new PowerSource(powerNode.name + num) {
+                {
+                    localizedName = Core.bundle.get("string.Compress" + num) + powerNode.localizedName;
+                    description = powerNode.description;
+                    details = powerNode.details;
+
+
+                    size = powerNode.size;
+                    maxNodes = (int) (((PowerNode) powerNode).maxNodes * attributeBase);
+                    powerProduction = ((PowerSource) powerNode).powerProduction * attributeBase;
+                    laserRange = ((PowerNode) powerNode).laserRange * sizeBase;
+                    schematicPriority = powerNode.schematicPriority;
+
+                    ItemStack[] newrequirements = new ItemStack[powerNode.requirements.length];
+                    int j = 0;
+                    for (ItemStack itemStack : powerNode.requirements) {
+                        Item item = ECItems.get(itemStack.item).get(num);
+                        int amount = itemStack.amount;
+                        newrequirements[j] = new ItemStack(item, amount);
+                        j++;
+                    }
+                    requirements(powerNode.category, powerNode.buildVisibility, newrequirements);
+
+
+                }
+            };
+            //加入方块检索表
+            ECBlocks.get(powerNode).add(newpowerNode);
+
+            /*
+            //获取Block的全部属性
+            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
+            //添加属性
+            field0.add(PowerBlock.class.getDeclaredFields());
+            field0.add(PowerNode.class.getDeclaredFields());
+            field0.add(PowerSource.class.getDeclaredFields());
+            //遍历全部属性
+            for (Field field : field0) {
+                //允许通过反射访问私有变量
+                field.setAccessible(true);
+                //判断是否为final修饰的属性
+                if (!Modifier.isFinal(field.getModifiers())) {
+                    //获取属性名
+                    String name0 = field.getName();
+                    //获取原物品属性的属性值
+                    Object value0 = field.get(powerNode);
+                    //将新物品的属性设置为和原物品相同
+                    if (value0 != null) switch (name0) {
+                        case "health" -> {
+                            if ((int) value0 == -1) field.set(newpowerNode, (int) (160 * attributeBase));
+                            else field.set(newpowerNode, (int) ((int) value0 * attributeBase));
+                        }
+                        case "requirements" -> {
+                            ItemStack[] requirements = new ItemStack[powerNode.requirements.length];
+                            ItemStack[] TechRequirements = new ItemStack[powerNode.requirements.length];
+                            for (int j = 0; j < powerNode.requirements.length; j++) {
+                                Item item = ECItems.get(powerNode.requirements[j].item).get(i);
+                                int amount = powerNode.requirements[j].amount;
+                                requirements[j] = new ItemStack(item, amount);
+
+                                TechRequirements[j] = new ItemStack(item, amount * 30);
+                            }
+                            field.set(newpowerNode, requirements);
+                            //遍历上级的全部科技节点,将本方块作为子节点添加
+                            for (TechNode techNode : ECBlocks.get(powerNode).get(i - 1).techNodes) {
+                                TechNode node = node(ECBlocks.get(powerNode).get(i), TechRequirements, () -> {
+                                });
+                                node.parent = techNode;
+                                techNode.children.add(node);
+                            }
+                        }
+                        case "buildType", "barMap" -> {
+                        }
+                        case "maxNodes" -> field.set(newpowerNode, (int) ((int) value0 * attributeBase));
+                        case "laserRange" -> field.set(newpowerNode, (float) value0 * sizeBase);
+                        case "powerProduction" -> field.set(newpowerNode, (float) value0 * attributeBase);
+                        //其他没有自定义需求的属性
+                        default -> field.set(newpowerNode, value0);
+                    }
+                }
+            }
+
+             */
+
+            //贴图前缀
+            String[] prefixs = {""};
+            //贴图后缀
+            String[] sprites = {"", "-rotator", "-top"};
+            //遍历贴图后缀
+            for (String sprite : sprites) {
+                for (String prefix : prefixs) {
+                    //延时运行,来自@(I hope...)
+                    Tool.forceRun(() -> {
+                        //判断原版是否有该后缀贴图
+                        if (!Core.atlas.has(prefix + powerNode.name + sprite)) return false;
+                        //以原版贴图覆盖新物品贴图
+                        Core.atlas.addRegion(prefix + newpowerNode.name + sprite, Core.atlas.find(prefix + powerNode.name + sprite));
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
     //电池
     public static void battery(Block battery) throws IllegalAccessException {
         //创建物品检索表
@@ -4041,7 +4415,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(battery);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newbattery, (int) (160 * attributeBase));
                             else field.set(newbattery, (int) ((int) value0 * attributeBase));
@@ -4141,7 +4515,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(lightBlock);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newlightBlock, (int) (160 * attributeBase));
                             else field.set(newlightBlock, (int) ((int) value0 * attributeBase));
@@ -4232,7 +4606,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
 
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
@@ -4360,7 +4734,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
 
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
@@ -4496,7 +4870,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -4584,7 +4958,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -4673,7 +5047,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(conduit);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newconduit, (int) (160 * attributeBase));
                             else field.set(newconduit, (int) ((int) value0 * attributeBase));
@@ -4771,7 +5145,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(conduit);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newconduit, (int) (160 * attributeBase));
                             else field.set(newconduit, (int) ((int) value0 * attributeBase));
@@ -4869,7 +5243,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(block);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(block, (int) (160 * attributeBase));
                             else field.set(newBlock, (int) ((int) value0 * attributeBase));
@@ -4921,99 +5295,7 @@ public class load {
         }
     }
 
-    //电力源
-    public static void PowerSource(Block powerNode) throws IllegalAccessException {
-        //创建物品检索表
-        Seq<Block> PowerNodes = new Seq<>();
-        PowerNodes.add(powerNode);
-        ECBlocks.put(powerNode, PowerNodes);
-        //根据原物品批量创建压缩物品
-        for (int i = 1; i < 10; i++) {
-            int num = i;
-            float attributeBase = (float) Math.pow(5, num);
-            float sizeBase = (float) Math.pow(1.4, num);
-            //创建新钻头
-            PowerSource newpowerNode = new PowerSource(powerNode.name + num) {{
-                localizedName = Core.bundle.get("string.Compress" + num) + powerNode.localizedName;
-                description = powerNode.description;
-                details = powerNode.details;
-            }};
-            //加入方块检索表
-            ECBlocks.get(powerNode).add(newpowerNode);
-
-
-            //获取Block的全部属性
-            Seq<Field> field0 = new Seq<>(Block.class.getDeclaredFields());
-            //添加属性
-            field0.add(PowerBlock.class.getDeclaredFields());
-            field0.add(PowerNode.class.getDeclaredFields());
-            field0.add(PowerSource.class.getDeclaredFields());
-            //遍历全部属性
-            for (Field field : field0) {
-                //允许通过反射访问私有变量
-                field.setAccessible(true);
-                //判断是否为final修饰的属性
-                if (!Modifier.isFinal(field.getModifiers())) {
-                    //获取属性名
-                    String name0 = field.getName();
-                    //获取原物品属性的属性值
-                    Object value0 = field.get(powerNode);
-                    //将新物品的属性设置为和原物品相同
-                    switch (name0) {
-                        case "health" -> {
-                            if ((int) value0 == -1) field.set(newpowerNode, (int) (160 * attributeBase));
-                            else field.set(newpowerNode, (int) ((int) value0 * attributeBase));
-                        }
-                        case "requirements" -> {
-                            ItemStack[] requirements = new ItemStack[powerNode.requirements.length];
-                            ItemStack[] TechRequirements = new ItemStack[powerNode.requirements.length];
-                            for (int j = 0; j < powerNode.requirements.length; j++) {
-                                Item item = ECItems.get(powerNode.requirements[j].item).get(i);
-                                int amount = powerNode.requirements[j].amount;
-                                requirements[j] = new ItemStack(item, amount);
-
-                                TechRequirements[j] = new ItemStack(item, amount * 30);
-                            }
-                            field.set(newpowerNode, requirements);
-                            //遍历上级的全部科技节点,将本方块作为子节点添加
-                            for (TechNode techNode : ECBlocks.get(powerNode).get(i - 1).techNodes) {
-                                TechNode node = node(ECBlocks.get(powerNode).get(i), TechRequirements, () -> {
-                                });
-                                node.parent = techNode;
-                                techNode.children.add(node);
-                            }
-                        }
-                        case "buildType", "barMap" -> {
-                        }
-                        case "maxNodes" -> field.set(newpowerNode, (int) ((int) value0 * attributeBase));
-                        case "laserRange" -> field.set(newpowerNode, (float) value0 * sizeBase);
-                        case "powerProduction" -> field.set(newpowerNode, (float) value0 * attributeBase);
-                        //其他没有自定义需求的属性
-                        default -> field.set(newpowerNode, value0);
-                    }
-                }
-            }
-
-            //贴图前缀
-            String[] prefixs = {""};
-            //贴图后缀
-            String[] sprites = {"", "-rotator", "-top"};
-            //遍历贴图后缀
-            for (String sprite : sprites) {
-                for (String prefix : prefixs) {
-                    //延时运行,来自@(I hope...)
-                    Tool.forceRun(() -> {
-                        //判断原版是否有该后缀贴图
-                        if (!Core.atlas.has(prefix + powerNode.name + sprite)) return false;
-                        //以原版贴图覆盖新物品贴图
-                        Core.atlas.addRegion(prefix + newpowerNode.name + sprite, Core.atlas.find(prefix + powerNode.name + sprite));
-                        return true;
-                    });
-                }
-            }
-        }
-    }
-
+    //物品源
     public static void ItemSource(Block powerNode) throws IllegalAccessException {
         //创建物品检索表
         Seq<Block> PowerNodes = new Seq<>();
@@ -5049,7 +5331,7 @@ public class load {
                     //获取原物品属性的属性值
                     Object value0 = field.get(powerNode);
                     //将新物品的属性设置为和原物品相同
-                    switch (name0) {
+                    if (value0 != null) switch (name0) {
                         case "health" -> {
                             if ((int) value0 == -1) field.set(newpowerNode, (int) (160 * attributeBase));
                             else field.set(newpowerNode, (int) ((int) value0 * attributeBase));

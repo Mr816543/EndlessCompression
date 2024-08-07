@@ -8,6 +8,7 @@ import mindustry.Vars;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
 import mindustry.world.Block;
+import mindustry.world.blocks.campaign.LaunchPad;
 import mindustry.world.blocks.defense.ForceProjector;
 import mindustry.world.blocks.defense.MendProjector;
 import mindustry.world.blocks.defense.OverdriveProjector;
@@ -110,6 +111,8 @@ public class ECBlocks {
             else if (clazz.equals(PowerTurret.class)) load.PowerTurret(block);
             else if (clazz.equals(TractorBeamTurret.class)) load.TractorBeamTurret(block);
             else if (clazz.equals(PointDefenseTurret.class)) load.PointDefenseTurret(block);
+            else if (clazz.equals(AttributeCrafter.class)) load.AttributeCrafter(block);
+            else if (clazz.equals(LaunchPad.class)) load.LaunchPad(block);
 
 
             // if (block instanceof Turret) load.turret(block);
