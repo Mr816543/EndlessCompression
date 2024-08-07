@@ -4,15 +4,13 @@ package ec.content;
 import arc.Core;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import arc.util.Log;
 import mindustry.Vars;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
 import mindustry.world.Block;
 import mindustry.world.blocks.campaign.LaunchPad;
-import mindustry.world.blocks.defense.ForceProjector;
-import mindustry.world.blocks.defense.MendProjector;
-import mindustry.world.blocks.defense.OverdriveProjector;
-import mindustry.world.blocks.defense.Wall;
+import mindustry.world.blocks.defense.*;
 import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.blocks.distribution.ArmoredConveyor;
 import mindustry.world.blocks.distribution.Conveyor;
@@ -29,6 +27,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.blocks.units.Reconstructor;
+import mindustry.world.blocks.units.RepairTurret;
 import mindustry.world.blocks.units.UnitFactory;
 
 
@@ -69,6 +68,7 @@ public class ECBlocks {
 
         //遍历blocks
         for (Block block : blocks) {
+            boolean compress = true;
             Class<?> clazz = block.getClass().getSuperclass();
             if (false) {
             } else if (clazz.equals(Drill.class)) load.drill(block);
@@ -111,8 +111,27 @@ public class ECBlocks {
             else if (clazz.equals(PowerTurret.class)) load.PowerTurret(block);
             else if (clazz.equals(TractorBeamTurret.class)) load.TractorBeamTurret(block);
             else if (clazz.equals(PointDefenseTurret.class)) load.PointDefenseTurret(block);
+
             else if (clazz.equals(AttributeCrafter.class)) load.AttributeCrafter(block);
             else if (clazz.equals(LaunchPad.class)) load.LaunchPad(block);
+            else if (clazz.equals(RepairTurret.class)) load.RepairTurret(block);
+            else if (clazz.equals(Fracker.class)) load.Fracker(block);
+            else if (clazz.equals(Door.class)) load.Door(block);
+
+
+
+
+
+
+
+            else compress = false;
+
+            if (compress = true){
+                if (block.isModded()){
+                    Log.info(Core.bundle.get("log.compress") + "[" + block.minfo.mod.name + "]" + block.localizedName + Core.bundle.get("log.compress.end"));
+                }
+
+            }
 
 
             // if (block instanceof Turret) load.turret(block);
