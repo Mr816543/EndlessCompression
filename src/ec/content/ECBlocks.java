@@ -52,18 +52,6 @@ public class ECBlocks {
             }
         }
 
-        for (Item item : ECItems.All) {
-            //运行加载物品压缩器的方法
-            load.itemCompressor(item);
-            //运行加载多重物品压缩器的方法
-            load.itemMultiPress(item);
-        }
-
-        for (Liquid liquid : ECLiquids.All) {
-            //运行加载液体压缩器的方法
-            load.liquidCompressor(liquid);
-            load.liquidMultiPress(liquid);
-        }
 
 
         //遍历blocks
@@ -117,6 +105,9 @@ public class ECBlocks {
             else if (clazz.equals(RepairTurret.class)) load.RepairTurret(block);
             else if (clazz.equals(Fracker.class)) load.Fracker(block);
             else if (clazz.equals(Door.class)) load.Door(block);
+
+            else if (clazz.equals(LaserTurret.class)) load.LaserTurret(block);
+            else if (clazz.equals(ShockMine.class)) load.ShockMine(block);
 
 
 
@@ -175,6 +166,20 @@ public class ECBlocks {
             //else if (block instanceof OverdriveProjector) load.OverdriveProjector(block);
             // else if (block instanceof ForceProjector) load.ForceProjector(block);
 
+        }
+
+
+        for (Item item : ECItems.All) {
+            //运行加载物品压缩器的方法
+            load.itemCompressor(item);
+            //运行加载多重物品压缩器的方法
+            load.itemMultiPress(item);
+        }
+
+        for (Liquid liquid : ECLiquids.All) {
+            //运行加载液体压缩器的方法
+            load.liquidCompressor(liquid);
+            load.liquidMultiPress(liquid);
         }
     }
 }

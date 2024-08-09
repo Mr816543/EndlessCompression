@@ -10,6 +10,7 @@ import arc.graphics.g2d.TextureRegion;
 import arc.util.Eachable;
 import ec.Tools.AnyMtiCrafter;
 import ec.Tools.Tool;
+import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.content.TechTree;
 import mindustry.entities.units.BuildPlan;
@@ -26,6 +27,7 @@ import mindustry.world.draw.*;
 
 import static ec.Tools.AnyMtiCrafter.name;
 import static ec.content.ECBlocks.ECBlocks;
+import static ec.content.ECItems.All;
 import static ec.content.ECItems.ECItems;
 import static mindustry.content.Items.*;
 import static mindustry.content.Items.silicon;
@@ -37,8 +39,12 @@ public class ECOnly {
     public static void load() throws IllegalAccessException {
 
         Item power = new Item("power", load.itemColor(surgeAlloy, 0, true)){{charge = 1f;minfo.mod = null;}};
+        Item[] newAll = new Item[All.length+1];
+        System.arraycopy(All, 0, newAll, 0, All.length);
+        newAll[All.length] = power;
+        All = newAll;
         for (TechTree.TechNode techNode : copper.techNodes){
-            TechTree.TechNode node = node(power, new ItemStack[]{new ItemStack(silicon,1)},() -> {});
+            TechTree.TechNode node = nodeProduce(power,() -> {});
             node.parent = techNode;
             techNode.children.add(node);
         }

@@ -28,6 +28,7 @@ public class EndlessCompression extends Mod {
             ECUnitTypes.load();
             ECBlocks.load();
             ECOnly.load();
+            ECTest.load();
         } catch (IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }

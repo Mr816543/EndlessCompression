@@ -5,9 +5,14 @@ import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import mindustry.Vars;
+import mindustry.content.TechTree;
 import mindustry.type.Item;
 
 import java.util.Arrays;
+
+import static mindustry.content.Items.copper;
+import static mindustry.content.Items.surgeAlloy;
+import static mindustry.content.TechTree.nodeProduce;
 
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -42,5 +47,10 @@ public class ECItems {
             All[i] = item;
             i++;
         }
+
+
+
+
+
     }
 }
