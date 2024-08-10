@@ -10,7 +10,6 @@ import arc.math.Mathf;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Eachable;
-import arc.util.Log;
 import ec.Tools.AnyMtiCrafter;
 import ec.Tools.Tool;
 import ec.cType.ECDrill;
@@ -1205,8 +1204,9 @@ public class load {
                             }
                             field.set(newBlock, newconsumeBuilder);
                         }
-                        case "range" , "bufferCapacity" , "itemCapacity" -> field.set(newBlock,(int)((int)value0 * sizeBase));
-                        case "speed" -> field.set(newBlock,(float)value0/attributeBase);
+                        case "range", "bufferCapacity", "itemCapacity" ->
+                                field.set(newBlock, (int) ((int) value0 * sizeBase));
+                        case "speed" -> field.set(newBlock, (float) value0 / attributeBase);
                         case "buildType", "barMap" -> {
                         }
                         //其他没有自定义需求的属性
@@ -1218,7 +1218,7 @@ public class load {
             //贴图前缀
             String[] prefixs = {""};
             //贴图后缀
-            String[] sprites = {"", "-arrow" , "-bridge" , "-end"};
+            String[] sprites = {"", "-arrow", "-bridge", "-end"};
             //遍历贴图后缀
             for (String sprite : sprites) {
                 for (String prefix : prefixs) {
@@ -1861,7 +1861,7 @@ public class load {
             //贴图前缀
             String[] prefixs = {""};
             //贴图后缀
-            String[] sprites = {"", "-rotator", "-top", "-arrow", "-arrow-blur", "-glow", "-item", "-top-invert"};
+            String[] sprites = {"", "-rotator", "-top", "-arrow", "-arrow-blur", "-glow", "-item", "-top-invert", "-rim"};
             //遍历贴图后缀
             for (String sprite : sprites) {
                 for (String prefix : prefixs) {
@@ -2420,6 +2420,8 @@ public class load {
                             field.set(newBlock, newconsumeBuilder);
                         }
                         case "pumpAmount", "liquidCapacity" -> field.set(newBlock, (float) value0 * attributeBase);
+                        case "buildType", "barMap" -> {
+                        }
                         //其他没有自定义需求的属性
                         default -> field.set(newBlock, value0);
                     }
@@ -2762,12 +2764,12 @@ public class load {
                             }
                             field.set(newBlock, newconsumeBuilder);
                         }
-                        case "tileDamage" , "damage" -> field.set(newBlock,(float)value0*attributeBase);
-                        case "length" , "tendrils" , "shots" -> field.set(newBlock,(int)((int)value0 * sizeBase));
+                        case "tileDamage", "damage" -> field.set(newBlock, (float) value0 * attributeBase);
+                        case "length", "tendrils", "shots" -> field.set(newBlock, (int) ((int) value0 * sizeBase));
                         case "bullet" -> {
                             BulletType bullet = ((BulletType) value0).copy();
-                            bullet(bullet,i);
-                            field.set(newBlock,bullet);
+                            bullet(bullet, i);
+                            field.set(newBlock, bullet);
                         }
                         case "buildType", "barMap" -> {
                         }
@@ -3901,11 +3903,10 @@ public class load {
                         //判断是否为物品容量
                         case "itemCapacity" -> {
                             //对物品容量进行增强
-                            if ((int)value0<0) {
-                                int itemCapacity = (int) (Math.max(Mathf.round((int)(unit.hitSize * 4f), 10), 10) * healthBase  );
-                                field.set(newunit,itemCapacity);
-                            }
-                            else field.set(newunit, (int) ((int) value0 * healthBase));
+                            if ((int) value0 < 0) {
+                                int itemCapacity = (int) (Math.max(Mathf.round((int) (unit.hitSize * 4f), 10), 10) * healthBase);
+                                field.set(newunit, itemCapacity);
+                            } else field.set(newunit, (int) ((int) value0 * healthBase));
                         }
 
                         //判断是否为护甲
@@ -4226,6 +4227,7 @@ public class load {
     public static BulletType bullet(BulletType bullet, float damageBase, float sizeBase) {
         bullet.knockback *= sizeBase;
         bullet.lifetime *= sizeBase;
+        bullet.drawSize *= sizeBase;
         //手机会卡//bullet.hitSize *= damageBase;
         bullet.damage *= damageBase;
         bullet.splashDamage *= damageBase;
@@ -4259,10 +4261,9 @@ public class load {
             bulletType.pierceCap = (int) (bulletType.pierceCap * sizeBase);
         } else if (bullet instanceof LightningBulletType bulletType) {
             bulletType.lightningLength *= sizeBase;
-        } else if (bullet instanceof ContinuousLaserBulletType bulletType){
+        } else if (bullet instanceof ContinuousLaserBulletType bulletType) {
             bulletType.length *= sizeBase;
             bulletType.width *= sizeBase;
-            bulletType.drawSize *= sizeBase;
             bulletType.lifetime /= sizeBase;
         }
         return bullet;
@@ -4312,6 +4313,15 @@ public class load {
 
                 randLenVectors(e.id, (int) Math.min(8 * sizeBase, 1024), e.finpow() * 60f * sizeBase, e.rotation, (float) Math.toDegrees(Math.atan(Math.toRadians(10f)) / sizeBase), (x, y) -> {
                     Fill.circle(e.x + x, e.y + y, 0.65f + e.fout() * 1.5f);
+                });
+            });
+        }
+        if (bullet.shootEffect == Fx.shootPyraFlame) {
+            bullet.shootEffect = load.shootEffect(Fx.shootPyraFlame, e -> {
+                color(Pal.lightPyraFlame, Pal.darkPyraFlame, Color.gray, e.fin());
+
+                randLenVectors(e.id, (int) Math.min(10 * sizeBase, 2048), e.finpow() * 70f * sizeBase, e.rotation, (float) Math.toDegrees(Math.atan(Math.toRadians(10f)) / sizeBase), (x, y) -> {
+                    Fill.circle(e.x + x, e.y + y, 0.65f + e.fout() * 1.6f);
                 });
             });
         }
@@ -5119,7 +5129,6 @@ public class load {
                         j++;
                     }
                     requirements(powerNode.category, powerNode.buildVisibility, newrequirements);
-
 
 
                 }

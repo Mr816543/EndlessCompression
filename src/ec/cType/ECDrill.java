@@ -1,6 +1,7 @@
 package ec.cType;
 
 import arc.math.Mathf;
+import arc.util.Log;
 import mindustry.world.blocks.production.Drill;
 
 public class ECDrill extends Drill {
@@ -14,6 +15,9 @@ public class ECDrill extends Drill {
     public class DrillBuild extends Drill.DrillBuild {
         @Override
         public void updateTile() {
+            if (!(warmup>=0)) warmup =0;
+            if (!(progress>=0)) progress = 0;
+
             if (timer(timerDump, Math.min(dumpTime,1))) {
                 dump(dominantItem != null && items.has(dominantItem) ? dominantItem : null);
             }
@@ -42,6 +46,7 @@ public class ECDrill extends Drill {
             }
 
             int Effects = 0 ;
+            Log.info("progress >= delay"+" : "+(progress >= delay));
             while (dominantItems > 0 && progress >= delay && items.total() < itemCapacity) {
                 offload(dominantItem);
                 progress -= delay;

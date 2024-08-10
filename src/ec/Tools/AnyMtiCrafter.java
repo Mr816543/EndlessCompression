@@ -405,6 +405,7 @@ public class AnyMtiCrafter extends Block {
                     if (outputDir == -1 || (outputDir + this.rotation) % 4 == this.relativeTo(other)) {
                         other = other.getLiquidDestination(this, liquid);
                         if (other != null && other.block.hasLiquids && this.canDumpLiquid(other, liquid) && other.liquids != null) {
+                            if (!(other.liquids.get(liquid)>=0))other.liquids.set(liquid,0);
                             float ofract = other.liquids.get(liquid) / other.block.liquidCapacity;
                             float fract = this.liquids.get(liquid) / thisLiquidCapacity;
                             if (ofract < fract) {

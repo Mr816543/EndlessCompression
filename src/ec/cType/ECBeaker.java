@@ -461,6 +461,7 @@ public class ECBeaker extends Block {
                     if (outputDir == -1 || (outputDir + this.rotation) % 4 == this.relativeTo(other)) {
                         other = other.getLiquidDestination(this, liquid);
                         if (other != null && other.block.hasLiquids && this.canDumpLiquid(other, liquid) && other.liquids != null) {
+                            if (!(other.liquids.get(liquid)>=0)) other.liquids.set(liquid,0);
                             float ofract = other.liquids.get(liquid) / other.block.liquidCapacity;
                             float fract = this.liquids.get(liquid) / thisLiquidCapacity;
                             if (ofract < fract) {
@@ -489,6 +490,7 @@ public class ECBeaker extends Block {
 
         @Override
         public boolean acceptLiquid(Building source, Liquid liquid) {
+            if (source.block == this.block) return false;
             boolean b = false;
             if (consistent.size!=0 && !acceptNoConsistent){
                 for (Formula formula : consistent) {
@@ -502,6 +504,7 @@ public class ECBeaker extends Block {
 
         @Override
         public boolean acceptItem(Building source, Item item) {
+            if (source.block == this.block) return false;
             boolean b = false;
             if (consistent.size!=0 && !acceptNoConsistent){
                 for (Formula formula : consistent) {

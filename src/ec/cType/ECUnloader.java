@@ -149,7 +149,7 @@ public class ECUnloader extends Unloader {
                 }
             }
 
-            while (unloadTimer > speed) {
+            if (unloadTimer > speed) {
 
                 if(item != null){
                     rotations = item.id; //next rotation for nulloaders
@@ -184,8 +184,13 @@ public class ECUnloader extends Unloader {
 
                     //trade the items
                     if(dumpingFrom != null && dumpingTo != null && (dumpingFrom.loadFactor != dumpingTo.loadFactor || !dumpingFrom.canLoad)){
-                        dumpingTo.building.handleItem(this, item);
-                        dumpingFrom.building.removeStack(item, 1);
+                        int amount = (int)(unloadTimer / speed);
+                        for (int i = 0 ; i<amount;i++){
+                            if (dumpingTo.building.acceptItem(this,item)){
+                                int removeStack = dumpingFrom.building.removeStack(item, 1);
+                                if (removeStack != 0 ) dumpingTo.building.handleItem(this, item);
+                            }
+                        }
                         dumpingTo.lastUsed = 0;
                         dumpingFrom.lastUsed = 0;
                         any = true;
@@ -193,7 +198,7 @@ public class ECUnloader extends Unloader {
                 }
 
                 if(any){
-                    unloadTimer -= speed;
+                    unloadTimer %= speed;
                 }else{
                     unloadTimer = Math.min(unloadTimer, speed);
                 }

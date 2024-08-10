@@ -44,7 +44,7 @@ public class ECOnly {
         newAll[All.length] = power;
         All = newAll;
         for (TechTree.TechNode techNode : copper.techNodes){
-            TechTree.TechNode node = nodeProduce(power,() -> {});
+            TechTree.TechNode node = node(power,with(silicon,5) ,() -> {});
             node.parent = techNode;
             techNode.children.add(node);
         }
