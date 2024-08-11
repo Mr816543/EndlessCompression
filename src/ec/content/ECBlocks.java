@@ -15,6 +15,7 @@ import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.liquid.ArmoredConduit;
 import mindustry.world.blocks.liquid.Conduit;
+import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
@@ -105,7 +106,9 @@ public class ECBlocks {
 
             else if (clazz.equals(LaserTurret.class)) load.LaserTurret(block);
             else if (clazz.equals(ShockMine.class)) load.ShockMine(block);
-           // else if (clazz.equals(BufferedItemBridge.class)) load.BufferedItemBridge(block);
+            else if (clazz.equals(BufferedItemBridge.class)) load.BufferedItemBridge(block,11);
+            else if (clazz.equals(ItemBridge.class)) load.BufferedItemBridge(block,30);
+            else if (clazz.equals(LiquidBridge.class)) load.LiquidBridge(block);
 
 
 
