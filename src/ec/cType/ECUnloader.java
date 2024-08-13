@@ -1,34 +1,52 @@
 package ec.cType;
 
-
-import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.scene.ui.layout.Table;
-import arc.struct.Seq;
-import arc.util.Eachable;
-import arc.util.io.Reads;
-import arc.util.io.Writes;
-import arc.util.pooling.Pools;
-import mindustry.entities.units.BuildPlan;
-import mindustry.gen.Building;
-import mindustry.type.Item;
-import mindustry.world.blocks.ItemSelection;
+import arc.graphics.*;
+import arc.graphics.g2d.*;
+import arc.scene.ui.layout.*;
+import arc.struct.*;
+import arc.util.*;
+import arc.util.io.*;
+import arc.util.pooling.*;
+import mindustry.entities.units.*;
+import mindustry.gen.*;
+import mindustry.type.*;
+import mindustry.world.*;
+import mindustry.world.blocks.*;
 import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.blocks.storage.Unloader;
-import mindustry.world.meta.Stat;
-import mindustry.world.meta.StatUnit;
+import mindustry.world.meta.*;
 
-import java.util.Comparator;
+import java.util.*;
 
-import static mindustry.Vars.content;
+import static mindustry.Vars.*;
+import static mindustry.content.Blocks.unloader;
 
-public class ECUnloader extends Unloader {
-    public ECUnloader(String name) {
+public class ECUnloader extends Block{
+    public TextureRegion centerRegion;
+
+    public float speed = 1f;
+
+    public ECUnloader(String name){
         super(name);
+        update = true;
+        solid = true;
+        health = 70;
+        hasItems = true;
+        configurable = true;
+        saveConfig = true;
+        itemCapacity = 0;
+        noUpdateDisabled = true;
+        clearOnDoubleTap = true;
+        unloadable = false;
+
+        config(Item.class, (ECUnloaderBuild tile, Item item) -> tile.sortItem = item);
+        configClear((ECUnloaderBuild tile) -> tile.sortItem = null);
     }
+
     @Override
     public void setStats(){
         super.setStats();
+        stats.add(Stat.speed, 60f / speed, StatUnit.itemsSecond);
     }
 
     @Override
@@ -42,7 +60,7 @@ public class ECUnloader extends Unloader {
         removeBar("items");
     }
 
-    public static class ContainerStat extends Unloader.ContainerStat {
+    public static class ContainerStat{
         Building building;
         float loadFactor;
         boolean canLoad;
@@ -61,15 +79,15 @@ public class ECUnloader extends Unloader {
         }
     }
 
-    public class UnloaderBuild extends Unloader.UnloaderBuild {
+    public class ECUnloaderBuild extends Building{
         public float unloadTimer = 0f;
         public int rotations = 0;
         private final int itemsLength = content.items().size;
         public Item sortItem = null;
-        public ECUnloader.ContainerStat dumpingFrom, dumpingTo;
-        public final Seq<ECUnloader.ContainerStat> possibleBlocks = new Seq<>();
+        public ContainerStat dumpingFrom, dumpingTo;
+        public final Seq<ContainerStat> possibleBlocks = new Seq<>();
 
-        protected final Comparator<ECUnloader.ContainerStat> comparator = (x, y) -> {
+        protected final Comparator<ContainerStat> comparator = (x, y) -> {
             //sort so it gives priority for blocks that can only either receive or give (not both), and then by load, and then by last use
             //highest = unload from, lowest = unload to
             int unloadPriority = Boolean.compare(x.canUnload && !x.canLoad, y.canUnload && !y.canLoad); //priority to receive if it cannot give
@@ -113,7 +131,7 @@ public class ECUnloader extends Unloader {
             for(int i = 0; i < proximity.size; i++){
                 var other = proximity.get(i);
                 if(!other.interactable(team)) continue; //avoid blocks of the wrong team
-                ECUnloader.ContainerStat pb =  Pools.obtain(ECUnloader.ContainerStat.class, ECUnloader.ContainerStat::new);
+                ContainerStat pb = Pools.obtain(ContainerStat.class, ContainerStat::new);
 
                 //partial check
                 boolean canLoad = !(other.block instanceof StorageBlock);
@@ -127,6 +145,7 @@ public class ECUnloader extends Unloader {
             }
         }
 
+        float amount;
         @Override
         public void updateTile(){
             if(((unloadTimer += delta()) < speed) || (possibleBlocks.size < 2)) return;
@@ -136,8 +155,8 @@ public class ECUnloader extends Unloader {
             if(sortItem != null){
                 if(isPossibleItem(sortItem)) item = sortItem;
             }else{
-                //selects the next item for nulloaders
-                //inspired of nextIndex() but for all "proximity" (possibleBlocks) at once, and also way more powerful
+                //为空载程序选择下一个项目
+                //受到 nextIndex() 的启发，但适用于所有 "接近度"。 (块），而且功能更强大
                 for(int i = 0; i < itemsLength; i++){
                     int total = (rotations + i + 1) % itemsLength;
                     Item possibleItem = content.item(total);
@@ -149,61 +168,57 @@ public class ECUnloader extends Unloader {
                 }
             }
 
-            if (unloadTimer > speed) {
+            if(item != null){
+                rotations = item.id; //无效载荷的下一次轮换 //TODO maybe if(sortItem == null)
 
-                if(item != null){
-                    rotations = item.id; //next rotation for nulloaders
+                for(int i = 0; i < possibleBlocks.size; i++){
+                    var pb = possibleBlocks.get(i);
+                    var other = pb.building;
+                    pb.loadFactor = (other.getMaximumAccepted(item) == 0) || (other.items == null) ? 0 : other.items.get(item) / (float)other.getMaximumAccepted(item);
+                    pb.lastUsed = (pb.lastUsed + 1) % Integer.MAX_VALUE; //increment the priority if not used
+                }
 
-                    for(int i = 0; i < possibleBlocks.size; i++){
-                        var pb = possibleBlocks.get(i);
-                        var other = pb.building;
-                        pb.loadFactor = (other.getMaximumAccepted(item) == 0) || (other.items == null) ? 0 : other.items.get(item) / (float)other.getMaximumAccepted(item);
-                        pb.lastUsed = (pb.lastUsed + 1) % Integer.MAX_VALUE; //increment the priority if not used
-                    }
+                possibleBlocks.sort(comparator);
 
-                    possibleBlocks.sort(comparator);
+                dumpingTo = null;
+                dumpingFrom = null;
 
-                    dumpingTo = null;
-                    dumpingFrom = null;
-
-                    //choose the building to accept the item
-                    for(int i = 0; i < possibleBlocks.size; i++){
-                        if(possibleBlocks.get(i).canLoad){
-                            dumpingTo = possibleBlocks.get(i);
-                            break;
-                        }
-                    }
-
-                    //choose the building to take the item from
-                    for(int i = possibleBlocks.size - 1; i >= 0; i--){
-                        if(possibleBlocks.get(i).canUnload){
-                            dumpingFrom = possibleBlocks.get(i);
-                            break;
-                        }
-                    }
-
-                    //trade the items
-                    if(dumpingFrom != null && dumpingTo != null && (dumpingFrom.loadFactor != dumpingTo.loadFactor || !dumpingFrom.canLoad)){
-                        int amount = (int)(unloadTimer / speed);
-                        for (int i = 0 ; i<amount;i++){
-                            if (dumpingTo.building.acceptItem(this,item)){
-                                int removeStack = dumpingFrom.building.removeStack(item, 1);
-                                if (removeStack != 0 ) dumpingTo.building.handleItem(this, item);
-                            }
-                        }
-                        dumpingTo.lastUsed = 0;
-                        dumpingFrom.lastUsed = 0;
-                        any = true;
+                //选择建筑接收项目
+                for(int i = 0; i < possibleBlocks.size; i++){
+                    if(possibleBlocks.get(i).canLoad){
+                        dumpingTo = possibleBlocks.get(i);
+                        break;
                     }
                 }
 
-                if(any){
-                    unloadTimer %= speed;
-                }else{
-                    unloadTimer = Math.min(unloadTimer, speed);
+                //选择要从哪个建筑物中提取物品
+                for(int i = possibleBlocks.size - 1; i >= 0; i--){
+                    if(possibleBlocks.get(i).canUnload){
+                        dumpingFrom = possibleBlocks.get(i);
+                        break;
+                    }
+                }
+
+                //以物换物
+                if(dumpingFrom != null && dumpingTo != null && (dumpingFrom.loadFactor != dumpingTo.loadFactor || !dumpingFrom.canLoad)){
+
+                    amount = unloadTimer / speed ;
+                    amount = Math.min(amount,dumpingTo.building.getMaximumAccepted(item)-dumpingTo.building.items.get(item));
+                    amount = Math.min(amount,dumpingFrom.building.items.get(item));
+
+                    dumpingTo.building.handleStack(item,(int) amount,this);
+                    dumpingFrom.building.removeStack(item, (int) amount);
+                    dumpingTo.lastUsed = 0;
+                    dumpingFrom.lastUsed = 0;
+                    any = true;
                 }
             }
 
+            if(any){
+                unloadTimer %= speed;
+            }else{
+                unloadTimer = Math.min(unloadTimer, speed);
+            }
         }
 
         @Override
@@ -211,7 +226,7 @@ public class ECUnloader extends Unloader {
             super.draw();
 
             Draw.color(sortItem == null ? Color.clear : sortItem.color);
-            Draw.rect(centerRegion, x, y);
+            Draw.rect(((Unloader)unloader).centerRegion, x, y);
             Draw.color();
         }
 
@@ -243,10 +258,4 @@ public class ECUnloader extends Unloader {
             sortItem = id == -1 ? null : content.item(id);
         }
     }
-
-
-
-
-
-
 }

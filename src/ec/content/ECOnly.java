@@ -43,7 +43,7 @@ public class ECOnly {
         System.arraycopy(All, 0, newAll, 0, All.length);
         newAll[All.length] = power;
         All = newAll;
-        for (TechTree.TechNode techNode : copper.techNodes){
+        for (TechTree.TechNode techNode : silicon.techNodes){
             TechTree.TechNode node = node(power,with(silicon,5) ,() -> {});
             node.parent = techNode;
             techNode.children.add(node);

@@ -20,6 +20,7 @@ import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.sandbox.ItemSource;
+import mindustry.world.blocks.sandbox.LiquidSource;
 import mindustry.world.blocks.sandbox.PowerSource;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.StorageBlock;
@@ -93,6 +94,8 @@ public class ECBlocks {
             else if (clazz.equals(MassDriver.class)) load.MassDriver(block);
             else if (clazz.equals(PowerSource.class)) load.PowerSource(block);
             else if (clazz.equals(ItemSource.class)) load.ItemSource(block);
+
+            else if (clazz.equals(LiquidSource.class)) load.LiquidSource(block);
 
             else if (clazz.equals(PowerTurret.class)) load.PowerTurret(block);
             else if (clazz.equals(TractorBeamTurret.class)) load.TractorBeamTurret(block);
